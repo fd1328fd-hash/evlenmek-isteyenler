@@ -52,7 +52,8 @@
   @keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   .profile-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
   .card-top{display:flex;gap:14px;align-items:center;margin-bottom:14px;min-width:0}
-  .avatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.05rem;flex-shrink:0}
+  .avatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.05rem;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
+  .avatar img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
   .card-top h4{font-size:1rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .card-top .meta{font-size:.82rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bio{font-size:.86rem;color:var(--muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -68,10 +69,13 @@
   .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);background:#fff;border:1.5px dashed var(--border);border-radius:20px}
   .empty b{display:block;font-size:1.05rem;color:var(--ink);margin-bottom:6px}
 
-  /* KİLİTLİ EKRAN */
+  /* KENDİ KARTINIZ */
+  .profile-card.mine{border-color:var(--rose);border-width:2px;position:relative}
+  .profile-card.mine::before{content:"KENDİ PROFİLİN";position:absolute;top:-10px;left:20px;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:6px;letter-spacing:.04em}
+
   .locked-screen{background:#fff;border:1px solid var(--border);border-radius:24px;padding:60px 30px;text-align:center;box-shadow:var(--shadow-sm);grid-column:1/-1;max-width:100%}
   .locked-icon{font-size:4rem;margin-bottom:20px;display:block}
-  .locked-screen h3{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;margin-bottom:12px;letter-spacing:-.02em}
+  .locked-screen h3{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;margin-bottom:12px}
   .locked-screen p{color:var(--muted);font-size:.98rem;max-width:480px;margin:0 auto 26px}
   .locked-stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
   .locked-stat{text-align:center}
@@ -90,7 +94,8 @@
   .close-x:hover{background:var(--rose-soft);color:var(--rose)}
   #toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120px);background:#17141f;color:#fff;padding:14px 26px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:400;transition:transform .35s;width:calc(100% - 32px);max-width:420px;box-shadow:0 16px 40px rgba(0,0,0,.3);text-align:center;line-height:1.5}
   #toast.show{transform:translate(-50%,0)}
-  .user-badge{display:flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600;min-width:0}
+  .user-badge{display:flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600;min-width:0;cursor:pointer;padding:4px 8px;border-radius:12px;transition:.2s}
+  .user-badge:hover{background:var(--rose-soft)}
   .user-badge .avatar{width:34px;height:34px;border-radius:11px;font-size:.8rem}
   .user-badge span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
   .icon-btn{position:relative;width:42px;height:42px;border-radius:12px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:1.15rem;transition:.2s;flex-shrink:0}
@@ -132,17 +137,34 @@
   .msg time{display:block;font-size:.68rem;opacity:.7;margin-top:3px}
   .msg.me time{text-align:right;color:rgba(255,255,255,.85)}
   .msg.them time{color:var(--muted)}
+  .msg-img-preview{display:none;padding:10px 14px;background:#fff;border-top:1px solid var(--border);align-items:center;gap:12px}
+  .msg-img-preview.show{display:flex}
+  .msg-img-preview img{width:60px;height:60px;object-fit:cover;border-radius:10px;border:1.5px solid var(--border);flex-shrink:0}
+  .msg-img-preview .info{flex:1;min-width:0}
+  .msg-img-preview .info b{display:block;font-size:.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+  .msg-img-preview .info span{font-size:.75rem;color:var(--muted)}
+  .msg-img-preview .remove{width:34px;height:34px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;color:var(--muted);cursor:pointer;flex-shrink:0;font-size:.9rem;transition:.2s;border:none}
+  .msg-img-preview .remove:hover{background:var(--rose-soft);color:var(--rose)}
   .msg-input-row{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;background:#fff}
   .msg-input-row textarea{flex:1;border:none;outline:none;resize:none;font-size:.92rem;padding:10px 4px;max-height:100px;font-family:inherit;line-height:1.4;min-width:0}
   .msg-img-btn{width:40px;height:40px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;font-size:1.15rem;color:var(--muted);transition:.2s;flex-shrink:0}
   .msg-img-btn:hover{background:var(--rose-soft);color:var(--rose)}
   .msg-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;display:grid;place-items:center;font-size:1.15rem;box-shadow:0 6px 16px rgba(232,67,124,.32);transition:.2s;flex-shrink:0}
   .msg-send:hover{transform:scale(1.05)}
+  .msg-send:disabled{opacity:.6;cursor:not-allowed}
   .msg-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:40px}
   .msg-empty .emoji{font-size:3rem;margin-bottom:14px}
   .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
   .lightbox.open{display:flex}
   .lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
+
+  /* Profil fotoğrafı yükleme */
+  .photo-upload{display:flex;align-items:center;gap:16px;margin-bottom:18px;padding:14px;background:#fbf7fa;border-radius:16px}
+  .photo-upload .preview{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--rose),var(--plum));display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.4rem;overflow:hidden;flex-shrink:0;background-size:cover;background-position:center}
+  .photo-upload .preview img{width:100%;height:100%;object-fit:cover}
+  .photo-upload .actions{flex:1;min-width:0}
+  .photo-upload .actions p{font-size:.82rem;color:var(--muted);margin-bottom:8px}
+  .photo-upload .actions .btn{padding:8px 14px;font-size:.82rem}
 
   @media(max-width:980px){
     .hero-inner{grid-template-columns:1fr;gap:40px}
@@ -153,8 +175,6 @@
     .nav-actions .hide-mobile{display:none}
     .user-badge span{display:none}
   }
-
-  /* MOBİL DÜZENLEMELER */
   @media(max-width:600px){
     .container{width:92%}
     .hero{padding:32px 0}
@@ -192,43 +212,18 @@
     textarea.input{font-size:16px}
     #toast{font-size:.82rem;padding:11px 16px;bottom:14px}
     .locked-screen{padding:32px 16px;border-radius:18px}
-    .locked-screen h3{font-size:1.15rem}
     .locked-icon{font-size:2.6rem;margin-bottom:14px}
+    .locked-screen h3{font-size:1.15rem}
     .locked-screen p{font-size:.88rem}
-    .locked-stats{gap:12px;margin-bottom:22px}
-    .locked-stat b{font-size:1.25rem}
-    .locked-stat span{font-size:.72rem}
-    .locked-features{gap:8px;margin-bottom:22px}
-    .locked-feature{padding:8px 12px;font-size:.78rem}
-
-    /* MESAJLAŞMA MOBİL */
     .msg-overlay{padding:0}
     .msg-container{height:100vh;height:100dvh;border-radius:0;max-height:100dvh;width:100%}
-    .msg-sidebar-head{padding:14px 16px}
-    .msg-sidebar-head h3{font-size:1rem}
-    .conv-list{padding:6px}
-    .conv-item{padding:10px;gap:10px}
-    .conv-item .avatar{width:42px;height:42px;border-radius:12px}
-    .conv-info b{font-size:.88rem}
-    .conv-info span{font-size:.74rem}
-    .msg-head{padding:10px 12px;gap:8px}
-    .msg-head .avatar{width:36px;height:36px;border-radius:11px;font-size:.75rem}
-    .msg-head-info b{font-size:.88rem}
-    .msg-head-info span{font-size:.7rem}
-    .msg-head .icon-btn{width:34px;height:34px;font-size:.85rem}
     .msg-body{padding:12px 14px;gap:6px}
-    .msg{max-width:82%;font-size:.88rem;padding:9px 13px}
-    .msg img{max-height:220px}
+    .msg{max-width:82%;font-size:.88rem}
     .msg-input-row{padding:10px 12px;gap:8px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
-    .msg-input-row textarea{font-size:16px;padding:8px 4px}
-    .msg-send{width:38px;height:38px;font-size:1rem}
-    .msg-img-btn{width:36px;height:36px;font-size:1rem}
-  }
-
-  @media(max-width:360px){
-    .hero h1{font-size:1.3rem}
-    .logo span:not(.logo-mark){display:none}
-    .msg{max-width:88%}
+    .msg-input-row textarea{font-size:16px}
+    .msg-send{width:38px;height:38px}
+    .msg-img-btn{width:36px;height:36px}
+    .photo-upload .preview{width:64px;height:64px;font-size:1.1rem}
   }
 </style>
 </head>
@@ -283,71 +278,28 @@
     <div class="filter-panel" id="filterPanel" style="display:none">
       <h3>🎯 Gelişmiş Filtreleme</h3>
       <div class="filter-grid">
-        <div class="field" style="margin:0">
-          <label>Cinsiyet</label>
-          <select id="f-gender" class="input">
-            <option value="hepsi">Fark etmez</option>
-            <option value="kadın">Kadın</option>
-            <option value="erkek">Erkek</option>
-          </select>
+        <div class="field" style="margin:0"><label>Cinsiyet</label>
+          <select id="f-gender" class="input"><option value="hepsi">Fark etmez</option><option value="kadın">Kadın</option><option value="erkek">Erkek</option></select>
         </div>
-        <div class="field" style="margin:0">
-          <label>Ülke</label>
-          <select id="f-country" class="input"><option value="hepsi">Tümü</option></select>
-        </div>
-        <div class="field" style="margin:0">
-          <label>Şehir</label>
-          <select id="f-city" class="input"><option value="hepsi">Tümü</option></select>
-        </div>
-        <div class="field" style="margin:0">
-          <label>Medeni Durum</label>
+        <div class="field" style="margin:0"><label>Ülke</label><select id="f-country" class="input"><option value="hepsi">Tümü</option></select></div>
+        <div class="field" style="margin:0"><label>Şehir</label><select id="f-city" class="input"><option value="hepsi">Tümü</option></select></div>
+        <div class="field" style="margin:0"><label>Medeni Durum</label>
           <select id="f-marital" class="input">
-            <option value="hepsi">Fark etmez</option>
-            <option value="Bekar">Bekar</option>
-            <option value="Boşanmış">Boşanmış</option>
-            <option value="Dul">Dul (Eşi vefat etmiş)</option>
-            <option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
+            <option value="hepsi">Fark etmez</option><option value="Bekar">Bekar</option><option value="Boşanmış">Boşanmış</option><option value="Dul">Dul (Eşi vefat etmiş)</option><option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
           </select>
         </div>
-        <div class="field" style="margin:0">
-          <label>Eğitim</label>
+        <div class="field" style="margin:0"><label>Eğitim</label>
           <select id="f-education" class="input">
-            <option value="hepsi">Fark etmez</option>
-            <option value="İlköğretim">İlköğretim</option>
-            <option value="Lise">Lise</option>
-            <option value="Üniversite">Üniversite</option>
-            <option value="Yüksek Lisans">Yüksek Lisans</option>
-            <option value="Doktora">Doktora</option>
+            <option value="hepsi">Fark etmez</option><option value="İlköğretim">İlköğretim</option><option value="Lise">Lise</option><option value="Üniversite">Üniversite</option><option value="Yüksek Lisans">Yüksek Lisans</option><option value="Doktora">Doktora</option>
           </select>
         </div>
-        <div class="field" style="margin:0">
-          <label>Min. Yaş</label>
-          <input id="f-age-min" class="input" type="number" value="18" min="18">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Maks. Yaş</label>
-          <input id="f-age-max" class="input" type="number" value="99" min="18">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Min. Boy (cm)</label>
-          <input id="f-height-min" class="input" type="number" placeholder="150" min="100">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Maks. Boy (cm)</label>
-          <input id="f-height-max" class="input" type="number" placeholder="210" min="100">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Min. Kilo (kg)</label>
-          <input id="f-weight-min" class="input" type="number" placeholder="40" min="30">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Maks. Kilo (kg)</label>
-          <input id="f-weight-max" class="input" type="number" placeholder="150" min="30">
-        </div>
-        <div class="field" style="margin:0">
-          <label>Meslek / İsim ara</label>
-          <input id="f-search" class="input" type="text" placeholder="öğretmen, Ayşe...">
-        </div>
+        <div class="field" style="margin:0"><label>Min. Yaş</label><input id="f-age-min" class="input" type="number" value="18" min="18"></div>
+        <div class="field" style="margin:0"><label>Maks. Yaş</label><input id="f-age-max" class="input" type="number" value="99" min="18"></div>
+        <div class="field" style="margin:0"><label>Min. Boy (cm)</label><input id="f-height-min" class="input" type="number" placeholder="150" min="100"></div>
+        <div class="field" style="margin:0"><label>Maks. Boy (cm)</label><input id="f-height-max" class="input" type="number" placeholder="210" min="100"></div>
+        <div class="field" style="margin:0"><label>Min. Kilo (kg)</label><input id="f-weight-min" class="input" type="number" placeholder="40" min="30"></div>
+        <div class="field" style="margin:0"><label>Maks. Kilo (kg)</label><input id="f-weight-max" class="input" type="number" placeholder="150" min="30"></div>
+        <div class="field" style="margin:0"><label>Meslek / İsim ara</label><input id="f-search" class="input" type="text" placeholder="öğretmen, Ayşe..."></div>
       </div>
       <div class="filter-actions">
         <button class="btn btn-ghost btn-sm" data-action="reset-filters">Filtreleri Sıfırla</button>
@@ -361,6 +313,7 @@
   </div>
 </section>
 
+<!-- KAYIT -->
 <div class="overlay" id="registerModal" data-overlay>
   <div class="modal">
     <button class="close-x" data-action="close-modal" data-modal="registerModal">✕</button>
@@ -375,17 +328,12 @@
         <div class="field"><label>Yaş *</label><input name="age" class="input" type="number" min="18" max="99" required placeholder="28"></div>
         <div class="field"><label>Cinsiyet *</label>
           <select name="gender" class="input" required>
-            <option value="">Seçiniz</option>
-            <option value="kadın">Kadın</option>
-            <option value="erkek">Erkek</option>
+            <option value="">Seçiniz</option><option value="kadın">Kadın</option><option value="erkek">Erkek</option>
           </select>
         </div>
         <div class="field"><label>Medeni Durum *</label>
           <select name="marital_status" class="input" required>
-            <option value="Bekar">Bekar</option>
-            <option value="Boşanmış">Boşanmış</option>
-            <option value="Dul">Dul</option>
-            <option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
+            <option value="Bekar">Bekar</option><option value="Boşanmış">Boşanmış</option><option value="Dul">Dul</option><option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
           </select>
         </div>
       </div>
@@ -398,12 +346,7 @@
         <div class="field"><label>Kilo (kg)</label><input name="weight" class="input" type="number" min="30" max="250" placeholder="75"></div>
         <div class="field"><label>Eğitim</label>
           <select name="education" class="input">
-            <option value="">Seçiniz</option>
-            <option value="İlköğretim">İlköğretim</option>
-            <option value="Lise">Lise</option>
-            <option value="Üniversite">Üniversite</option>
-            <option value="Yüksek Lisans">Yüksek Lisans</option>
-            <option value="Doktora">Doktora</option>
+            <option value="">Seçiniz</option><option value="İlköğretim">İlköğretim</option><option value="Lise">Lise</option><option value="Üniversite">Üniversite</option><option value="Yüksek Lisans">Yüksek Lisans</option><option value="Doktora">Doktora</option>
           </select>
         </div>
       </div>
@@ -413,12 +356,11 @@
       <div class="field"><label>Şifre * (min 6 karakter)</label><input name="password" class="input" type="password" required minlength="6"></div>
       <button type="submit" class="btn btn-primary btn-block" style="margin-top:8px">Hesabımı Oluştur</button>
     </form>
-    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">
-      Zaten üye misin? <a href="#" data-action="open-login" style="color:var(--rose);font-weight:600">Giriş yap</a>
-    </p>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">Zaten üye misin? <a href="#" data-action="open-login" style="color:var(--rose);font-weight:600">Giriş yap</a></p>
   </div>
 </div>
 
+<!-- GİRİŞ -->
 <div class="overlay" id="loginModal" data-overlay>
   <div class="modal" style="width:min(420px,100%)">
     <button class="close-x" data-action="close-modal" data-modal="loginModal">✕</button>
@@ -429,16 +371,76 @@
       <div class="field"><label>Şifre</label><input name="password" class="input" type="password" required placeholder="••••••••"></div>
       <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px">Giriş Yap</button>
     </form>
-    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">
-      Hesabın yok mu? <a href="#" data-action="open-register" style="color:var(--rose);font-weight:600">Ücretsiz kayıt ol</a>
-    </p>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">Hesabın yok mu? <a href="#" data-action="open-register" style="color:var(--rose);font-weight:600">Ücretsiz kayıt ol</a></p>
   </div>
 </div>
 
+<!-- ==================== PROFİL DÜZENLE MODALI ==================== -->
+<div class="overlay" id="editProfileModal" data-overlay>
+  <div class="modal">
+    <button class="close-x" data-action="close-modal" data-modal="editProfileModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px">Profilimi Düzenle</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px">Bilgilerini güncelle ve kaydet.</p>
+
+    <form id="editProfileForm">
+      <!-- Profil Fotoğrafı -->
+      <div class="photo-upload">
+        <div class="preview" id="editPhotoPreview">?</div>
+        <div class="actions">
+          <p><b>Profil Fotoğrafı</b><br>JPG veya PNG, max 5 MB</p>
+          <input type="file" id="editPhotoInput" accept="image/*" style="display:none">
+          <button type="button" class="btn btn-ghost" data-action="pick-edit-photo">📷 Fotoğraf Yükle</button>
+          <button type="button" class="btn btn-ghost" data-action="remove-edit-photo" id="editPhotoRemoveBtn" style="display:none;margin-left:6px">🗑️ Kaldır</button>
+        </div>
+      </div>
+
+      <div class="row-2">
+        <div class="field"><label>Ad Soyad *</label><input name="name" id="e-name" class="input" required></div>
+        <div class="field"><label>Yaş *</label><input name="age" id="e-age" class="input" type="number" min="18" max="99" required></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label>Cinsiyet *</label>
+          <select name="gender" id="e-gender" class="input" required>
+            <option value="kadın">Kadın</option><option value="erkek">Erkek</option>
+          </select>
+        </div>
+        <div class="field"><label>Medeni Durum *</label>
+          <select name="marital_status" id="e-marital" class="input" required>
+            <option value="Bekar">Bekar</option><option value="Boşanmış">Boşanmış</option><option value="Dul">Dul</option><option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
+          </select>
+        </div>
+        <div class="field"><label>Eğitim</label>
+          <select name="education" id="e-education" class="input">
+            <option value="">Seçiniz</option><option value="İlköğretim">İlköğretim</option><option value="Lise">Lise</option><option value="Üniversite">Üniversite</option><option value="Yüksek Lisans">Yüksek Lisans</option><option value="Doktora">Doktora</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label>Ülke *</label><select name="country" id="e-country" class="input" required><option value="">Seçiniz</option></select></div>
+        <div class="field"><label>Şehir *</label><select name="city" id="e-city" class="input" required><option value="">Seçiniz</option></select></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label>Boy (cm)</label><input name="height" id="e-height" class="input" type="number" min="100" max="250"></div>
+        <div class="field"><label>Kilo (kg)</label><input name="weight" id="e-weight" class="input" type="number" min="30" max="250"></div>
+        <div class="field"><label>Meslek</label><input name="job" id="e-job" class="input"></div>
+      </div>
+      <div class="field"><label>Kısa Tanıtım</label><textarea name="bio" id="e-bio" class="input" rows="3"></textarea></div>
+      <div class="field"><label>İlgi Alanları (virgülle ayır)</label><input name="interests" id="e-interests" class="input"></div>
+
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button type="button" class="btn btn-ghost" data-action="close-modal" data-modal="editProfileModal" style="flex:1">İptal</button>
+        <button type="submit" class="btn btn-primary" style="flex:2" id="editProfileSubmitBtn">Kaydet</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- DETAY -->
 <div class="overlay" id="detailModal" data-overlay>
   <div class="modal" id="detailBody"></div>
 </div>
 
+<!-- MESAJLAŞMA -->
 <div class="msg-overlay" id="msgOverlay">
   <div class="msg-container" id="msgContainer">
     <div class="msg-sidebar">
@@ -460,46 +462,27 @@
   </div>
 </div>
 
-<div class="lightbox" id="lightbox" data-action="close-lightbox">
-  <img id="lightboxImg" src="" alt="">
-</div>
-
+<div class="lightbox" id="lightbox" data-action="close-lightbox"><img id="lightboxImg" src="" alt=""></div>
 <div id="toast"></div>
 
 <script>
 const SUPABASE_URL = "https://mrlyghqqyvrdcwwmhpwj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EW46ECy6Lv4Z1qJ_UPPx1A_JbU3G_rG";
-
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 const GRADS = [
-  "linear-gradient(135deg,#e8437c,#c72c63)",
-  "linear-gradient(135deg,#6d3b8f,#9b5fc0)",
-  "linear-gradient(135deg,#2e9e8f,#1f7a6e)",
-  "linear-gradient(135deg,#e08c2e,#c06a12)",
-  "linear-gradient(135deg,#3b7dd8,#2a5aa0)",
-  "linear-gradient(135deg,#d84a6b,#a52e4d)",
-  "linear-gradient(135deg,#5a4bd8,#3f32a8)",
-  "linear-gradient(135deg,#0f9b8e,#0a6f66)"
+  "linear-gradient(135deg,#e8437c,#c72c63)","linear-gradient(135deg,#6d3b8f,#9b5fc0)","linear-gradient(135deg,#2e9e8f,#1f7a6e)",
+  "linear-gradient(135deg,#e08c2e,#c06a12)","linear-gradient(135deg,#3b7dd8,#2a5aa0)","linear-gradient(135deg,#d84a6b,#a52e4d)",
+  "linear-gradient(135deg,#5a4bd8,#3f32a8)","linear-gradient(135deg,#0f9b8e,#0a6f66)"
 ];
-const grad = id => {
-  let h = 0;
-  for (let i = 0; i < (id || "").length; i++) h = (h + id.charCodeAt(i)) % GRADS.length;
-  return GRADS[h];
-};
+const grad = id => { let h = 0; for (let i = 0; i < (id || "").length; i++) h = (h + id.charCodeAt(i)) % GRADS.length; return GRADS[h]; };
 const initials = n => String(n || "?").trim().split(/\s+/).map(x => x[0]).join("").slice(0, 2).toUpperCase();
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 
-function toast(msg, ms = 3500) {
-  const t = $("#toast");
-  t.innerHTML = msg;
-  t.classList.add("show");
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove("show"), ms);
-}
+function toast(msg, ms = 3500) { const t = $("#toast"); t.innerHTML = msg; t.classList.add("show"); clearTimeout(t._timer); t._timer = setTimeout(() => t.classList.remove("show"), ms); }
 
 function savePendingProfile(data) { try { localStorage.setItem("gb_pending_profile", JSON.stringify(data)); } catch(e) {} }
 function getPendingProfile() { try { const raw = localStorage.getItem("gb_pending_profile"); return raw ? JSON.parse(raw) : null; } catch(e) { return null; } }
@@ -514,12 +497,7 @@ async function applyPendingProfile() {
   const { _userId, ...profileData } = pending;
   profileData.interests = profileData.interests || [];
   const { error } = await db.from("profiles").insert({ id: currentUser.id, ...profileData });
-  if (!error) {
-    clearPendingProfile();
-    myProfile = { ...profileData, id: currentUser.id };
-    toast(`✅ Profilin oluşturuldu, hoş geldin ${String(profileData.name).split(" ")[0]}! 🎉`, 5000);
-    loadProfiles();
-  }
+  if (!error) { clearPendingProfile(); myProfile = { ...profileData, id: currentUser.id }; toast(`✅ Profilin oluşturuldu, hoş geldin ${String(profileData.name).split(" ")[0]}! 🎉`, 5000); loadProfiles(); }
 }
 
 const LOCATIONS = {
@@ -541,27 +519,24 @@ const LOCATIONS = {
 };
 
 function fillCountriesAndCities() {
-  const rCountry = $("#r-country");
-  if (rCountry) {
-    rCountry.innerHTML = '<option value="">Seçiniz</option>';
-    Object.keys(LOCATIONS).forEach(c => {
-      const o = document.createElement("option"); o.value = c; o.textContent = c; rCountry.appendChild(o);
-    });
-  }
+  ["#r-country","#e-country"].forEach(sel => {
+    const el = $(sel);
+    if (!el) return;
+    el.innerHTML = '<option value="">Seçiniz</option>';
+    Object.keys(LOCATIONS).forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; el.appendChild(o); });
+  });
   const fCountry = $("#f-country");
   if (fCountry) {
     fCountry.innerHTML = '<option value="hepsi">Tümü</option>';
-    Object.keys(LOCATIONS).forEach(c => {
-      const o = document.createElement("option"); o.value = c; o.textContent = c; fCountry.appendChild(o);
-    });
+    Object.keys(LOCATIONS).forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; fCountry.appendChild(o); });
   }
   updateCityDropdown("r-country", "r-city");
+  updateCityDropdown("e-country", "e-city");
   updateCityDropdown("f-country", "f-city");
 }
 
 function updateCityDropdown(countrySelId, citySelId) {
-  const countrySel = $("#" + countrySelId);
-  const citySel = $("#" + citySelId);
+  const countrySel = $("#" + countrySelId); const citySel = $("#" + citySelId);
   if (!countrySel || !citySel) return;
   const country = countrySel.value;
   citySel.innerHTML = "";
@@ -580,14 +555,9 @@ function openModal(id) { $("#" + id).classList.add("open"); document.body.style.
 function closeModal(id) { const el = $("#" + id); if (el) el.classList.remove("open"); document.body.style.overflow = ""; }
 function closeAllModals() { $$(".overlay").forEach(o => o.classList.remove("open")); document.body.style.overflow = ""; }
 
-let currentUser = null;
-let myProfile = null;
-let myLikes = new Set();
-let allProfiles = [];
-let unreadCount = 0;
-let activeConvUserId = null;
-let realtimeChannel = null;
-let allUsers = {};
+let currentUser = null, myProfile = null, myLikes = new Set(), allProfiles = [], unreadCount = 0;
+let activeConvUserId = null, realtimeChannel = null, allUsers = {}, pendingImage = null;
+let pendingProfilePhoto = null; // { file, url }
 
 async function checkSession() {
   const { data } = await db.auth.getSession();
@@ -616,21 +586,21 @@ function updateNavbar() {
   const nav = $("#navActions");
   if (currentUser && myProfile) {
     const badge = unreadCount > 0 ? `<span class="badge">${unreadCount > 99 ? "99+" : unreadCount}</span>` : "";
+    const avatarStyle = myProfile.avatar_url
+      ? `background-image:url('${esc(myProfile.avatar_url)}')`
+      : `background:${grad(currentUser.id)}`;
+    const avatarContent = myProfile.avatar_url ? "" : initials(myProfile.name);
     nav.innerHTML = `
       <button class="icon-btn" data-action="open-messages" title="Mesajlar">💬${badge}</button>
-      <div class="user-badge">
-        <div class="avatar" style="background:${grad(currentUser.id)}">${initials(myProfile.name)}</div>
+      <button class="icon-btn" data-action="open-edit-profile" title="Profilimi Düzenle">⚙️</button>
+      <div class="user-badge" data-action="open-edit-profile" title="Profilimi Düzenle">
+        <div class="avatar" style="${avatarStyle}">${avatarContent}</div>
         <span class="hide-mobile">${esc(myProfile.name)}</span>
       </div>
       <button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>
     `;
   } else if (currentUser && !myProfile) {
-    nav.innerHTML = `
-      <div class="user-badge">
-        <div class="avatar" style="background:${grad(currentUser.id)}">?</div>
-      </div>
-      <button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>
-    `;
+    nav.innerHTML = `<button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>`;
   } else {
     nav.innerHTML = `
       <button class="btn btn-ghost btn-sm" data-action="open-login">Giriş Yap</button>
@@ -640,9 +610,7 @@ function updateNavbar() {
 }
 
 function updateProfileSection() {
-  const filterPanel = $("#filterPanel");
-  const grid = $("#profileGrid");
-
+  const filterPanel = $("#filterPanel"); const grid = $("#profileGrid");
   if (!currentUser || !myProfile) {
     filterPanel.style.display = "none";
     grid.innerHTML = `
@@ -659,18 +627,16 @@ function updateProfileSection() {
           <span class="locked-feature">Sınırsız profil görüntüleme</span>
           <span class="locked-feature">Anlık mesajlaşma</span>
           <span class="locked-feature">Resim gönderme</span>
-          <span class="locked-feature">Gelişmiş filtreleme</span>
+          <span class="locked-feature">Profil fotoğrafı</span>
         </div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <button class="btn btn-primary" data-action="open-register">Ücretsiz Üye Ol</button>
           <button class="btn btn-ghost" data-action="open-login">Giriş Yap</button>
         </div>
-      </div>
-    `;
+      </div>`;
     $("#profileCount").textContent = "Üye olmadan profilleri göremezsiniz";
     return;
   }
-
   filterPanel.style.display = "block";
 }
 
@@ -684,12 +650,9 @@ async function initRealtime() {
         appendMessage(msg, false);
         db.from("messages").update({ is_read: true }).eq("id", msg.id).then(() => {});
       }
-      refreshUnreadCount();
-      refreshConversationList();
+      refreshUnreadCount(); refreshConversationList();
     })
-    .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `sender_id=eq.${currentUser.id}` }, () => {
-      refreshConversationList();
-    })
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `sender_id=eq.${currentUser.id}` }, () => { refreshConversationList(); })
     .subscribe();
 }
 
@@ -698,6 +661,11 @@ async function refreshUnreadCount() {
   const { count } = await db.from("messages").select("*", { count: "exact", head: true }).eq("receiver_id", currentUser.id).eq("is_read", false);
   unreadCount = count || 0;
   updateNavbar();
+}
+
+function avatarHtml(p) {
+  if (p.avatar_url) return `<div class="avatar" style="background-image:url('${esc(p.avatar_url)}')"></div>`;
+  return `<div class="avatar" style="background:${grad(p.id)}">${initials(p.name)}</div>`;
 }
 
 async function loadProfiles(filters = {}) {
@@ -727,8 +695,7 @@ async function loadProfiles(filters = {}) {
   list.forEach(p => allUsers[p.id] = p);
   if (!list.length) {
     grid.innerHTML = `<div class="empty"><b>Sonuç bulunamadı 😕</b>Filtreleri değiştirip tekrar dene.</div>`;
-    $("#profileCount").textContent = "0 üye bulundu";
-    return;
+    $("#profileCount").textContent = "0 üye bulundu"; return;
   }
   $("#profileCount").textContent = `${list.length} üye bulundu`;
   grid.innerHTML = list.map(p => {
@@ -740,9 +707,9 @@ async function loadProfiles(filters = {}) {
     if (p.weight) infoPills.push(`<span class="info-pill">${p.weight} kg</span>`);
     if (p.education) infoPills.push(`<span class="info-pill">${esc(p.education)}</span>`);
     return `
-      <article class="profile-card">
+      <article class="profile-card ${isMe ? "mine" : ""}">
         <div class="card-top">
-          <div class="avatar" style="background:${grad(p.id)}">${initials(p.name)}</div>
+          ${avatarHtml(p)}
           <div style="min-width:0;flex:1">
             <h4>${esc(p.name)}, ${p.age}</h4>
             <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</div>
@@ -754,17 +721,21 @@ async function loadProfiles(filters = {}) {
           ${(p.interests || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
         </div>
         <div class="card-actions">
-          <button class="btn btn-ghost btn-sm" data-action="view-profile" data-id="${p.id}" style="flex:1">Profili Gör</button>
-          ${!isMe ? `
+          ${isMe ? `
+            <button class="btn btn-primary btn-sm" data-action="open-edit-profile" style="flex:1">⚙️ Profilimi Düzenle</button>
+            <button class="btn btn-ghost btn-sm" data-action="view-profile" data-id="${p.id}">Görüntüle</button>
+          ` : `
+            <button class="btn btn-ghost btn-sm" data-action="view-profile" data-id="${p.id}" style="flex:1">Profili Gör</button>
             <button class="like-btn ${liked ? "liked" : ""}" data-action="toggle-like" data-id="${p.id}">${liked ? "♥" : "♡"}</button>
             <button class="like-btn" data-action="start-chat" data-id="${p.id}" title="Mesaj">💬</button>
-          ` : ""}
+          `}
         </div>
       </article>
     `;
   }).join("");
 }
 
+/* ==================== KAYIT ==================== */
 async function handleRegister(e) {
   e.preventDefault();
   const fd = new FormData(e.target);
@@ -785,66 +756,42 @@ async function handleRegister(e) {
   btn.disabled = true; btn.textContent = "Kayıt oluyor...";
 
   const { data: authData, error: authErr } = await db.auth.signUp({ email: data.email, password, options: { emailRedirectTo: window.location.origin } });
-
-  if (authErr) {
-    btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
-    let msg = authErr.message;
-    if (msg.includes("already registered")) msg = "Bu e-posta adresi zaten kayıtlı. Giriş yapmayı deneyin.";
-    toast("Hata: " + msg);
-    return;
-  }
+  if (authErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; let msg = authErr.message; if (msg.includes("already registered")) msg = "Bu e-posta zaten kayıtlı. Giriş yapmayı deneyin."; toast("Hata: " + msg); return; }
 
   const userId = authData.user.id;
-
-  if (!authData.session) {
-    const pending = {
-      _userId: userId,
-      name: data.name, age: data.age, gender: data.gender,
-      country: data.country || "Türkiye", city: data.city,
-      job: data.job || "", bio: data.bio || "",
-      marital_status: data.marital_status || "Bekar",
-      height: data.height, weight: data.weight,
-      education: data.education || "", interests: data.interests
-    };
-    savePendingProfile(pending);
-    btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
-    e.target.reset();
-    closeAllModals();
-    toast("✅ <b>Kayıt başarılı!</b><br>📧 E-postana onay linki gönderdik.<br>Linke tıkladıktan sonra buraya gelip <b>giriş yap</b> — profilin otomatik oluşacak.", 9000);
-    return;
-  }
-
-  const { error: profErr } = await db.from("profiles").insert({
-    id: userId, name: data.name, age: data.age, gender: data.gender,
+  const profileData = {
+    name: data.name, age: data.age, gender: data.gender,
     country: data.country || "Türkiye", city: data.city,
     job: data.job || "", bio: data.bio || "",
     marital_status: data.marital_status || "Bekar",
     height: data.height, weight: data.weight,
     education: data.education || "", interests: data.interests
-  });
+  };
 
-  if (profErr) {
+  if (!authData.session) {
+    savePendingProfile({ _userId: userId, ...profileData });
     btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
-    toast("Profil kaydedilemedi: " + profErr.message);
+    e.target.reset(); closeAllModals();
+    toast("✅ <b>Kayıt başarılı!</b><br>📧 E-postana onay linki gönderdik.<br>Linke tıkladıktan sonra <b>giriş yap</b> — profilin otomatik oluşacak.", 9000);
     return;
   }
 
+  const { error: profErr } = await db.from("profiles").insert({ id: userId, ...profileData });
+  if (profErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; toast("Profil kaydedilemedi: " + profErr.message); return; }
+
   currentUser = authData.user;
-  myProfile = { ...data, id: userId };
+  myProfile = { ...profileData, id: userId };
   myLikes = new Set();
-  closeAllModals();
-  updateNavbar();
-  updateProfileSection();
-  await initRealtime();
-  loadProfiles();
+  closeAllModals(); updateNavbar(); updateProfileSection();
+  await initRealtime(); loadProfiles();
   toast(`Hoş geldin ${data.name.split(" ")[0]}! 🎉`);
 }
 
+/* ==================== GİRİŞ ==================== */
 async function handleLogin(e) {
   e.preventDefault();
   const fd = new FormData(e.target);
-  const email = fd.get("email");
-  const password = fd.get("password");
+  const email = fd.get("email"), password = fd.get("password");
   const btn = e.target.querySelector("button[type=submit]");
   btn.disabled = true; btn.textContent = "Giriş yapılıyor...";
   const { data, error } = await db.auth.signInWithPassword({ email, password });
@@ -853,19 +800,12 @@ async function handleLogin(e) {
     let msg = error.message;
     if (msg.includes("Email not confirmed")) msg = "📧 E-postanı henüz onaylamadın. Gelen kutunu kontrol et.";
     else if (msg.includes("Invalid login")) msg = "E-posta veya şifre hatalı.";
-    toast("Hata: " + msg);
-    return;
+    toast("Hata: " + msg); return;
   }
   currentUser = data.user;
-  await loadMyProfile();
-  await applyPendingProfile();
-  await loadMyLikes();
-  await initRealtime();
-  await refreshUnreadCount();
-  closeAllModals();
-  updateNavbar();
-  updateProfileSection();
-  loadProfiles();
+  await loadMyProfile(); await applyPendingProfile(); await loadMyLikes();
+  await initRealtime(); await refreshUnreadCount();
+  closeAllModals(); updateNavbar(); updateProfileSection(); loadProfiles();
   toast("Giriş başarılı ✓");
 }
 
@@ -873,25 +813,141 @@ async function handleLogout() {
   if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
   await db.auth.signOut();
   currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
-  activeConvUserId = null;
-  closeMessages();
-  updateNavbar();
-  updateProfileSection();
+  activeConvUserId = null; cancelPendingImage(); cancelPendingProfilePhoto();
+  closeMessages(); updateNavbar(); updateProfileSection();
   toast("Çıkış yapıldı");
 }
 
+/* ==================== PROFİL DÜZENLE ==================== */
+function openEditProfile() {
+  if (!currentUser || !myProfile) return;
+  pendingProfilePhoto = null;
+
+  $("#e-name").value = myProfile.name || "";
+  $("#e-age").value = myProfile.age || "";
+  $("#e-gender").value = myProfile.gender || "kadın";
+  $("#e-marital").value = myProfile.marital_status || "Bekar";
+  $("#e-education").value = myProfile.education || "";
+  $("#e-height").value = myProfile.height || "";
+  $("#e-weight").value = myProfile.weight || "";
+  $("#e-job").value = myProfile.job || "";
+  $("#e-bio").value = myProfile.bio || "";
+  $("#e-interests").value = (myProfile.interests || []).join(", ");
+
+  // Ülke + şehir
+  $("#e-country").value = myProfile.country || "Türkiye";
+  updateCityDropdown("e-country", "e-city");
+  $("#e-city").value = myProfile.city || "";
+
+  // Fotoğraf önizleme
+  const preview = $("#editPhotoPreview");
+  if (myProfile.avatar_url) {
+    preview.style.backgroundImage = `url('${myProfile.avatar_url}')`;
+    preview.style.background = `url('${myProfile.avatar_url}') center/cover`;
+    preview.textContent = "";
+    $("#editPhotoRemoveBtn").style.display = "inline-flex";
+  } else {
+    preview.style.backgroundImage = "";
+    preview.style.background = `linear-gradient(135deg,var(--rose),var(--plum))`;
+    preview.textContent = initials(myProfile.name);
+    $("#editPhotoRemoveBtn").style.display = "none";
+  }
+
+  openModal("editProfileModal");
+}
+
+function cancelPendingProfilePhoto() {
+  if (pendingProfilePhoto) { URL.revokeObjectURL(pendingProfilePhoto.url); pendingProfilePhoto = null; }
+  const fi = $("#editPhotoInput"); if (fi) fi.value = "";
+}
+
+async function handleEditProfile(e) {
+  e.preventDefault();
+  if (!currentUser) return;
+
+  const fd = new FormData(e.target);
+  const data = Object.fromEntries(fd);
+  data.age = Number(data.age);
+  data.height = data.height ? Number(data.height) : null;
+  data.weight = data.weight ? Number(data.weight) : null;
+  data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
+
+  if (!data.name || !data.age || !data.gender || !data.city || !data.country) { toast("Zorunlu alanları doldur."); return; }
+  if (data.age < 18) { toast("18 yaş zorunludur."); return; }
+
+  const btn = $("#editProfileSubmitBtn");
+  btn.disabled = true; btn.textContent = "Kaydediliyor...";
+
+  // Yeni fotoğraf varsa yükle
+  let avatar_url = myProfile.avatar_url || null;
+  if (pendingProfilePhoto) {
+    toast("📤 Fotoğraf yükleniyor...", 2500);
+    const file = pendingProfilePhoto.file;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const fileName = `${currentUser.id}/avatar-${Date.now()}.${ext}`;
+    const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
+    if (upErr) {
+      btn.disabled = false; btn.textContent = "Kaydet";
+      toast("Fotoğraf yüklenemedi: " + upErr.message);
+      return;
+    }
+    const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
+    avatar_url = urlData.publicUrl;
+  }
+
+  const updateData = {
+    name: data.name, age: data.age, gender: data.gender,
+    country: data.country, city: data.city,
+    job: data.job || "", bio: data.bio || "",
+    marital_status: data.marital_status || "Bekar",
+    height: data.height, weight: data.weight,
+    education: data.education || "", interests: data.interests,
+    avatar_url
+  };
+
+  const { error } = await db.from("profiles").update(updateData).eq("id", currentUser.id);
+  if (error) {
+    btn.disabled = false; btn.textContent = "Kaydet";
+    toast("Kaydedilemedi: " + error.message);
+    return;
+  }
+
+  // Başarılı
+  myProfile = { ...myProfile, ...updateData };
+  cancelPendingProfilePhoto();
+  btn.disabled = false; btn.textContent = "Kaydet";
+  closeModal("editProfileModal");
+  updateNavbar();
+  loadProfiles();
+  toast("✅ Profilin güncellendi!");
+}
+
+function handleEditPhotoPick(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { toast("Fotoğraf 5 MB'tan büyük olamaz."); e.target.value = ""; return; }
+  if (!file.type.startsWith("image/")) { toast("Lütfen bir resim dosyası seç."); e.target.value = ""; return; }
+  if (pendingProfilePhoto) URL.revokeObjectURL(pendingProfilePhoto.url);
+  const url = URL.createObjectURL(file);
+  pendingProfilePhoto = { file, url };
+  const preview = $("#editPhotoPreview");
+  preview.style.background = `url('${url}') center/cover`;
+  preview.textContent = "";
+  $("#editPhotoRemoveBtn").style.display = "inline-flex";
+  e.target.value = "";
+}
+
+/* ==================== BEĞENİ ==================== */
 async function toggleLike(id) {
   if (!currentUser || !myProfile) { toast("Beğenmek için üye ol."); openModal("registerModal"); return; }
   if (currentUser.id === id) return;
   if (myLikes.has(id)) {
     await db.from("likes").delete().eq("liker_id", currentUser.id).eq("liked_id", id);
-    myLikes.delete(id);
-    toast("Beğeni geri alındı");
+    myLikes.delete(id); toast("Beğeni geri alındı");
   } else {
     const { error } = await db.from("likes").insert({ liker_id: currentUser.id, liked_id: id });
     if (error) { toast("Hata: " + error.message); return; }
-    myLikes.add(id);
-    toast("Beğenildi ♥");
+    myLikes.add(id); toast("Beğenildi ♥");
   }
   loadProfiles(getCurrentFilters());
 }
@@ -916,14 +972,11 @@ function resetFilters() {
   $("#f-height-min").value = ""; $("#f-height-max").value = "";
   $("#f-weight-min").value = ""; $("#f-weight-max").value = "";
   $("#f-search").value = "";
-  loadProfiles();
-  toast("Filtreler sıfırlandı");
+  loadProfiles(); toast("Filtreler sıfırlandı");
 }
 function quickSearch() {
   if (!currentUser || !myProfile) { toast("Filtreleme için üye ol."); openModal("registerModal"); return; }
-  const gender = $("#q-gender").value;
-  const min = +$("#q-min").value || 18;
-  const max = +$("#q-max").value || 99;
+  const gender = $("#q-gender").value, min = +$("#q-min").value || 18, max = +$("#q-max").value || 99;
   $("#f-gender").value = gender; $("#f-age-min").value = min; $("#f-age-max").value = max;
   loadProfiles({ gender, ageMin: min, ageMax: max });
   document.getElementById("profiller").scrollIntoView({ behavior: "smooth" });
@@ -942,10 +995,14 @@ async function viewProfile(id) {
   if (p.education) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Eğitim</span><b>${esc(p.education)}</b></div>`);
   if (p.job) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Meslek</span><b>${esc(p.job)}</b></div>`);
   if (p.city) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Konum</span><b>${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</b></div>`);
+
+  const avatarStyle = p.avatar_url ? `background:url('${esc(p.avatar_url)}') center/cover` : `background:${grad(p.id)}`;
+  const avatarContent = p.avatar_url ? "" : initials(p.name);
+
   $("#detailBody").innerHTML = `
     <button class="close-x" data-action="close-modal" data-modal="detailModal">✕</button>
     <div class="card-top" style="margin-bottom:20px">
-      <div class="avatar" style="background:${grad(p.id)};width:78px;height:78px;font-size:1.5rem;border-radius:22px">${initials(p.name)}</div>
+      <div class="avatar" style="${avatarStyle};width:78px;height:78px;font-size:1.5rem;border-radius:22px">${avatarContent}</div>
       <div style="min-width:0;flex:1">
         <h3 style="font-size:1.3rem">${esc(p.name)}, ${p.age}</h3>
         <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}</div>
@@ -958,6 +1015,9 @@ async function viewProfile(id) {
     <div class="tags" style="margin-bottom:20px">
       ${(p.interests || []).map(t => `<span class="tag">${esc(t)}</span>`).join("") || "<span style='color:var(--muted);font-size:.86rem'>Belirtilmemiş</span>"}
     </div>
+    ${isMe ? `
+      <button class="btn btn-primary btn-block" data-action="close-modal-detail-open-edit">⚙️ Profilimi Düzenle</button>
+    ` : ""}
     ${!isMe && currentUser ? `
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button class="btn ${liked ? "btn-ghost" : "btn-primary"}" data-action="toggle-like-modal" data-id="${p.id}" style="flex:1;min-width:120px">
@@ -970,24 +1030,22 @@ async function viewProfile(id) {
   openModal("detailModal");
 }
 
+/* ==================== MESAJLAŞMA ==================== */
 function openMessages() {
   if (!currentUser || !myProfile) { toast("Mesajlaşmak için üye ol."); openModal("registerModal"); return; }
-  $("#msgOverlay").classList.add("open");
-  document.body.style.overflow = "hidden";
+  $("#msgOverlay").classList.add("open"); document.body.style.overflow = "hidden";
   refreshConversationList();
 }
 function closeMessages() {
   $("#msgOverlay").classList.remove("open");
   $("#msgContainer").classList.remove("chat-open");
   document.body.style.overflow = "";
-  activeConvUserId = null;
+  activeConvUserId = null; cancelPendingImage();
 }
 
 async function refreshConversationList() {
   if (!currentUser) return;
-  const { data, error } = await db.from("messages").select("*")
-    .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`)
-    .order("created_at", { ascending: false }).limit(500);
+  const { data, error } = await db.from("messages").select("*").or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`).order("created_at", { ascending: false }).limit(500);
   if (error) { console.warn(error); return; }
   const convs = {};
   (data || []).forEach(m => {
@@ -998,10 +1056,7 @@ async function refreshConversationList() {
   });
   const list = Object.entries(convs).sort((a, b) => new Date(b[1].last.created_at) - new Date(a[1].last.created_at));
   const el = $("#convList");
-  if (!list.length) {
-    el.innerHTML = `<div class="empty" style="border:none;padding:30px 15px;font-size:.86rem">Henüz mesajlaşma yok.<br>Bir profilden "💬" butonuna basarak başla.</div>`;
-    return;
-  }
+  if (!list.length) { el.innerHTML = `<div class="empty" style="border:none;padding:30px 15px;font-size:.86rem">Henüz mesajlaşma yok.<br>Bir profilden "💬" butonuna basarak başla.</div>`; return; }
   const missingIds = list.map(([id]) => id).filter(id => !allUsers[id]);
   if (missingIds.length) {
     const { data: profs } = await db.from("profiles").select("*").in("id", missingIds);
@@ -1009,13 +1064,14 @@ async function refreshConversationList() {
   }
   el.innerHTML = list.map(([id, conv]) => {
     const u = allUsers[id] || { name: "Bilinmeyen", city: "" };
-    const last = conv.last;
-    const isActive = id === activeConvUserId;
+    const last = conv.last; const isActive = id === activeConvUserId;
     const time = formatTime(last.created_at);
     const preview = (last.sender_id === currentUser.id ? "Sen: " : "") + (last.content || (last.image_url ? "📷 Resim" : ""));
+    const avStyle = u.avatar_url ? `background:url('${esc(u.avatar_url)}') center/cover` : `background:${grad(id)}`;
+    const avContent = u.avatar_url ? "" : initials(u.name);
     return `
       <div class="conv-item ${isActive ? "active" : ""}" data-action="open-conv" data-id="${id}">
-        <div class="avatar" style="background:${grad(id)}">${initials(u.name)}</div>
+        <div class="avatar" style="${avStyle}">${avContent}</div>
         <div class="conv-info">
           <b>${esc(u.name)}</b>
           <span>${esc(preview.slice(0, 40))}${preview.length > 40 ? "..." : ""}</span>
@@ -1045,10 +1101,12 @@ async function openConversation(otherId) {
     if (data) allUsers[otherId] = data;
   }
   const u = allUsers[otherId] || { name: "Kullanıcı" };
+  const avStyle = u.avatar_url ? `background:url('${esc(u.avatar_url)}') center/cover` : `background:${grad(otherId)}`;
+  const avContent = u.avatar_url ? "" : initials(u.name);
   $("#msgMain").innerHTML = `
     <div class="msg-head">
       <button class="icon-btn" id="msgBack" data-action="msg-back" style="display:none">←</button>
-      <div class="avatar" style="background:${grad(otherId)}">${initials(u.name)}</div>
+      <div class="avatar" style="${avStyle}">${avContent}</div>
       <div class="msg-head-info">
         <b>${esc(u.name)}</b>
         <span>çevrimiçi</span>
@@ -1056,11 +1114,19 @@ async function openConversation(otherId) {
       <button class="icon-btn" data-action="close-messages">✕</button>
     </div>
     <div class="msg-body" id="msgBody"></div>
+    <div class="msg-img-preview" id="msgImgPreview">
+      <img id="msgImgPreviewImg" src="" alt="">
+      <div class="info">
+        <b id="msgImgPreviewName"></b>
+        <span>Göndermek için ➤ butonuna bas</span>
+      </div>
+      <button class="remove" data-action="cancel-image" title="Vazgeç">✕</button>
+    </div>
     <div class="msg-input-row">
-      <button class="msg-img-btn" data-action="pick-image" title="Resim gönder">📷</button>
+      <button class="msg-img-btn" data-action="pick-image" title="Resim ekle">📷</button>
       <input type="file" id="msgImageInput" accept="image/*" style="display:none">
       <textarea id="msgInput" placeholder="Mesajını yaz..." rows="1"></textarea>
-      <button class="msg-send" data-action="send-msg">➤</button>
+      <button class="msg-send" data-action="send-msg" title="Gönder">➤</button>
     </div>
   `;
   $("#msgContainer").classList.add("chat-open");
@@ -1068,47 +1134,38 @@ async function openConversation(otherId) {
   const { data: msgs } = await db.from("messages").select("*")
     .or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`)
     .order("created_at", { ascending: true });
-  const body = $("#msgBody");
   (msgs || []).forEach(m => appendMessage(m, false));
   await db.from("messages").update({ is_read: true }).eq("receiver_id", currentUser.id).eq("sender_id", otherId).eq("is_read", false);
-  refreshUnreadCount();
-  refreshConversationList();
-  scrollToBottom();
-  const input = $("#msgInput");
-  input.focus();
+  refreshUnreadCount(); refreshConversationList(); scrollToBottom();
+  const input = $("#msgInput"); input.focus();
   input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
   input.addEventListener("input", () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 100) + "px"; });
-  const fileInput = $("#msgImageInput");
-  fileInput.addEventListener("change", handleImagePick);
+  $("#msgImageInput").addEventListener("change", handleImagePick);
 }
 
-async function handleImagePick(e) {
+function handleImagePick(e) {
   const file = e.target.files[0];
   if (!file || !activeConvUserId) return;
   if (file.size > 5 * 1024 * 1024) { toast("Resim 5 MB'tan büyük olamaz."); e.target.value = ""; return; }
   if (!file.type.startsWith("image/")) { toast("Lütfen bir resim dosyası seç."); e.target.value = ""; return; }
-  toast("📤 Resim yükleniyor...", 2000);
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
-  const fileName = `${currentUser.id}/${Date.now()}.${ext}`;
-  const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
-  if (upErr) { toast("Resim yüklenemedi: " + upErr.message); return; }
-  const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
-  const imageUrl = urlData.publicUrl;
-  const { error } = await db.from("messages").insert({
-    sender_id: currentUser.id, receiver_id: activeConvUserId, content: "", image_url: imageUrl
-  });
-  if (error) { toast("Mesaj gönderilemedi: " + error.message); return; }
-  appendMessage({
-    sender_id: currentUser.id, receiver_id: activeConvUserId, content: "", image_url: imageUrl,
-    created_at: new Date().toISOString(), id: "temp-" + Date.now()
-  }, true);
-  refreshConversationList();
+  if (pendingImage) URL.revokeObjectURL(pendingImage.url);
+  const localUrl = URL.createObjectURL(file);
+  pendingImage = { file, url: localUrl };
+  $("#msgImgPreviewImg").src = localUrl;
+  $("#msgImgPreviewName").textContent = file.name;
+  $("#msgImgPreview").classList.add("show");
+  $("#msgInput").focus();
   e.target.value = "";
 }
 
+function cancelPendingImage() {
+  if (pendingImage) { URL.revokeObjectURL(pendingImage.url); pendingImage = null; }
+  const prev = $("#msgImgPreview"); if (prev) prev.classList.remove("show");
+  const fi = $("#msgImageInput"); if (fi) fi.value = "";
+}
+
 function appendMessage(m, scroll = true) {
-  const body = $("#msgBody");
-  if (!body) return;
+  const body = $("#msgBody"); if (!body) return;
   const isMe = m.sender_id === currentUser.id;
   const div = document.createElement("div");
   div.className = "msg " + (isMe ? "me" : "them");
@@ -1130,12 +1187,28 @@ async function sendMessage() {
   const input = $("#msgInput");
   if (!input || !activeConvUserId) return;
   const content = input.value.trim();
-  if (!content) return;
-  input.value = ""; input.style.height = "auto";
-  const tempMsg = { sender_id: currentUser.id, receiver_id: activeConvUserId, content, created_at: new Date().toISOString(), id: "temp-" + Date.now() };
-  appendMessage(tempMsg, true);
-  const { error } = await db.from("messages").insert({ sender_id: currentUser.id, receiver_id: activeConvUserId, content });
-  if (error) { toast("Mesaj gönderilemedi: " + error.message); return; }
+  if (!content && !pendingImage) return;
+  const sendBtn = $(".msg-send"); if (sendBtn) sendBtn.disabled = true;
+
+  let imageUrl = null;
+  if (pendingImage) {
+    toast("📤 Resim yükleniyor...", 2000);
+    const file = pendingImage.file;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const fileName = `${currentUser.id}/${Date.now()}.${ext}`;
+    const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
+    if (upErr) { toast("Resim yüklenemedi: " + upErr.message); if (sendBtn) sendBtn.disabled = false; return; }
+    const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
+    imageUrl = urlData.publicUrl;
+  }
+
+  appendMessage({ sender_id: currentUser.id, receiver_id: activeConvUserId, content: content || "", image_url: imageUrl, created_at: new Date().toISOString(), id: "temp-" + Date.now() }, true);
+
+  const { error } = await db.from("messages").insert({ sender_id: currentUser.id, receiver_id: activeConvUserId, content: content || "", image_url: imageUrl });
+  if (error) { toast("Mesaj gönderilemedi: " + error.message); if (sendBtn) sendBtn.disabled = false; return; }
+
+  input.value = ""; input.style.height = "auto"; cancelPendingImage();
+  if (sendBtn) sendBtn.disabled = false;
   refreshConversationList();
 }
 
@@ -1143,25 +1216,35 @@ async function startChatWith(userId) {
   if (!currentUser) { toast("Mesaj göndermek için giriş yap."); openModal("loginModal"); return; }
   if (currentUser.id === userId) return;
   if (!myProfile) { toast("Önce profilinin oluşması gerekiyor."); return; }
-  closeModal("detailModal");
-  openMessages();
+  closeModal("detailModal"); openMessages();
   await openConversation(userId);
 }
 
 function openLightbox(url) { $("#lightboxImg").src = url; $("#lightbox").classList.add("open"); }
 function closeLightbox() { $("#lightbox").classList.remove("open"); $("#lightboxImg").src = ""; }
 
+/* ==================== EVENT ==================== */
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-action]");
   if (!t) return;
-  const action = t.dataset.action;
-  const id = t.dataset.id;
-  const modal = t.dataset.modal;
+  const action = t.dataset.action, id = t.dataset.id, modal = t.dataset.modal;
   if (t.tagName === "A") e.preventDefault();
   switch (action) {
     case "open-login": closeAllModals(); openModal("loginModal"); break;
     case "open-register": closeAllModals(); openModal("registerModal"); break;
     case "close-modal": closeModal(modal); break;
+    case "close-modal-detail-open-edit": closeModal("detailModal"); openEditProfile(); break;
+    case "open-edit-profile": closeAllModals(); openEditProfile(); break;
+    case "pick-edit-photo": $("#editPhotoInput").click(); break;
+    case "remove-edit-photo":
+      cancelPendingProfilePhoto();
+      const prev = $("#editPhotoPreview");
+      prev.style.backgroundImage = "";
+      prev.style.background = `linear-gradient(135deg,var(--rose),var(--plum))`;
+      prev.textContent = initials(myProfile.name);
+      $("#editPhotoRemoveBtn").style.display = "none";
+      myProfile.avatar_url = null;
+      break;
     case "logout": await handleLogout(); break;
     case "toggle-like": await toggleLike(id); break;
     case "toggle-like-modal": await toggleLike(id); await viewProfile(id); break;
@@ -1176,28 +1259,25 @@ document.addEventListener("click", async e => {
     case "start-chat": await startChatWith(id); break;
     case "msg-back": $("#msgContainer").classList.remove("chat-open"); break;
     case "pick-image": if ($("#msgImageInput")) $("#msgImageInput").click(); break;
+    case "cancel-image": cancelPendingImage(); toast("Resim kaldırıldı", 1500); break;
     case "open-lightbox": openLightbox(t.dataset.url); break;
     case "close-lightbox": closeLightbox(); break;
   }
 });
 
-$$(".overlay").forEach(ov => {
-  ov.addEventListener("click", e => { if (e.target === ov) closeModal(ov.id); });
-});
-
+$$(".overlay").forEach(ov => { ov.addEventListener("click", e => { if (e.target === ov) closeModal(ov.id); }); });
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    closeAllModals();
-    closeLightbox();
-    if ($("#msgOverlay").classList.contains("open")) closeMessages();
-  }
+  if (e.key === "Escape") { closeAllModals(); closeLightbox(); if ($("#msgOverlay").classList.contains("open")) closeMessages(); }
 });
 
 $("#registerForm").addEventListener("submit", handleRegister);
 $("#loginForm").addEventListener("submit", handleLogin);
+$("#editProfileForm").addEventListener("submit", handleEditProfile);
+$("#editPhotoInput").addEventListener("change", handleEditPhotoPick);
 
 document.addEventListener("change", e => {
   if (e.target.id === "r-country") updateCityDropdown("r-country", "r-city");
+  if (e.target.id === "e-country") updateCityDropdown("e-country", "e-city");
   if (e.target.id === "f-country") updateCityDropdown("f-country", "f-city");
 });
 
@@ -1207,17 +1287,13 @@ document.addEventListener("change", e => {
     if (event === "SIGNED_OUT") {
       currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
       if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
-      updateNavbar();
-      updateProfileSection();
+      updateNavbar(); updateProfileSection();
     } else if (event === "SIGNED_IN") {
       const { data } = await db.auth.getSession();
       if (data.session) {
         currentUser = data.session.user;
-        await loadMyProfile();
-        await applyPendingProfile();
-        updateNavbar();
-        updateProfileSection();
-        loadProfiles();
+        await loadMyProfile(); await applyPendingProfile();
+        updateNavbar(); updateProfileSection(); loadProfiles();
       }
     }
   });
