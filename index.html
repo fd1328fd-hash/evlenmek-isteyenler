@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evlenmek İsteyenler — Ciddi İlişkiler Platformu</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--rose:#e8437c;--rose-dark:#c72c63;--rose-soft:#ffe6ef;--plum:#6d3b8f;--ink:#1c1a24;--muted:#6c6880;--bg:#fff9fc;--border:#f1e3ea;--shadow:0 12px 34px rgba(109,59,143,.10);--shadow-sm:0 4px 14px rgba(109,59,143,.08);--green:#25d366}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  .container{width:min(1180px,92%);margin-inline:auto}
+  button,input,select,textarea{font:inherit;color:inherit}
+  button{cursor:pointer;border:none;background:none}
+  a{color:inherit;text-decoration:none}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:999px;font-weight:600;font-size:.94rem;transition:.2s;white-space:nowrap}
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;box-shadow:0 8px 22px rgba(232,67,124,.32)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{border:1.5px solid var(--border);background:#fff;color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--rose);color:var(--rose)}
+  .btn-block{width:100%}
+  .btn-sm{padding:9px 18px;font-size:.86rem}
+  header{position:sticky;top:0;z-index:80;background:rgba(255,249,252,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;white-space:nowrap}
+  .logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--rose),var(--plum));color:#fff;font-size:1.05rem}
+  .nav-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .hero{padding:60px 0}
+  .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+  .hero h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin-bottom:18px}
+  .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--rose),var(--plum));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:1.02rem;margin-bottom:28px;max-width:520px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .card-box{background:#fff;border-radius:24px;padding:30px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+  .input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:.92rem;outline:none;transition:.2s;background:#fff;font-family:inherit}
+  .input:focus{border-color:var(--rose);box-shadow:0 0 0 4px var(--rose-soft)}
+  select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236c6880' d='M6 8 0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  section{padding:60px 0}
+  .sec-head{text-align:center;max-width:620px;margin:0 auto 40px}
+  .sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.02em;font-weight:800;margin-bottom:12px}
+  .sec-head p{color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+  .profile-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column;animation:pop .35s ease both}
+  @keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .profile-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+  .card-top{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .avatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.05rem;flex-shrink:0}
+  .card-top h4{font-size:1rem;font-weight:700}
+  .card-top .meta{font-size:.82rem;color:var(--muted)}
+  .bio{font-size:.86rem;color:var(--muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .info-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;font-size:.76rem}
+  .info-pill{background:#f2e9fa;color:var(--plum);padding:3px 9px;border-radius:7px;font-weight:600}
+  .info-pill.rose{background:var(--rose-soft);color:var(--rose-dark)}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .tag{font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:7px;background:#f2e9fa;color:var(--plum)}
+  .like-btn{width:42px;flex:0 0 42px;height:40px;border-radius:12px;border:1.5px solid var(--border);display:grid;place-items:center;font-size:1.05rem;transition:.2s;background:#fff}
+  .like-btn:hover{border-color:var(--rose);background:var(--rose-soft)}
+  .like-btn.liked{background:linear-gradient(135deg,var(--rose),var(--rose-dark));border-color:transparent;color:#fff}
+  .card-actions{display:flex;gap:8px;margin-top:auto}
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);background:#fff;border:1.5px dashed var(--border);border-radius:20px}
+  .empty b{display:block;font-size:1.05rem;color:var(--ink);margin-bottom:6px}
+  .overlay{position:fixed;inset:0;background:rgba(23,20,31,.55);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+  .overlay.open{display:flex;animation:fade .2s ease}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{background:#fff;border-radius:26px;width:min(560px,100%);max-height:92vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:rise .25s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  .close-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;color:var(--muted);z-index:10}
+  .close-x:hover{background:var(--rose-soft);color:var(--rose)}
+  #toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120px);background:#17141f;color:#fff;padding:14px 26px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:400;transition:transform .35s;max-width:90%;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+  #toast.show{transform:translate(-50%,0)}
+  .user-badge{display:flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600}
+  .user-badge .avatar{width:34px;height:34px;border-radius:11px;font-size:.8rem}
+  .icon-btn{position:relative;width:42px;height:42px;border-radius:12px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:1.15rem;transition:.2s}
+  .icon-btn:hover{border-color:var(--rose);background:var(--rose-soft)}
+  .badge{position:absolute;top:-5px;right:-5px;background:var(--rose);color:#fff;font-size:.68rem;font-weight:800;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 5px;border:2px solid #fff}
+  .filter-panel{background:#fff;border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:30px}
+  .filter-panel h3{font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  .filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;align-items:end}
+  .filter-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+  .msg-overlay{position:fixed;inset:0;background:rgba(23,20,31,.55);backdrop-filter:blur(6px);z-index:250;display:none;align-items:center;justify-content:center;padding:20px}
+  .msg-overlay.open{display:flex;animation:fade .2s ease}
+  .msg-container{background:#fff;border-radius:22px;width:min(1100px,100%);height:min(720px,92vh);display:grid;grid-template-columns:320px 1fr;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative}
+  .msg-sidebar{background:#fbf7fa;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+  .msg-sidebar-head{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+  .msg-sidebar-head h3{font-size:1.05rem}
+  .conv-list{flex:1;overflow-y:auto;padding:8px}
+  .conv-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;cursor:pointer;transition:.15s;margin-bottom:2px}
+  .conv-item:hover{background:#fff}
+  .conv-item.active{background:#fff;box-shadow:var(--shadow-sm)}
+  .conv-item .avatar{width:44px;height:44px;border-radius:14px;font-size:.82rem}
+  .conv-info{flex:1;min-width:0}
+  .conv-info b{display:block;font-size:.9rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .conv-info span{display:block;font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .conv-meta{text-align:right;flex-shrink:0}
+  .conv-meta time{font-size:.7rem;color:var(--muted);display:block}
+  .conv-meta .unread{background:var(--rose);color:#fff;font-size:.68rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 5px;margin-top:4px;margin-left:auto;width:fit-content}
+  .msg-main{display:flex;flex-direction:column;overflow:hidden}
+  .msg-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+  .msg-head .avatar{width:42px;height:42px;border-radius:13px;font-size:.82rem}
+  .msg-head-info{flex:1}
+  .msg-head-info b{font-size:.95rem}
+  .msg-head-info span{font-size:.78rem;color:var(--green);font-weight:600}
+  .msg-body{flex:1;overflow-y:auto;padding:20px 22px;background:#fbf7fa;display:flex;flex-direction:column;gap:8px}
+  .msg{max-width:70%;padding:10px 14px;border-radius:16px;font-size:.9rem;line-height:1.45;word-wrap:break-word;position:relative;animation:msgIn .2s ease}
+  @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;border-bottom-right-radius:4px}
+  .msg.them{align-self:flex-start;background:#fff;color:var(--ink);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm)}
+  .msg time{display:block;font-size:.68rem;opacity:.7;margin-top:3px}
+  .msg.me time{text-align:right;color:rgba(255,255,255,.85)}
+  .msg.them time{color:var(--muted)}
+  .typing-indicator{align-self:flex-start;background:#fff;padding:12px 16px;border-radius:16px;border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);display:none}
+  .typing-indicator.show{display:flex;gap:4px}
+  .typing-indicator span{width:7px;height:7px;background:#b5aec4;border-radius:50%;animation:bounce 1.2s infinite}
+  .typing-indicator span:nth-child(2){animation-delay:.2s}
+  .typing-indicator span:nth-child(3){animation-delay:.4s}
+  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+  .msg-input-row{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;background:#fff}
+  .msg-input-row textarea{flex:1;border:none;outline:none;resize:none;font-size:.92rem;padding:10px 4px;max-height:100px;font-family:inherit;line-height:1.4}
+  .msg-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;display:grid;place-items:center;font-size:1.15rem;box-shadow:0 6px 16px rgba(232,67,124,.35);transition:.2s}
+  .msg-send:hover{transform:scale(1.05)}
+  .msg-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:40px}
+  .msg-empty .emoji{font-size:3rem;margin-bottom:14px}
+  @media(max-width:980px){
+    .hero-inner{grid-template-columns:1fr;gap:40px}
+    .msg-container{grid-template-columns:1fr}
+    .msg-container.chat-open .msg-sidebar{display:none}
+    .msg-container:not(.chat-open) .msg-main{display:none}
+    .row-3{grid-template-columns:1fr 1fr}
+    .nav-actions .hide-mobile{display:none}
+  }
+  @media(max-width:600px){
+    .row-2,.row-3{grid-template-columns:1fr}
+    .modal{padding:24px 20px}
+    section{padding:44px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo"><span class="logo-mark">💍</span> Evlenmek İsteyenler</a>
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-ghost btn-sm" data-action="open-login">Giriş Yap</button>
+      <button class="btn btn-primary btn-sm" data-action="open-register">Ücretsiz Kayıt</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1>Hayat arkadaşını <em>ciddi</em> arayanlar burada bulur.</h1>
+      <p>Gerçek üyeler, gelişmiş filtreleme ve anlık mesajlaşma. Evlilik ve uzun soluklu ilişki hedefleyenlerin buluşma noktası.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-action="open-register">Hemen Üye Ol — Ücretsiz</button>
+        <button class="btn btn-ghost" data-action="scroll-profiles">Profilleri Gör</button>
+      </div>
+    </div>
+    <div class="card-box">
+      <h3 style="margin-bottom:16px">🔍 Hızlı Arama</h3>
+      <div class="field">
+        <label>Kimle tanışmak istiyorsun?</label>
+        <select id="q-gender" class="input">
+          <option value="hepsi">Fark etmez</option>
+          <option value="kadın">Kadın</option>
+          <option value="erkek">Erkek</option>
+        </select>
+      </div>
+      <div class="row-2">
+        <div class="field"><label>En az yaş</label><input id="q-min" class="input" type="number" value="18" min="18"></div>
+        <div class="field"><label>En çok yaş</label><input id="q-max" class="input" type="number" value="70" min="18"></div>
+      </div>
+      <button class="btn btn-primary btn-block" data-action="quick-search">Uygun Profilleri Bul</button>
+    </div>
+  </div>
+</section>
+
+<section id="profiller" style="background:#fff">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Gerçek Üyeler</h2>
+      <p id="profileCount">Yükleniyor...</p>
+    </div>
+
+    <div class="filter-panel">
+      <h3>🎯 Gelişmiş Filtreleme</h3>
+      <div class="filter-grid">
+        <div class="field" style="margin:0">
+          <label>Cinsiyet</label>
+          <select id="f-gender" class="input">
+            <option value="hepsi">Fark etmez</option>
+            <option value="kadın">Kadın</option>
+            <option value="erkek">Erkek</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Ülke</label>
+          <select id="f-country" class="input"><option value="hepsi">Tümü</option></select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Şehir</label>
+          <select id="f-city" class="input"><option value="hepsi">Tümü</option></select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Medeni Durum</label>
+          <select id="f-marital" class="input">
+            <option value="hepsi">Fark etmez</option>
+            <option value="Bekar">Bekar</option>
+            <option value="Boşanmış">Boşanmış</option>
+            <option value="Dul">Dul (Eşi vefat etmiş)</option>
+            <option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Eğitim</label>
+          <select id="f-education" class="input">
+            <option value="hepsi">Fark etmez</option>
+            <option value="İlköğretim">İlköğretim</option>
+            <option value="Lise">Lise</option>
+            <option value="Üniversite">Üniversite</option>
+            <option value="Yüksek Lisans">Yüksek Lisans</option>
+            <option value="Doktora">Doktora</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Min. Yaş</label>
+          <input id="f-age-min" class="input" type="number" value="18" min="18">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Maks. Yaş</label>
+          <input id="f-age-max" class="input" type="number" value="99" min="18">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Min. Boy (cm)</label>
+          <input id="f-height-min" class="input" type="number" placeholder="150" min="100">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Maks. Boy (cm)</label>
+          <input id="f-height-max" class="input" type="number" placeholder="210" min="100">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Min. Kilo (kg)</label>
+          <input id="f-weight-min" class="input" type="number" placeholder="40" min="30">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Maks. Kilo (kg)</label>
+          <input id="f-weight-max" class="input" type="number" placeholder="150" min="30">
+        </div>
+        <div class="field" style="margin:0">
+          <label>Meslek / İsim ara</label>
+          <input id="f-search" class="input" type="text" placeholder="öğretmen, Ayşe...">
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-ghost btn-sm" data-action="reset-filters">Filtreleri Sıfırla</button>
+        <button class="btn btn-primary btn-sm" data-action="apply-filters">Filtrele</button>
+      </div>
+    </div>
+
+    <div class="grid" id="profileGrid">
+      <div class="empty">⏳ Profiller yükleniyor...</div>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="registerModal" data-overlay>
+  <div class="modal">
+    <button class="close-x" data-action="close-modal" data-modal="registerModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px">Ücretsiz Hesap Oluştur</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px">Birkaç bilgi yeterli, hemen başla.</p>
+    <form id="registerForm">
+      <div class="row-2">
+        <div class="field"><label>Ad Soyad *</label><input name="name" class="input" required placeholder="Adınız Soyadınız"></div>
+        <div class="field"><label>E-posta *</label><input name="email" class="input" type="email" required placeholder="ornek@mail.com"></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label>Yaş *</label><input name="age" class="input" type="number" min="18" max="99" required placeholder="28"></div>
+        <div class="field"><label>Cinsiyet *</label>
+          <select name="gender" class="input" required>
+            <option value="">Seçiniz</option>
+            <option value="kadın">Kadın</option>
+            <option value="erkek">Erkek</option>
+          </select>
+        </div>
+        <div class="field"><label>Medeni Durum *</label>
+          <select name="marital_status" class="input" required>
+            <option value="Bekar">Bekar</option>
+            <option value="Boşanmış">Boşanmış</option>
+            <option value="Dul">Dul</option>
+            <option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label>Ülke *</label><select name="country" id="r-country" class="input" required><option value="">Seçiniz</option></select></div>
+        <div class="field"><label>Şehir *</label><select name="city" id="r-city" class="input" required><option value="">Seçiniz</option></select></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label>Boy (cm)</label><input name="height" class="input" type="number" min="100" max="250" placeholder="175"></div>
+        <div class="field"><label>Kilo (kg)</label><input name="weight" class="input" type="number" min="30" max="250" placeholder="75"></div>
+        <div class="field"><label>Eğitim</label>
+          <select name="education" class="input">
+            <option value="">Seçiniz</option>
+            <option value="İlköğretim">İlköğretim</option>
+            <option value="Lise">Lise</option>
+            <option value="Üniversite">Üniversite</option>
+            <option value="Yüksek Lisans">Yüksek Lisans</option>
+            <option value="Doktora">Doktora</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Meslek</label><input name="job" class="input" placeholder="Öğretmen"></div>
+      <div class="field"><label>Kısa Tanıtım</label><textarea name="bio" class="input" rows="3" placeholder="Kendinden kısaca bahset..."></textarea></div>
+      <div class="field"><label>İlgi Alanları (virgülle ayır)</label><input name="interests" class="input" placeholder="Kitap, Yoga, Seyahat"></div>
+      <div class="field"><label>Şifre * (min 6 karakter)</label><input name="password" class="input" type="password" required minlength="6"></div>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:8px">Hesabımı Oluştur</button>
+    </form>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">
+      Zaten üye misin? <a href="#" data-action="open-login" style="color:var(--rose);font-weight:600">Giriş yap</a>
+    </p>
+  </div>
+</div>
+
+<div class="overlay" id="loginModal" data-overlay>
+  <div class="modal" style="width:min(420px,100%)">
+    <button class="close-x" data-action="close-modal" data-modal="loginModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px">Tekrar hoş geldin 👋</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px">Hesabına giriş yap.</p>
+    <form id="loginForm">
+      <div class="field"><label>E-posta</label><input name="email" class="input" type="email" required placeholder="ornek@mail.com"></div>
+      <div class="field"><label>Şifre</label><input name="password" class="input" type="password" required placeholder="••••••••"></div>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px">Giriş Yap</button>
+    </form>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px">
+      Hesabın yok mu? <a href="#" data-action="open-register" style="color:var(--rose);font-weight:600">Ücretsiz kayıt ol</a>
+    </p>
+  </div>
+</div>
+
+<div class="overlay" id="detailModal" data-overlay>
+  <div class="modal" id="detailBody"></div>
+</div>
+
+<div class="msg-overlay" id="msgOverlay">
+  <div class="msg-container" id="msgContainer">
+    <div class="msg-sidebar">
+      <div class="msg-sidebar-head">
+        <h3>💬 Mesajlar</h3>
+        <button class="icon-btn" style="width:34px;height:34px;font-size:.9rem" data-action="close-messages">✕</button>
+      </div>
+      <div class="conv-list" id="convList">
+        <div class="empty" style="border:none;padding:30px 15px;font-size:.86rem">Henüz mesajlaşma yok.</div>
+      </div>
+    </div>
+    <div class="msg-main" id="msgMain">
+      <div class="msg-empty" id="msgEmpty">
+        <div class="emoji">💌</div>
+        <b style="font-size:1rem;color:var(--ink);margin-bottom:6px">Bir sohbet seç</b>
+        <span style="font-size:.86rem">Soldaki listeden bir kişiye tıkla ve konuşmaya başla.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   SUPABASE BİLGİLERİ (Anahtar içine gömülü)
+============================================================ */
+const SUPABASE_URL = "https://mrlyghqqyvrdcwwmhpwj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_EW46ECy6Lv4Z1qJ_UPPx1A_JbU3G_rG";
+/* ============================================================ */
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const GRADS = [
+  "linear-gradient(135deg,#e8437c,#c72c63)",
+  "linear-gradient(135deg,#6d3b8f,#9b5fc0)",
+  "linear-gradient(135deg,#2e9e8f,#1f7a6e)",
+  "linear-gradient(135deg,#e08c2e,#c06a12)",
+  "linear-gradient(135deg,#3b7dd8,#2a5aa0)",
+  "linear-gradient(135deg,#d84a6b,#a52e4d)",
+  "linear-gradient(135deg,#5a4bd8,#3f32a8)",
+  "linear-gradient(135deg,#0f9b8e,#0a6f66)"
+];
+const grad = id => {
+  let h = 0;
+  for (let i = 0; i < (id || "").length; i++) h = (h + id.charCodeAt(i)) % GRADS.length;
+  return GRADS[h];
+};
+const initials = n => String(n || "?").trim().split(/\s+/).map(x => x[0]).join("").slice(0, 2).toUpperCase();
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+function toast(msg, ms = 3000) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), ms);
+}
+
+const LOCATIONS = {
+  "Türkiye": ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Şanlıurfa","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"],
+  "Almanya": ["Berlin","Hamburg","Münih","Köln","Frankfurt","Stuttgart","Düsseldorf","Leipzig","Dortmund","Essen","Bremen","Dresden","Hannover","Nürnberg","Duisburg"],
+  "Hollanda": ["Amsterdam","Rotterdam","Lahey","Utrecht","Eindhoven","Groningen","Tilburg"],
+  "Fransa": ["Paris","Lyon","Marsilya","Toulouse","Nice","Strazburg"],
+  "İngiltere": ["Londra","Manchester","Birmingham","Leeds","Liverpool","Edinburgh"],
+  "Avusturya": ["Viyana","Graz","Linz","Salzburg"],
+  "Belçika": ["Brüksel","Anvers","Gent","Charleroi"],
+  "İsviçre": ["Zürih","Cenevre","Basel","Bern"],
+  "ABD": ["New York","Los Angeles","Chicago","Houston","Miami","Boston","San Francisco"],
+  "Kanada": ["Toronto","Vancouver","Montreal","Ottawa","Calgary"],
+  "Avustralya": ["Sydney","Melbourne","Brisbane","Perth"],
+  "Kıbrıs": ["Lefkoşa","Girne","Gazimağusa","Güzelyurt"],
+  "Azerbaycan": ["Bakü","Gence","Sumqayıt"],
+  "Suudi Arabistan": ["Riyad","Cidde","Mekke","Medine"],
+  "BAE": ["Dubai","Abu Dabi","Şarja"]
+};
+
+function fillCountriesAndCities() {
+  const rCountry = $("#r-country");
+  if (rCountry) {
+    rCountry.innerHTML = '<option value="">Seçiniz</option>';
+    Object.keys(LOCATIONS).forEach(c => {
+      const o = document.createElement("option");
+      o.value = c; o.textContent = c;
+      rCountry.appendChild(o);
+    });
+  }
+  const fCountry = $("#f-country");
+  if (fCountry) {
+    fCountry.innerHTML = '<option value="hepsi">Tümü</option>';
+    Object.keys(LOCATIONS).forEach(c => {
+      const o = document.createElement("option");
+      o.value = c; o.textContent = c;
+      fCountry.appendChild(o);
+    });
+  }
+  updateCityDropdown("r-country", "r-city");
+  updateCityDropdown("f-country", "f-city");
+}
+
+function updateCityDropdown(countrySelId, citySelId) {
+  const countrySel = $("#" + countrySelId);
+  const citySel = $("#" + citySelId);
+  if (!countrySel || !citySel) return;
+  const country = countrySel.value;
+  citySel.innerHTML = "";
+  if (country && LOCATIONS[country]) {
+    const ph = document.createElement("option");
+    ph.value = ""; ph.textContent = "Seçiniz";
+    citySel.appendChild(ph);
+    LOCATIONS[country].forEach(c => {
+      const o = document.createElement("option");
+      o.value = c; o.textContent = c;
+      citySel.appendChild(o);
+    });
+  } else if (country === "hepsi" || country === "") {
+    const ph = document.createElement("option");
+    ph.value = country === "hepsi" ? "hepsi" : "";
+    ph.textContent = country === "hepsi" ? "Tümü" : "Önce ülke seçin";
+    citySel.appendChild(ph);
+  }
+}
+
+function openModal(id) { $("#" + id).classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeModal(id) { const el = $("#" + id); if (el) el.classList.remove("open"); document.body.style.overflow = ""; }
+function closeAllModals() { $$(".overlay").forEach(o => o.classList.remove("open")); document.body.style.overflow = ""; }
+
+let currentUser = null;
+let myProfile = null;
+let myLikes = new Set();
+let allProfiles = [];
+let unreadCount = 0;
+let activeConvUserId = null;
+let realtimeChannel = null;
+let allUsers = {};
+
+async function checkSession() {
+  const { data } = await db.auth.getSession();
+  if (data.session) {
+    currentUser = data.session.user;
+    await loadMyProfile();
+    await loadMyLikes();
+    await initRealtime();
+    await refreshUnreadCount();
+  }
+  updateNavbar();
+}
+
+async function loadMyProfile() {
+  const { data } = await db.from("profiles").select("*").eq("id", currentUser.id).maybeSingle();
+  myProfile = data;
+}
+async function loadMyLikes() {
+  const { data } = await db.from("likes").select("liked_id").eq("liker_id", currentUser.id);
+  myLikes = new Set((data || []).map(x => x.liked_id));
+}
+
+function updateNavbar() {
+  const nav = $("#navActions");
+  if (currentUser && myProfile) {
+    const badge = unreadCount > 0 ? `<span class="badge">${unreadCount > 99 ? "99+" : unreadCount}</span>` : "";
+    nav.innerHTML = `
+      <button class="icon-btn" data-action="open-messages" title="Mesajlar">💬${badge}</button>
+      <div class="user-badge">
+        <div class="avatar" style="background:${grad(currentUser.id)}">${initials(myProfile.name)}</div>
+        <span class="hide-mobile">${esc(myProfile.name)}</span>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>
+    `;
+  } else {
+    nav.innerHTML = `
+      <button class="btn btn-ghost btn-sm" data-action="open-login">Giriş Yap</button>
+      <button class="btn btn-primary btn-sm" data-action="open-register">Ücretsiz Kayıt</button>
+    `;
+  }
+}
+
+async function initRealtime() {
+  if (!currentUser) return;
+  if (realtimeChannel) db.removeChannel(realtimeChannel);
+  realtimeChannel = db.channel("messages-realtime")
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `receiver_id=eq.${currentUser.id}` }, payload => {
+      const msg = payload.new;
+      if (activeConvUserId === msg.sender_id) {
+        appendMessage(msg, false);
+        db.from("messages").update({ is_read: true }).eq("id", msg.id).then(() => {});
+      }
+      refreshUnreadCount();
+      refreshConversationList();
+    })
+    .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `sender_id=eq.${currentUser.id}` }, () => {
+      refreshConversationList();
+    })
+    .subscribe();
+}
+
+async function refreshUnreadCount() {
+  if (!currentUser) return;
+  const { count } = await db.from("messages").select("*", { count: "exact", head: true }).eq("receiver_id", currentUser.id).eq("is_read", false);
+  unreadCount = count || 0;
+  updateNavbar();
+}
+
+async function loadProfiles(filters = {}) {
+  const grid = $("#profileGrid");
+  grid.innerHTML = `<div class="empty">⏳ Yükleniyor...</div>`;
+  let q = db.from("profiles").select("*").order("created_at", { ascending: false });
+  if (filters.gender && filters.gender !== "hepsi") q = q.eq("gender", filters.gender);
+  if (filters.country && filters.country !== "hepsi") q = q.eq("country", filters.country);
+  if (filters.city && filters.city !== "hepsi") q = q.eq("city", filters.city);
+  if (filters.marital && filters.marital !== "hepsi") q = q.eq("marital_status", filters.marital);
+  if (filters.education && filters.education !== "hepsi") q = q.eq("education", filters.education);
+  if (filters.ageMin) q = q.gte("age", filters.ageMin);
+  if (filters.ageMax) q = q.lte("age", filters.ageMax);
+  if (filters.heightMin) q = q.gte("height", filters.heightMin);
+  if (filters.heightMax) q = q.lte("height", filters.heightMax);
+  if (filters.weightMin) q = q.gte("weight", filters.weightMin);
+  if (filters.weightMax) q = q.lte("weight", filters.weightMax);
+  const { data, error } = await q.limit(100);
+  if (error) { grid.innerHTML = `<div class="empty"><b>Bağlantı hatası</b>${esc(error.message)}</div>`; return; }
+  let list = data || [];
+  if (filters.search) {
+    const s = filters.search.toLowerCase();
+    list = list.filter(p => (p.name || "").toLowerCase().includes(s) || (p.job || "").toLowerCase().includes(s) || (p.city || "").toLowerCase().includes(s));
+  }
+  allProfiles = list;
+  list.forEach(p => allUsers[p.id] = p);
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty"><b>Sonuç bulunamadı 😕</b>Filtreleri değiştirip tekrar dene.</div>`;
+    $("#profileCount").textContent = "0 üye bulundu";
+    return;
+  }
+  $("#profileCount").textContent = `${list.length} üye bulundu`;
+  grid.innerHTML = list.map(p => {
+    const liked = myLikes.has(p.id);
+    const isMe = currentUser && currentUser.id === p.id;
+    const infoPills = [];
+    if (p.marital_status) infoPills.push(`<span class="info-pill ${p.marital_status === "Boşanmış" ? "rose" : ""}">${esc(p.marital_status)}</span>`);
+    if (p.height) infoPills.push(`<span class="info-pill">${p.height} cm</span>`);
+    if (p.weight) infoPills.push(`<span class="info-pill">${p.weight} kg</span>`);
+    if (p.education) infoPills.push(`<span class="info-pill">${esc(p.education)}</span>`);
+    return `
+      <article class="profile-card">
+        <div class="card-top">
+          <div class="avatar" style="background:${grad(p.id)}">${initials(p.name)}</div>
+          <div>
+            <h4>${esc(p.name)}, ${p.age}</h4>
+            <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</div>
+          </div>
+        </div>
+        <div class="info-row">${infoPills.join("")}</div>
+        <p class="bio">${esc(p.bio || "Henüz tanıtım eklenmemiş.")}</p>
+        <div class="tags">
+          ${(p.interests || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-ghost btn-sm" data-action="view-profile" data-id="${p.id}" style="flex:1">Profili Gör</button>
+          ${!isMe ? `
+            <button class="like-btn ${liked ? "liked" : ""}" data-action="toggle-like" data-id="${p.id}">${liked ? "♥" : "♡"}</button>
+            <button class="like-btn" data-action="start-chat" data-id="${p.id}" title="Mesaj">💬</button>
+          ` : ""}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+async function handleRegister(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const data = Object.fromEntries(fd);
+  data.age = Number(data.age);
+  data.height = data.height ? Number(data.height) : null;
+  data.weight = data.weight ? Number(data.weight) : null;
+  data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
+  const password = data.password;
+  delete data.password;
+  if (!data.name || !data.email || !data.age || !data.gender || !data.city || !data.country) { toast("Lütfen zorunlu (*) alanları doldur."); return; }
+  if (data.age < 18) { toast("18 yaşından küçükler üye olamaz."); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { toast("Geçerli e-posta gir."); return; }
+  if (password.length < 6) { toast("Şifre en az 6 karakter olmalı."); return; }
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "Kayıt oluyor...";
+  const { data: authData, error: authErr } = await db.auth.signUp({ email: data.email, password });
+  if (authErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; toast("Hata: " + authErr.message); return; }
+  const userId = authData.user.id;
+  const { error: profErr } = await db.from("profiles").insert({
+    id: userId, name: data.name, age: data.age, gender: data.gender,
+    country: data.country || "Türkiye", city: data.city,
+    job: data.job || "", bio: data.bio || "",
+    marital_status: data.marital_status || "Bekar",
+    height: data.height, weight: data.weight,
+    education: data.education || "", interests: data.interests
+  });
+  if (profErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; toast("Profil kaydedilemedi: " + profErr.message); return; }
+  currentUser = authData.user;
+  myProfile = { ...data, id: userId };
+  myLikes = new Set();
+  closeAllModals();
+  updateNavbar();
+  await initRealtime();
+  loadProfiles();
+  toast(`Hoş geldin ${data.name.split(" ")[0]}! 🎉`);
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const email = fd.get("email");
+  const password = fd.get("password");
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "Giriş yapılıyor...";
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  btn.disabled = false; btn.textContent = "Giriş Yap";
+  if (error) { toast("Hata: " + error.message); return; }
+  currentUser = data.user;
+  await loadMyProfile();
+  await loadMyLikes();
+  await initRealtime();
+  await refreshUnreadCount();
+  closeAllModals();
+  updateNavbar();
+  loadProfiles();
+  toast("Giriş başarılı ✓");
+}
+
+async function handleLogout() {
+  if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
+  await db.auth.signOut();
+  currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
+  activeConvUserId = null;
+  closeMessages();
+  updateNavbar();
+  loadProfiles();
+  toast("Çıkış yapıldı");
+}
+
+async function toggleLike(id) {
+  if (!currentUser) { toast("Beğenmek için giriş yap."); openModal("loginModal"); return; }
+  if (currentUser.id === id) return;
+  if (myLikes.has(id)) {
+    await db.from("likes").delete().eq("liker_id", currentUser.id).eq("liked_id", id);
+    myLikes.delete(id);
+    toast("Beğeni geri alındı");
+  } else {
+    const { error } = await db.from("likes").insert({ liker_id: currentUser.id, liked_id: id });
+    if (error) { toast("Hata: " + error.message); return; }
+    myLikes.add(id);
+    toast("Beğenildi ♥");
+  }
+  loadProfiles(getCurrentFilters());
+}
+
+function getCurrentFilters() {
+  return {
+    gender: $("#f-gender").value,
+    country: $("#f-country").value,
+    city: $("#f-city").value,
+    marital: $("#f-marital").value,
+    education: $("#f-education").value,
+    ageMin: +$("#f-age-min").value || 18,
+    ageMax: +$("#f-age-max").value || 99,
+    heightMin: +$("#f-height-min").value || null,
+    heightMax: +$("#f-height-max").value || null,
+    weightMin: +$("#f-weight-min").value || null,
+    weightMax: +$("#f-weight-max").value || null,
+    search: $("#f-search").value.trim()
+  };
+}
+
+function applyFilters() { loadProfiles(getCurrentFilters()); }
+function resetFilters() {
+  $("#f-gender").value = "hepsi";
+  $("#f-country").value = "hepsi";
+  $("#f-city").innerHTML = '<option value="hepsi">Tümü</option>';
+  $("#f-marital").value = "hepsi";
+  $("#f-education").value = "hepsi";
+  $("#f-age-min").value = 18;
+  $("#f-age-max").value = 99;
+  $("#f-height-min").value = "";
+  $("#f-height-max").value = "";
+  $("#f-weight-min").value = "";
+  $("#f-weight-max").value = "";
+  $("#f-search").value = "";
+  loadProfiles();
+  toast("Filtreler sıfırlandı");
+}
+function quickSearch() {
+  const gender = $("#q-gender").value;
+  const min = +$("#q-min").value || 18;
+  const max = +$("#q-max").value || 99;
+  $("#f-gender").value = gender;
+  $("#f-age-min").value = min;
+  $("#f-age-max").value = max;
+  loadProfiles({ gender, ageMin: min, ageMax: max });
+  document.getElementById("profiller").scrollIntoView({ behavior: "smooth" });
+}
+
+async function viewProfile(id) {
+  const { data: p, error } = await db.from("profiles").select("*").eq("id", id).single();
+  if (error || !p) { toast("Profil bulunamadı"); return; }
+  const liked = myLikes.has(p.id);
+  const isMe = currentUser && currentUser.id === p.id;
+  const details = [];
+  if (p.marital_status) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Medeni Durum</span><b>${esc(p.marital_status)}</b></div>`);
+  if (p.height) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Boy</span><b>${p.height} cm</b></div>`);
+  if (p.weight) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Kilo</span><b>${p.weight} kg</b></div>`);
+  if (p.education) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Eğitim</span><b>${esc(p.education)}</b></div>`);
+  if (p.job) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Meslek</span><b>${esc(p.job)}</b></div>`);
+  if (p.city) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Konum</span><b>${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</b></div>`);
+  $("#detailBody").innerHTML = `
+    <button class="close-x" data-action="close-modal" data-modal="detailModal">✕</button>
+    <div class="card-top" style="margin-bottom:20px">
+      <div class="avatar" style="background:${grad(p.id)};width:78px;height:78px;font-size:1.5rem;border-radius:22px">${initials(p.name)}</div>
+      <div>
+        <h3 style="font-size:1.3rem">${esc(p.name)}, ${p.age}</h3>
+        <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}</div>
+      </div>
+    </div>
+    ${details.length ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">${details.join("")}</div>` : ""}
+    <h5 style="font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Hakkında</h5>
+    <p style="font-size:.92rem;background:#fbf7fa;padding:16px;border-radius:14px;margin-bottom:18px">${esc(p.bio || "Henüz tanıtım yok.")}</p>
+    <h5 style="font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">İlgi Alanları</h5>
+    <div class="tags" style="margin-bottom:20px">
+      ${(p.interests || []).map(t => `<span class="tag">${esc(t)}</span>`).join("") || "<span style='color:var(--muted);font-size:.86rem'>Belirtilmemiş</span>"}
+    </div>
+    ${!isMe && currentUser ? `
+      <div style="display:flex;gap:10px">
+        <button class="btn ${liked ? "btn-ghost" : "btn-primary"}" data-action="toggle-like-modal" data-id="${p.id}" style="flex:1">
+          ${liked ? "♥ Beğenildi" : "♡ Beğen"}
+        </button>
+        <button class="btn btn-primary" data-action="start-chat" data-id="${p.id}" style="flex:1">💬 Mesaj Gönder</button>
+      </div>
+    ` : ""}
+    ${!currentUser ? `<button class="btn btn-primary btn-block" data-action="open-login">Beğenmek için giriş yap</button>` : ""}
+  `;
+  openModal("detailModal");
+}
+
+function openMessages() {
+  if (!currentUser) { toast("Mesajlaşmak için giriş yap."); openModal("loginModal"); return; }
+  $("#msgOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+  refreshConversationList();
+}
+function closeMessages() {
+  $("#msgOverlay").classList.remove("open");
+  $("#msgContainer").classList.remove("chat-open");
+  document.body.style.overflow = "";
+  activeConvUserId = null;
+}
+
+async function refreshConversationList() {
+  if (!currentUser) return;
+  const { data, error } = await db.from("messages")
+    .select("*")
+    .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`)
+    .order("created_at", { ascending: false })
+    .limit(500);
+  if (error) { console.warn(error); return; }
+  const convs = {};
+  (data || []).forEach(m => {
+    const otherId = m.sender_id === currentUser.id ? m.receiver_id : m.sender_id;
+    if (!convs[otherId]) convs[otherId] = { last: m, unread: 0, messages: [] };
+    convs[otherId].messages.push(m);
+    if (m.receiver_id === currentUser.id && !m.is_read) convs[otherId].unread++;
+  });
+  const list = Object.entries(convs).sort((a, b) => new Date(b[1].last.created_at) - new Date(a[1].last.created_at));
+  const el = $("#convList");
+  if (!list.length) {
+    el.innerHTML = `<div class="empty" style="border:none;padding:30px 15px;font-size:.86rem">Henüz mesajlaşma yok.<br>Bir profilden "💬" butonuna basarak başla.</div>`;
+    return;
+  }
+  const missingIds = list.map(([id]) => id).filter(id => !allUsers[id]);
+  if (missingIds.length) {
+    const { data: profs } = await db.from("profiles").select("*").in("id", missingIds);
+    (profs || []).forEach(p => allUsers[p.id] = p);
+  }
+  el.innerHTML = list.map(([id, conv]) => {
+    const u = allUsers[id] || { name: "Bilinmeyen", city: "" };
+    const last = conv.last;
+    const isActive = id === activeConvUserId;
+    const time = formatTime(last.created_at);
+    const preview = (last.sender_id === currentUser.id ? "Sen: " : "") + last.content;
+    return `
+      <div class="conv-item ${isActive ? "active" : ""}" data-action="open-conv" data-id="${id}">
+        <div class="avatar" style="background:${grad(id)}">${initials(u.name)}</div>
+        <div class="conv-info">
+          <b>${esc(u.name)}</b>
+          <span>${esc(preview.slice(0, 40))}${preview.length > 40 ? "..." : ""}</span>
+        </div>
+        <div class="conv-meta">
+          <time>${time}</time>
+          ${conv.unread ? `<div class="unread">${conv.unread}</div>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function formatTime(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const diff = (now - d) / 1000;
+  if (diff < 60) return "şimdi";
+  if (diff < 3600) return Math.floor(diff / 60) + " dk";
+  if (diff < 86400) return d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0");
+  return d.getDate() + "." + (d.getMonth() + 1);
+}
+
+async function openConversation(otherId) {
+  if (!otherId) return;
+  activeConvUserId = otherId;
+  if (!allUsers[otherId]) {
+    const { data } = await db.from("profiles").select("*").eq("id", otherId).single();
+    if (data) allUsers[otherId] = data;
+  }
+  const u = allUsers[otherId] || { name: "Kullanıcı" };
+  $("#msgMain").innerHTML = `
+    <div class="msg-head">
+      <button class="icon-btn" style="width:36px;height:36px;font-size:.85rem;display:none" id="msgBack" data-action="msg-back">←</button>
+      <div class="avatar" style="background:${grad(otherId)}">${initials(u.name)}</div>
+      <div class="msg-head-info">
+        <b>${esc(u.name)}</b>
+        <span>çevrimiçi</span>
+      </div>
+      <button class="icon-btn" style="width:36px;height:36px;font-size:.85rem" data-action="close-messages">✕</button>
+    </div>
+    <div class="msg-body" id="msgBody">
+      <div class="typing-indicator" id="typingIndicator"><span></span><span></span><span></span></div>
+    </div>
+    <div class="msg-input-row">
+      <textarea id="msgInput" placeholder="Mesajını yaz..." rows="1"></textarea>
+      <button class="msg-send" data-action="send-msg">➤</button>
+    </div>
+  `;
+  $("#msgContainer").classList.add("chat-open");
+  if (window.innerWidth <= 980) $("#msgBack").style.display = "grid";
+  const { data: msgs } = await db.from("messages").select("*")
+    .or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`)
+    .order("created_at", { ascending: true });
+  const body = $("#msgBody");
+  (msgs || []).forEach(m => appendMessage(m, false));
+  await db.from("messages").update({ is_read: true })
+    .eq("receiver_id", currentUser.id).eq("sender_id", otherId).eq("is_read", false);
+  refreshUnreadCount();
+  refreshConversationList();
+  scrollToBottom();
+  const input = $("#msgInput");
+  input.focus();
+  input.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  input.addEventListener("input", () => {
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 100) + "px";
+  });
+}
+
+function appendMessage(m, scroll = true) {
+  const body = $("#msgBody");
+  if (!body) return;
+  const indicator = $("#typingIndicator");
+  const isMe = m.sender_id === currentUser.id;
+  const div = document.createElement("div");
+  div.className = "msg " + (isMe ? "me" : "them");
+  const time = new Date(m.created_at);
+  div.innerHTML = `${escapeText(m.content)}<time>${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}</time>`;
+  if (indicator) body.insertBefore(div, indicator);
+  else body.appendChild(div);
+  if (scroll) scrollToBottom();
+}
+
+function escapeText(t) {
+  return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])).replace(/\n/g, "<br>");
+}
+function scrollToBottom() {
+  const body = $("#msgBody");
+  if (body) body.scrollTop = body.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = $("#msgInput");
+  if (!input || !activeConvUserId) return;
+  const content = input.value.trim();
+  if (!content) return;
+  input.value = "";
+  input.style.height = "auto";
+  const tempMsg = {
+    sender_id: currentUser.id, receiver_id: activeConvUserId,
+    content, created_at: new Date().toISOString(), id: "temp-" + Date.now()
+  };
+  appendMessage(tempMsg, true);
+  const { error } = await db.from("messages").insert({
+    sender_id: currentUser.id, receiver_id: activeConvUserId, content
+  });
+  if (error) { toast("Mesaj gönderilemedi: " + error.message); return; }
+  refreshConversationList();
+}
+
+async function startChatWith(userId) {
+  if (!currentUser) { toast("Mesaj göndermek için giriş yap."); openModal("loginModal"); return; }
+  if (currentUser.id === userId) return;
+  closeModal("detailModal");
+  openMessages();
+  await openConversation(userId);
+}
+
+document.addEventListener("click", async e => {
+  const t = e.target.closest("[data-action]");
+  if (!t) return;
+  const action = t.dataset.action;
+  const id = t.dataset.id;
+  const modal = t.dataset.modal;
+  if (t.tagName === "A") e.preventDefault();
+  switch (action) {
+    case "open-login": closeAllModals(); openModal("loginModal"); break;
+    case "open-register": closeAllModals(); openModal("registerModal"); break;
+    case "close-modal": closeModal(modal); break;
+    case "logout": await handleLogout(); break;
+    case "toggle-like": await toggleLike(id); break;
+    case "toggle-like-modal": await toggleLike(id); await viewProfile(id); break;
+    case "view-profile": await viewProfile(id); break;
+    case "quick-search": quickSearch(); break;
+    case "apply-filters": applyFilters(); break;
+    case "reset-filters": resetFilters(); break;
+    case "scroll-profiles": document.getElementById("profiller").scrollIntoView({ behavior: "smooth" }); break;
+    case "open-messages": openMessages(); break;
+    case "close-messages": closeMessages(); break;
+    case "open-conv": await openConversation(id); break;
+    case "send-msg": await sendMessage(); break;
+    case "start-chat": await startChatWith(id); break;
+    case "msg-back": $("#msgContainer").classList.remove("chat-open"); break;
+  }
+});
+
+$$(".overlay").forEach(ov => {
+  ov.addEventListener("click", e => { if (e.target === ov) closeModal(ov.id); });
+});
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") {
+    closeAllModals();
+    if ($("#msgOverlay").classList.contains("open")) closeMessages();
+  }
+});
+
+$("#registerForm").addEventListener("submit", handleRegister);
+$("#loginForm").addEventListener("submit", handleLogin);
+
+document.addEventListener("change", e => {
+  if (e.target.id === "r-country") updateCityDropdown("r-country", "r-city");
+  if (e.target.id === "f-country") updateCityDropdown("f-country", "f-city");
+});
+
+(async function init() {
+  fillCountriesAndCities();
+  db.auth.onAuthStateChange(async (event) => {
+    if (event === "SIGNED_OUT") {
+      currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
+      if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
+      updateNavbar();
+    }
+  });
+  await checkSession();
+  await loadProfiles();
+})();
+</script>
+</body>
+</html>
