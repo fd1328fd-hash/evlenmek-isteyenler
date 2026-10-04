@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="tr" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="google" content="notranslate">
+<title>Evlenmek İsteyenler — Ciddi İlişkiler Platformu</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff3c4"/>
+              <stop offset="0.35" stop-color="#f5c542"/>
+              <stop offset="0.65" stop-color="#e0a020"/>
+              <stop offset="1" stop-color="#a06d0e"/>
+            </linearGradient>
+            <linearGradient id="goldShine" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fffbe8"/>
+              <stop offset="1" stop-color="#d4a01e"/>
+            </linearGradient>
+            <linearGradient id="diamond" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff"/>
+              <stop offset="0.5" stop-color="#bfe0ff"/>
+              <stop offset="1" stop-color="#6fa8dc"/>
+            </linearGradient>
+            <radialGradient id="bgGlow" cx="0.5" cy="0.5" r="0.7">
+              <stop offset="0" stop-color="#ffffff" stop-opacity="0.25"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+              <feOffset dx="0" dy="1.5" result="off"/>
+              <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+              <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect width="100" height="100" rx="18" fill="#4a86c4"/>
+          <rect width="100" height="100" rx="18" fill="url(#bgGlow)"/>
+          <g filter="url(#shadow)">
+            <circle cx="38" cy="60" r="20" fill="none" stroke="url(#goldG)" stroke-width="6"/>
+            <circle cx="38" cy="60" r="20" fill="none" stroke="url(#goldShine)" stroke-width="2" opacity="0.6"/>
+            <circle cx="62" cy="60" r="20" fill="none" stroke="url(#goldG)" stroke-width="6"/>
+            <circle cx="62" cy="60" r="20" fill="none" stroke="url(#goldShine)" stroke-width="2" opacity="0.6"/>
+            <circle cx="60" cy="60" r="20" fill="none" stroke="#a06d0e" stroke-width="0.8" opacity="0.4"/>
+            <path d="M 55,34 L 60,22 L 65,34 L 60,38 Z" fill="url(#diamond)"/>
+            <path d="M 55,34 L 60,38 L 60,22 Z" fill="#ffffff" opacity="0.5"/>
+            <path d="M 60,38 L 65,34 L 60,22 Z" fill="#6fa8dc" opacity="0.35"/>
+            <path d="M 55,34 L 65,34" stroke="#ffffff" stroke-width="0.6" opacity="0.7"/>
+            <circle cx="58" cy="28" r="1.2" fill="#ffffff" opacity="0.9"/>
+          </g>
+        </svg>
+      </span>
+      <span class="logo-text">Evlenmek İsteyenler</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="lang-switcher">
+        <button class="lang-btn" id="langBtn" type="button" aria-label="Language">
+          <span class="flag" id="langFlag"><img src="https://flagcdn.com/w40/tr.png" alt="tr" style="width:20px;height:14px;object-fit:cover;border-radius:2px;vertical-align:middle;display:inline-block"></span>
+          <span class="lang-name" id="langName">Türkçe</span>
+          <span style="font-size:.6rem">▼</span>
+        </button>
+        <div class="lang-menu" id="langMenu"></div>
+      </div>
+      <div class="nav-actions" id="navActions">
+        <button class="btn btn-ghost btn-sm" data-action="open-login" data-i18n="login">Giriş Yap</button>
+        <button class="btn btn-primary btn-sm" data-action="open-register" data-i18n="signup">Ücretsiz Kayıt</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <h1 data-i18n="heroTitle" data-i18n-html="1">Hayat arkadaşını <em>ciddi</em> arayanlar burada bulur.</h1>
+      <p data-i18n="heroDesc">Gerçek üyeler, gelişmiş filtreleme ve anlık mesajlaşma. Evlilik ve uzun soluklu ilişki hedefleyenlerin buluşma noktası.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" data-action="open-register" data-i18n="heroCta">Hemen Üye Ol — Ücretsiz</button>
+        <button class="btn btn-ghost" data-action="open-login" data-i18n="loginBtn">Giriş Yap</button>
+      </div>
+    </div>
+    <div class="card-box">
+      <h3 style="margin-bottom:16px" data-i18n="quickSearch">🔍 Hızlı Arama</h3>
+      <div class="field">
+        <label data-i18n="whoMeet">Kimle tanışmak istiyorsun?</label>
+        <select id="q-gender" class="input">
+          <option value="hepsi" data-i18n-opt="any">Fark etmez</option>
+          <option value="kadın" data-i18n-opt="female">Kadın</option>
+          <option value="erkek" data-i18n-opt="male">Erkek</option>
+        </select>
+      </div>
+      <div class="row-2">
+        <div class="field"><label data-i18n="minAge">En az yaş</label><input id="q-min" class="input" type="number" value="18" min="18"></div>
+        <div class="field"><label data-i18n="maxAge">En çok yaş</label><input id="q-max" class="input" type="number" value="70" min="18"></div>
+      </div>
+      <button class="btn btn-primary btn-block" data-action="quick-search" data-i18n="findProfiles">Uygun Profilleri Bul</button>
+    </div>
+  </div>
+</section>
+
+<section id="profiller" style="background:#fff">
+  <div class="container">
+    <div class="sec-head">
+      <h2 data-i18n="realMembers">Gerçek Üyeler</h2>
+      <p id="profileCount">Yükleniyor...</p>
+    </div>
+
+    <div class="filter-panel" id="filterPanel" style="display:none">
+      <h3 data-i18n="advancedFilter">🎯 Gelişmiş Filtreleme</h3>
+      <div class="filter-grid">
+        <div class="field" style="margin:0"><label data-i18n="gender">Cinsiyet</label>
+          <select id="f-gender" class="input"><option value="hepsi" data-i18n-opt="any">Fark etmez</option><option value="kadın" data-i18n-opt="female">Kadın</option><option value="erkek" data-i18n-opt="male">Erkek</option></select>
+        </div>
+        <div class="field" style="margin:0"><label data-i18n="country">Ülke</label><select id="f-country" class="input"><option value="hepsi" data-i18n-opt="all">Tümü</option></select></div>
+        <div class="field" style="margin:0"><label data-i18n="city">Şehir</label>
+          <input id="f-city" class="input" list="dl-f-city" placeholder="Tümü" autocomplete="off">
+          <datalist id="dl-f-city"></datalist>
+        </div>
+        <div class="field" style="margin:0"><label data-i18n="maritalStatus">Medeni Durum</label>
+          <select id="f-marital" class="input">
+            <option value="hepsi" data-i18n-opt="dontCare">Fark etmez</option>
+            <option value="Bekar" data-i18n-opt="single">Bekar</option>
+            <option value="Boşanmış" data-i18n-opt="divorced">Boşanmış</option>
+            <option value="Dul" data-i18n-opt="widowed">Dul</option>
+            <option value="Ayrı yaşıyor" data-i18n-opt="separated">Ayrı yaşıyor</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0"><label data-i18n="education">Eğitim</label>
+          <select id="f-education" class="input">
+            <option value="hepsi" data-i18n-opt="dontCare">Fark etmez</option>
+            <option value="İlköğretim" data-i18n-opt="primary">İlköğretim</option>
+            <option value="Lise" data-i18n-opt="highSchool">Lise</option>
+            <option value="Üniversite" data-i18n-opt="university">Üniversite</option>
+            <option value="Yüksek Lisans" data-i18n-opt="masters">Yüksek Lisans</option>
+            <option value="Doktora" data-i18n-opt="phd">Doktora</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0"><label data-i18n="minAgeL">Min. Yaş</label><input id="f-age-min" class="input" type="number" value="18" min="18"></div>
+        <div class="field" style="margin:0"><label data-i18n="maxAgeL">Maks. Yaş</label><input id="f-age-max" class="input" type="number" value="99" min="18"></div>
+        <div class="field" style="margin:0"><label data-i18n="minHeightL">Min. Boy (cm)</label><input id="f-height-min" class="input" type="number" placeholder="150" min="100"></div>
+        <div class="field" style="margin:0"><label data-i18n="maxHeightL">Maks. Boy (cm)</label><input id="f-height-max" class="input" type="number" placeholder="210" min="100"></div>
+        <div class="field" style="margin:0"><label data-i18n="minWeightL">Min. Kilo (kg)</label><input id="f-weight-min" class="input" type="number" placeholder="40" min="30"></div>
+        <div class="field" style="margin:0"><label data-i18n="maxWeightL">Maks. Kilo (kg)</label><input id="f-weight-max" class="input" type="number" placeholder="150" min="30"></div>
+        <div class="field" style="margin:0"><label data-i18n="job">Meslek / İsim ara</label><input id="f-search" class="input" type="text" data-i18n-ph="searchPh" placeholder="öğretmen, Ayşe..."></div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-ghost btn-sm" data-action="reset-filters" data-i18n="resetFilters">Filtreleri Sıfırla</button>
+        <button class="btn btn-primary btn-sm" data-action="apply-filters" data-i18n="filter">Filtrele</button>
+      </div>
+    </div>
+
+    <div class="grid" id="profileGrid">
+      <div class="empty" data-i18n="loading">⏳ Yükleniyor...</div>
+    </div>
+  </div>
+</section>
+
+<div class="overlay" id="registerModal" data-overlay>
+  <div class="modal">
+    <button class="close-x" data-action="close-modal" data-modal="registerModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px" data-i18n="createAccount">Ücretsiz Hesap Oluştur</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px" data-i18n="accountDesc">Birkaç bilgi yeterli, hemen başla.</p>
+    <form id="registerForm">
+      <div class="row-2">
+        <div class="field"><label data-i18n="fullName">Ad Soyad *</label><input name="name" class="input" required></div>
+        <div class="field"><label data-i18n="email">E-posta *</label><input name="email" class="input" type="email" required placeholder="ornek@mail.com"></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label data-i18n="age">Yaş *</label><input name="age" class="input" type="number" min="18" max="99" required></div>
+        <div class="field"><label data-i18n="gender">Cinsiyet *</label>
+          <select name="gender" class="input" required>
+            <option value="" data-i18n-opt="select">Seçiniz</option>
+            <option value="kadın" data-i18n-opt="female">Kadın</option>
+            <option value="erkek" data-i18n-opt="male">Erkek</option>
+          </select>
+        </div>
+        <div class="field"><label data-i18n="maritalStatus">Medeni Durum *</label>
+          <select name="marital_status" class="input" required>
+            <option value="Bekar" data-i18n-opt="single">Bekar</option>
+            <option value="Boşanmış" data-i18n-opt="divorced">Boşanmış</option>
+            <option value="Dul" data-i18n-opt="widowed">Dul</option>
+            <option value="Ayrı yaşıyor" data-i18n-opt="separated">Ayrı yaşıyor</option>
+          </select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label data-i18n="country">Ülke *</label><select name="country" id="r-country" class="input" required><option value="" data-i18n-opt="select">Seçiniz</option></select></div>
+        <div class="field"><label data-i18n="city">Şehir *</label>
+          <input name="city" id="r-city" class="input" list="dl-r-city" required placeholder="Şehir seç veya yaz" autocomplete="off">
+          <datalist id="dl-r-city"></datalist>
+        </div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label data-i18n="height">Boy (cm)</label><input name="height" class="input" type="number" min="100" max="250"></div>
+        <div class="field"><label data-i18n="weight">Kilo (kg)</label><input name="weight" class="input" type="number" min="30" max="250"></div>
+        <div class="field"><label data-i18n="education">Eğitim</label>
+          <select name="education" class="input">
+            <option value="" data-i18n-opt="select">Seçiniz</option>
+            <option value="İlköğretim" data-i18n-opt="primary">İlköğretim</option>
+            <option value="Lise" data-i18n-opt="highSchool">Lise</option>
+            <option value="Üniversite" data-i18n-opt="university">Üniversite</option>
+            <option value="Yüksek Lisans" data-i18n-opt="masters">Yüksek Lisans</option>
+            <option value="Doktora" data-i18n-opt="phd">Doktora</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label data-i18n="job">Meslek</label><input name="job" class="input"></div>
+      <div class="field"><label data-i18n="bio">Kısa Tanıtım</label><textarea name="bio" class="input" rows="3"></textarea></div>
+      <div class="field"><label data-i18n="interests">İlgi Alanları (virgülle ayır)</label><input name="interests" class="input" data-i18n-ph="interestsPh"></div>
+      <div class="field"><label data-i18n="password">Şifre (min 6 karakter)</label><input name="password" class="input" type="password" required minlength="6"></div>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:8px" data-i18n="createMyAccount">Hesabımı Oluştur</button>
+    </form>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px"><span data-i18n="alreadyMember">Zaten üye misin?</span> <a href="#" data-action="open-login" style="color:var(--rose);font-weight:600" data-i18n="loginLink">Giriş yap</a></p>
+  </div>
+</div>
+
+<div class="overlay" id="loginModal" data-overlay>
+  <div class="modal" style="width:min(420px,100%)">
+    <button class="close-x" data-action="close-modal" data-modal="loginModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px" data-i18n="welcomeBack">Tekrar hoş geldin 👋</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px" data-i18n="loginDesc">Hesabına giriş yap.</p>
+    <form id="loginForm">
+      <div class="field"><label data-i18n="email">E-posta</label><input name="email" class="input" type="email" required placeholder="ornek@mail.com"></div>
+      <div class="field"><label data-i18n="password">Şifre</label><input name="password" class="input" type="password" required placeholder="••••••••"></div>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:6px" data-i18n="login">Giriş Yap</button>
+    </form>
+    <p style="text-align:center;font-size:.82rem;color:var(--muted);margin-top:12px"><span data-i18n="noAccount">Hesabın yok mu?</span> <a href="#" data-action="open-register" style="color:var(--rose);font-weight:600" data-i18n="signupLink">Ücretsiz kayıt ol</a></p>
+  </div>
+</div>
+
+<div class="overlay" id="editProfileModal" data-overlay>
+  <div class="modal">
+    <button class="close-x" data-action="close-modal" data-modal="editProfileModal">✕</button>
+    <h3 style="font-size:1.3rem;margin-bottom:6px" data-i18n="editProfile">Profilimi Düzenle</h3>
+    <p style="font-size:.86rem;color:var(--muted);margin-bottom:18px" data-i18n="updateInfo">Bilgilerini güncelle ve kaydet.</p>
+    <form id="editProfileForm">
+      <div class="photo-upload">
+        <div class="preview" id="editPhotoPreview">?</div>
+        <div class="actions">
+          <p><b data-i18n="profilePhoto">Profil Fotoğrafı</b><br><span data-i18n="photoHint">JPG veya PNG, max 5 MB</span></p>
+          <input type="file" id="editPhotoInput" accept="image/*" style="display:none">
+          <button type="button" class="btn btn-ghost" data-action="pick-edit-photo" data-i18n="uploadPhoto">📷 Fotoğraf Yükle</button>
+          <button type="button" class="btn btn-ghost" data-action="remove-edit-photo" id="editPhotoRemoveBtn" style="display:none;margin-left:6px" data-i18n="removePhoto">🗑️ Kaldır</button>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label data-i18n="fullName">Ad Soyad *</label><input name="name" id="e-name" class="input" required></div>
+        <div class="field"><label data-i18n="age">Yaş *</label><input name="age" id="e-age" class="input" type="number" min="18" max="99" required></div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label data-i18n="gender">Cinsiyet *</label>
+          <select name="gender" id="e-gender" class="input" required><option value="kadın" data-i18n-opt="female">Kadın</option><option value="erkek" data-i18n-opt="male">Erkek</option></select>
+        </div>
+        <div class="field"><label data-i18n="maritalStatus">Medeni Durum *</label>
+          <select name="marital_status" id="e-marital" class="input" required><option value="Bekar" data-i18n-opt="single">Bekar</option><option value="Boşanmış" data-i18n-opt="divorced">Boşanmış</option><option value="Dul" data-i18n-opt="widowed">Dul</option><option value="Ayrı yaşıyor" data-i18n-opt="separated">Ayrı yaşıyor</option></select>
+        </div>
+        <div class="field"><label data-i18n="education">Eğitim</label>
+          <select name="education" id="e-education" class="input"><option value="" data-i18n-opt="select">Seçiniz</option><option value="İlköğretim" data-i18n-opt="primary">İlköğretim</option><option value="Lise" data-i18n-opt="highSchool">Lise</option><option value="Üniversite" data-i18n-opt="university">Üniversite</option><option value="Yüksek Lisans" data-i18n-opt="masters">Yüksek Lisans</option><option value="Doktora" data-i18n-opt="phd">Doktora</option></select>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field"><label data-i18n="country">Ülke *</label><select name="country" id="e-country" class="input" required><option value="" data-i18n-opt="select">Seçiniz</option></select></div>
+        <div class="field"><label data-i18n="city">Şehir *</label>
+          <input name="city" id="e-city" class="input" list="dl-e-city" required placeholder="Şehir seç veya yaz" autocomplete="off">
+          <datalist id="dl-e-city"></datalist>
+        </div>
+      </div>
+      <div class="row-3">
+        <div class="field"><label data-i18n="height">Boy (cm)</label><input name="height" id="e-height" class="input" type="number" min="100" max="250"></div>
+        <div class="field"><label data-i18n="weight">Kilo (kg)</label><input name="weight" id="e-weight" class="input" type="number" min="30" max="250"></div>
+        <div class="field"><label data-i18n="job">Meslek</label><input name="job" id="e-job" class="input"></div>
+      </div>
+      <div class="field"><label data-i18n="bio">Kısa Tanıtım</label><textarea name="bio" id="e-bio" class="input" rows="3"></textarea></div>
+      <div class="field"><label data-i18n="interests">İlgi Alanları (virgülle ayır)</label><input name="interests" id="e-interests" class="input"></div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button type="button" class="btn btn-ghost" data-action="close-modal" data-modal="editProfileModal" style="flex:1" data-i18n="cancel">İptal</button>
+        <button type="submit" class="btn btn-primary" style="flex:2" id="editProfileSubmitBtn" data-i18n="save">Kaydet</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="overlay" id="detailModal" data-overlay>
+  <div class="modal" id="detailBody"></div>
+</div>
+
+<div class="msg-overlay" id="msgOverlay">
+  <div class="msg-container" id="msgContainer">
+    <div class="msg-sidebar">
+      <div class="msg-sidebar-head">
+        <h3 data-i18n="messages">💬 Mesajlar</h3>
+        <button class="icon-btn" style="width:34px;height:34px;font-size:.9rem" data-action="close-messages">✕</button>
+      </div>
+      <div class="conv-list" id="convList">
+        <div class="empty" style="border:none;padding:30px 15px;font-size:.86rem" data-i18n="noChats">Henüz mesajlaşma yok.</div>
+      </div>
+    </div>
+    <div class="msg-main" id="msgMain">
+      <div class="msg-empty" id="msgEmpty">
+        <div class="emoji">💌</div>
+        <b style="font-size:1rem;color:var(--ink);margin-bottom:6px" data-i18n="selectChat">Bir sohbet seç</b>
+        <span style="font-size:.86rem" data-i18n="selectChatDesc">Soldaki listeden bir kişiye tıkla ve konuşmaya başla.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" data-action="close-lightbox"><img id="lightboxImg" src="" alt=""></div>
+<div id="toast"></div>
+
+<!-- ============== FOOTER ============== -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo">
+          <span class="logo-mark">💍</span>
+          <span>Evlenmek İsteyenler</span>
+        </div>
+        <p data-i18n="footerAbout">Ciddi ilişki ve evlilik hedefleyen kişileri buluşturan, doğrulanmış profillere sahip güvenli bir tanışma platformu.</p>
+      </div>
+      <div>
+        <h5 data-i18n="footerExplore">Keşfet</h5>
+        <ul>
+          <li><a data-action="open-register" data-i18n="signup">Ücretsiz Kayıt</a></li>
+          <li><a data-action="open-login" data-i18n="login">Giriş Yap</a></li>
+          <li><a data-action="open-edit-profile" data-i18n="editProfile">Profilimi Düzenle</a></li>
+          <li><a data-action="open-messages" data-i18n="messages">Mesajlar</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="footerLegal">Yasal</h5>
+        <ul>
+          <li><a data-action="open-legal" data-legal="kvkk" data-i18n="legalKvkk">KVKK Aydınlatma Metni</a></li>
+          <li><a data-action="open-legal" data-legal="privacy" data-i18n="legalPrivacy">Gizlilik Politikası</a></li>
+          <li><a data-action="open-legal" data-legal="terms" data-i18n="legalTerms">Kullanım Koşulları</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 data-i18n="footerSupport">Destek</h5>
+        <ul>
+          <li><a data-action="open-legal" data-legal="kvkk" data-i18n="legalRights">Haklarınız</a></li>
+          <li><a href="mailto:destek@evlenmekisteyenler.com">destek@evlenmekisteyenler.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Evlenmek İsteyenler · <span data-i18n="allRights">Tüm hakları saklıdır.</span></span>
+      <span data-i18n="footerDisclaimer">18 yaş altı kişiler üye olamaz.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============== KVKK MODALI ============== -->
+<div class="overlay" id="legalKvkkModal" data-overlay>
+  <div class="modal legal-modal">
+    <button class="close-x" data-action="close-modal" data-modal="legalKvkkModal">✕</button>
+    <h2>KVKK Aydınlatma Metni</h2>
+    <p class="legal-sub">6698 Sayılı Kişisel Verilerin Korunması Kanunu Kapsamında Aydınlatma Metni</p>
+
+    <div class="legal-note" data-i18n="legalNoteTr">
+      ⚖️ Bu metin 6698 Sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca hazırlanmıştır ve yalnızca Türkçe olarak sunulmaktadır. Diğer dillerdeki kullanıcılar, bağlayıcı metin olarak Türkçe versiyonu kabul etmiş sayılır.
+    </div>
+
+    <h3>1. Veri Sorumlusu</h3>
+    <p>Kişisel verileriniz, veri sorumlusu sıfatıyla <b>Evlenmek İsteyenler</b> ("Platform") tarafından aşağıda açıklanan kapsamda işlenmektedir.</p>
+
+    <h3>2. İşlenen Kişisel Veriler</h3>
+    <p>Platforma üye olmanız ve hizmetlerimizi kullanmanız sırasında aşağıdaki kişisel verileriniz işlenir:</p>
+    <ul>
+      <li><b>Kimlik Verileri:</b> Ad, soyad, yaş, cinsiyet, medeni durum</li>
+      <li><b>İletişim Verileri:</b> E-posta adresi</li>
+      <li><b>Konum Verileri:</b> Ülke, şehir</li>
+      <li><b>Mesleki/Eğitim Verileri:</b> Meslek, eğitim durumu, ilgi alanları</li>
+      <li><b>Fiziksel Özellikler:</b> Boy, kilo (isteğe bağlı)</li>
+      <li><b>Görsel Veriler:</b> Profil fotoğrafı (isteğe bağlı)</li>
+      <li><b>İletişim İçerikleri:</b> Platform üzerinden diğer üyelerle yaptığınız mesajlaşmalar</li>
+      <li><b>İşlem Güvenliği Verileri:</b> IP adresi, oturum bilgileri</li>
+    </ul>
+
+    <h3>3. Kişisel Verilerin İşlenme Amaçları</h3>
+    <ul>
+      <li>Üyelik hizmetinin sunulması ve yönetilmesi</li>
+      <li>Profil oluşturma, eşleştirme ve filtreleme hizmetleri</li>
+      <li>Üyeler arası iletişimin sağlanması</li>
+      <li>Kimlik doğrulaması ve sahte hesap tespiti</li>
+      <li>Yasal yükümlülüklerin yerine getirilmesi</li>
+      <li>Platform güvenliğinin sağlanması</li>
+      <li>Hizmet kalitesinin iyileştirilmesi</li>
+    </ul>
+
+    <h3>4. Hukuki Sebepler</h3>
+    <p>Kişisel verileriniz; KVKK m.5/2 kapsamında sözleşmenin ifası, hukuki yükümlülüklerin yerine getirilmesi, meşru menfaat ve açık rızanız hukuki sebeplerine dayanılarak işlenmektedir.</p>
+
+    <h3>5. Verilerin Aktarılması</h3>
+    <p>Kişisel verileriniz; platformun teknik altyapısı için kullanılan yurt dışı merkezli hizmet sağlayıcılarına (bulut depolama ve veritabanı hizmetleri) KVKK m.9 kapsamında aktarılabilir. Hizmet sağlayıcılarımız endüstri standardı güvenlik önlemleri uygulamaktadır.</p>
+
+    <h3>6. Saklama Süresi</h3>
+    <p>Kişisel verileriniz, üyeliğiniz devam ettiği sürece ve üyeliğinizin sona ermesinden sonra yasal zorunluluklar çerçevesinde 10 yıla kadar saklanır. Süre sonunda verileriniz silinir, yok edilir veya anonim hale getirilir.</p>
+
+    <h3>7. KVKK m.11 Kapsamındaki Haklarınız</h3>
+    <ul>
+      <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme</li>
+      <li>İşlenmişse buna ilişkin bilgi talep etme</li>
+      <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme</li>
+      <li>Yurt içinde / yurt dışında aktarıldığı üçüncü kişileri bilme</li>
+      <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme</li>
+      <li>KVKK m.7 kapsamında silinmesini veya yok edilmesini isteme</li>
+      <li>Otomatik sistemlerle analiz edilmesi nedeniyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme</li>
+      <li>Kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde zararın giderilmesini talep etme</li>
+    </ul>
+
+    <h3>8. Başvuru</h3>
+    <p>Haklarınızı kullanmak için <b>destek@evlenmekisteyenler.com</b> adresine e-posta gönderebilirsiniz. Başvurularınız en geç 30 gün içinde ücretsiz olarak sonuçlandırılır.</p>
+
+    <p class="legal-footer-note">Son güncelleme: Ocak 2026</p>
+  </div>
+</div>
+
+<!-- ============== GİZLİLİK POLİTİKASI MODALI ============== -->
+<div class="overlay" id="legalPrivacyModal" data-overlay>
+  <div class="modal legal-modal">
+    <button class="close-x" data-action="close-modal" data-modal="legalPrivacyModal">✕</button>
+    <h2>Gizlilik Politikası</h2>
+    <p class="legal-sub">Evlenmek İsteyenler Gizlilik Politikası</p>
+
+    <div class="legal-note" data-i18n="legalNoteTr">
+      ⚖️ Bu metin yalnızca Türkçe olarak sunulmaktadır. Diğer dillerdeki kullanıcılar, bağlayıcı metin olarak Türkçe versiyonu kabul etmiş sayılır.
+    </div>
+
+    <h3>1. Toplanan Bilgiler</h3>
+    <p>Platformumuz aşağıdaki bilgileri toplar:</p>
+    <ul>
+      <li>Üyelik sırasında verdiğiniz bilgiler (ad, e-posta, yaş, cinsiyet, şehir vb.)</li>
+      <li>Profil bilgileriniz ve yüklediğiniz fotoğraflar</li>
+      <li>Diğer üyelerle yaptığınız mesajlaşmalar</li>
+      <li>Teknik bilgiler (IP, tarayıcı, cihaz bilgileri)</li>
+    </ul>
+
+    <h3>2. Bilgilerin Kullanımı</h3>
+    <ul>
+      <li>Size hizmet sunmak ve üyeliğinizi yönetmek</li>
+      <li>Profil eşleştirme ve filtreleme sağlamak</li>
+      <li>Platform güvenliğini sağlamak</li>
+      <li>Yasal yükümlülükleri yerine getirmek</li>
+      <li>Hizmetlerimizi iyileştirmek</li>
+    </ul>
+
+    <h3>3. Çerezler (Cookies)</h3>
+    <p>Platformumuz, oturum yönetimi ve kullanıcı deneyimini iyileştirmek amacıyla zorunlu çerezler kullanır. Bu çerezler kişisel veri toplamaz ve üçüncü taraflarla paylaşılmaz.</p>
+
+    <h3>4. Üçüncü Taraflar</h3>
+    <p>Verileriniz, hizmet altyapısı için kullanılan yurt dışı merkezli bulut hizmet sağlayıcıları tarafından barındırılır. Bu sağlayıcılar verilerinizi yalnızca depolama amacıyla işler ve bağımsız olarak kullanmaz.</p>
+
+    <h3>5. Veri Güvenliği</h3>
+    <ul>
+      <li>Tüm veriler SSL/HTTPS ile şifreli olarak iletilir</li>
+      <li>Şifreler şifrelenerek saklanır (hash + salt)</li>
+      <li>Veritabanı erişimi yetkilendirme (RLS) ile korunur</li>
+      <li>Düzenli güvenlik güncellemeleri uygulanır</li>
+    </ul>
+
+    <h3>6. Verilerin Saklanması</h3>
+    <p>Verileriniz, üyeliğiniz devam ettiği sürece saklanır. Hesabınızı sildiğinizde verileriniz 30 gün içinde sistemden kaldırılır (yasal zorunluluk olan veriler hariç).</p>
+
+    <h3>7. Kullanıcı Hakları</h3>
+    <ul>
+      <li>Verilerinize erişme</li>
+      <li>Verilerinizin düzeltilmesini isteme</li>
+      <li>Verilerinizin silinmesini isteme</li>
+      <li>Veri işlemeye itiraz etme</li>
+      <li>Veri taşınabilirliği</li>
+    </ul>
+
+    <h3>8. Değişiklikler</h3>
+    <p>Bu politika zaman zaman güncellenebilir. Önemli değişiklikler e-posta yoluyla bildirilir.</p>
+
+    <h3>9. İletişim</h3>
+    <p>Sorularınız için: <b>destek@evlenmekisteyenler.com</b></p>
+
+    <p class="legal-footer-note">Son güncelleme: Ocak 2026</p>
+  </div>
+</div>
+
+<!-- ============== KULLANIM KOŞULLARI MODALI ============== -->
+<div class="overlay" id="legalTermsModal" data-overlay>
+  <div class="modal legal-modal">
+    <button class="close-x" data-action="close-modal" data-modal="legalTermsModal">✕</button>
+    <h2>Kullanım Koşulları</h2>
+    <p class="legal-sub">Evlenmek İsteyenler Platformu Kullanım Koşulları</p>
+
+    <div class="legal-note" data-i18n="legalNoteTr">
+      ⚖️ Bu metin yalnızca Türkçe olarak sunulmaktadır. Diğer dillerdeki kullanıcılar, bağlayıcı metin olarak Türkçe versiyonu kabul etmiş sayılır.
+    </div>
+
+    <h3>1. Kabul</h3>
+    <p>Platforma üye olarak veya hizmetlerimizi kullanarak bu Kullanım Koşullarını kabul etmiş sayılırsınız. Koşulları kabul etmiyorsanız platformu kullanmamalısınız.</p>
+
+    <h3>2. Üyelik Şartları</h3>
+    <ul>
+      <li>18 yaşını doldurmuş olmalısınız</li>
+      <li>Verdiğiniz bilgilerin doğru ve güncel olması gerekir</li>
+      <li>Tek bir kişi yalnızca bir hesap açabilir</li>
+      <li>Başka birinin adına üye olamazsınız</li>
+    </ul>
+
+    <h3>3. Kullanıcı Yükümlülükleri</h3>
+    <ul>
+      <li>Hesap güvenliğinizden siz sorumlusunuz</li>
+      <li>Şifrenizi başkalarıyla paylaşmamalısınız</li>
+      <li>Diğer üyelere saygılı davranmalısınız</li>
+      <li>Yanıltıcı veya sahte bilgi vermemelisiniz</li>
+    </ul>
+
+    <h3>4. Yasak Davranışlar</h3>
+    <p>Aşağıdaki davranışlar kesinlikle yasaktır:</p>
+    <ul>
+      <li>Müstehcen, şiddet içeren veya yasa dışı içerik paylaşımı</li>
+      <li>Diğer üyelere hakaret, tehdit, taciz</li>
+      <li>Reklam, spam, dolandırıcılık girişimleri</li>
+      <li>Başka birinin bilgilerini izinsiz paylaşma</li>
+      <li>Platformu yasa dışı amaçlarla kullanma</li>
+      <li>Otomatik bot/script kullanımı</li>
+    </ul>
+
+    <h3>5. Fikri Mülkiyet</h3>
+    <p>Platformun tasarımı, logosu, yazılımı ve içeriği Evlenmek İsteyenler'e aittir. İzinsiz kopyalanamaz, çoğaltılamaz veya dağıtılamaz.</p>
+
+    <h3>6. Sorumluluk Sınırı</h3>
+    <ul>
+      <li>Üyeler arasında yaşanan anlaşmazlıklardan platform sorumlu değildir</li>
+      <li>Üyelerin paylaştığı bilgilerin doğruluğu garanti edilmez</li>
+      <li>Platform, teknik kesintilerden dolayı sorumlu tutulamaz</li>
+      <li>Üyelerin kendi aralarındaki ilişkilerinden platform sorumlu değildir</li>
+    </ul>
+
+    <h3>7. Hesap Askıya Alma ve Silme</h3>
+    <p>Platform, bu koşulları ihlal eden hesapları önceden bildirimde bulunmaksızın askıya alma veya silme hakkını saklı tutar.</p>
+
+    <h3>8. Üyelik İptali</h3>
+    <p>Hesabınızı dilediğiniz zaman silebilirsiniz. Silme talebiniz üzerine verileriniz 30 gün içinde sistemden kaldırılır.</p>
+
+    <h3>9. Değişiklikler</h3>
+    <p>Bu koşullar zaman zaman güncellenebilir. Güncel versiyon her zaman platformda yayınlanır.</p>
+
+    <h3>10. Uygulanacak Hukuk</h3>
+    <p>Bu koşullar Türkiye Cumhuriyeti hukukuna tabidir. Anlaşmazlıklarda Türkiye mahkemeleri yetkilidir.</p>
+
+    <h3>11. İletişim</h3>
+    <p>Sorularınız için: <b>destek@evlenmekisteyenler.com</b></p>
+
+    <p class="legal-footer-note">Son güncelleme: Ocak 2026</p>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
