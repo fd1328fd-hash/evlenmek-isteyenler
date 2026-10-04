@@ -24,11 +24,12 @@
   .btn-block{width:100%}
   .btn-sm{padding:9px 18px;font-size:.86rem}
   header{position:sticky;top:0;z-index:80;background:rgba(255,249,252,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:106px;gap:12px}
   .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;white-space:nowrap;min-width:0}
-  .logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--rose),var(--plum));color:#fff;flex-shrink:0}
-  .logo-mark svg{width:26px;height:26px}
+  .logo-mark{width:108px;height:90px;border-radius:20px;display:block;overflow:hidden;background:#4b86c4;box-shadow:0 6px 18px rgba(44,103,168,.4);flex-shrink:0}
+  .logo-mark svg{width:100%;height:100%;display:block}
   .logo span:not(.logo-mark){overflow:hidden;text-overflow:ellipsis}
+  .logo>span:not(.logo-mark){color:#d6112f;font-size:1.45rem;letter-spacing:-.01em}
   .nav-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
   .hero{padding:60px 0}
   .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
@@ -74,10 +75,6 @@
   .locked-icon{font-size:4rem;margin-bottom:20px;display:block}
   .locked-screen h3{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;margin-bottom:12px}
   .locked-screen p{color:var(--muted);font-size:.98rem;max-width:480px;margin:0 auto 26px}
-  .locked-stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
-  .locked-stat{text-align:center}
-  .locked-stat b{display:block;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--rose),var(--plum));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .locked-stat span{font-size:.78rem;color:var(--muted)}
   .locked-features{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
   .locked-feature{background:#fbf7fa;padding:12px 18px;border-radius:14px;font-size:.86rem;font-weight:600;color:var(--ink)}
   .locked-feature::before{content:"✓";color:var(--rose);margin-right:6px;font-weight:800}
@@ -134,7 +131,6 @@
   .msg time{display:block;font-size:.68rem;opacity:.7;margin-top:3px}
   .msg.me time{text-align:right;color:rgba(255,255,255,.85)}
   .msg.them time{color:var(--muted)}
-  /* Mesaj silme butonu */
   .msg .msg-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.25);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;opacity:0;transition:opacity .2s;cursor:pointer;border:none;line-height:1}
   .msg:hover .msg-del{opacity:1}
   @media(max-width:600px){.msg .msg-del{opacity:.7}}
@@ -185,10 +181,11 @@
     .hero-cta{flex-direction:column;gap:8px}
     .hero-cta .btn{width:100%;padding:12px}
     .card-box{padding:20px 16px;border-radius:18px}
-    .nav{height:58px;gap:6px}
+    .nav{height:76px;gap:6px}
     .logo{font-size:.9rem;gap:6px}
-    .logo-mark{width:30px;height:30px}
-    .logo-mark svg{width:20px;height:20px}
+    .logo-mark{width:66px;height:55px;border-radius:14px}
+    .logo{white-space:normal}
+    .logo>span:not(.logo-mark){font-size:.92rem;line-height:1.1;overflow:visible}
     .nav-actions{gap:4px}
     .btn{padding:10px 14px;font-size:.84rem}
     .btn-sm{padding:8px 12px;font-size:.78rem}
@@ -235,14 +232,38 @@
   <div class="container nav">
     <a href="#" class="logo">
       <span class="logo-mark">
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="18" cy="44" rx="9" ry="5.5" fill="white"/>
-          <path d="M23,42 C23,33 25,26 29,22 C32,19 33,16 33,14" stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-          <circle cx="33" cy="12.5" r="2.5" fill="white"/>
-          <ellipse cx="42" cy="44" rx="9" ry="5.5" fill="white"/>
-          <path d="M37,42 C37,33 35,26 31,22 C28,19 27,16 27,14" stroke="white" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-          <circle cx="27" cy="12.5" r="2.5" fill="white"/>
-        </svg>
+        <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="wa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe8fb"/><stop offset=".45" stop-color="#7db3e2"/><stop offset="1" stop-color="#2c67a8"/></linearGradient>
+    <linearGradient id="wh" gradientUnits="userSpaceOnUse" x1="0" y1="8" x2="0" y2="62"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#eef4fb"/><stop offset="1" stop-color="#bcd0e8"/></linearGradient>
+    <clipPath id="refl"><rect x="0" y="62" width="120" height="38"/></clipPath>
+    <filter id="rf" color-interpolation-filters="sRGB" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.18" numOctaves="1" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feGaussianBlur in="d" stdDeviation="0.4 0.9" result="b"/>
+      <feColorMatrix in="b" type="matrix" values="0.16 0 0 0 0.03  0 0.28 0 0 0.09  0 0 0.46 0 0.2  0 0 0 1 0"/>
+    </filter>
+    <g id="swan">
+      <path d="M60 62L14 62C8 61 5 56 4 49C10 51 16 50 22 46C28 42 38 42 46 47C52 51 58 56 60 62Z" fill="url(#wh)"/>
+      <path d="M44 47C35 43 24 44 13 49L21 52C29 50 37 51 44 52Z" fill="url(#wh)" stroke="#a9c0de" stroke-width=".5"/>
+      <path d="M46 52C37 50 26 51 15 57L24 58C32 57 40 58 48 57Z" fill="url(#wh)" stroke="#a9c0de" stroke-width=".5"/>
+      <path d="M48 58C39 57 30 59 21 62L29 62C37 61 44 61 50 61Z" fill="url(#wh)" stroke="#a9c0de" stroke-width=".5"/>
+      <path d="M26 47q6-2 12 0M24 52q7-2 14 0" fill="none" stroke="#a9c0de" stroke-width=".5" opacity=".6"/>
+      <path d="M55.5 56.9 L54.0 55.8 L52.6 54.7 L51.2 53.5 L49.8 52.3 L48.5 51.0 L47.2 49.7 L46.0 48.4 L44.8 47.0 L43.7 45.6 L42.7 44.2 L41.7 42.7 L40.9 41.3 L40.1 39.8 L39.5 38.4 L38.9 36.9 L38.4 35.4 L38.1 33.9 L37.8 32.4 L37.7 30.9 L37.7 29.5 L37.8 28.0 L38.0 26.5 L38.4 25.2 L38.8 23.9 L39.2 22.6 L39.8 21.5 L40.3 20.4 L40.9 19.4 L41.6 18.5 L42.3 17.6 L43.0 16.8 L43.7 16.1 L44.5 15.5 L45.3 15.0 L46.2 14.5 L47.1 14.1 L47.9 13.8 L48.8 13.6 L49.8 13.4 L50.7 13.3 L51.7 13.4 L52.6 13.4 L53.6 13.6 L54.6 13.9 L55.4 11.1 L54.2 10.8 L53.0 10.6 L51.8 10.4 L50.6 10.4 L49.4 10.5 L48.3 10.6 L47.1 10.9 L46.0 11.2 L44.9 11.7 L43.8 12.2 L42.7 12.9 L41.7 13.6 L40.7 14.4 L39.8 15.3 L38.9 16.3 L38.0 17.3 L37.2 18.5 L36.5 19.7 L35.8 21.0 L35.1 22.4 L34.5 23.9 L34.0 25.5 L33.6 27.3 L33.3 29.1 L33.2 31.0 L33.2 32.8 L33.3 34.7 L33.6 36.5 L34.0 38.3 L34.6 40.1 L35.2 41.9 L35.9 43.7 L36.8 45.5 L37.7 47.3 L38.7 49.0 L39.8 50.7 L40.9 52.3 L42.1 54.0 L43.4 55.6 L44.7 57.2 L46.1 58.7 L47.5 60.2 L49.0 61.6 L50.5 63.1Z" fill="url(#wh)"/>
+      <path d="M38 48C35 40 35 33 38 26" fill="none" stroke="#b5c9e4" stroke-width=".8" opacity=".55"/>
+      <ellipse cx="56.6" cy="13.9" rx="3.6" ry="2.5" transform="rotate(22 56.6 13.9)" fill="#fbfdff"/>
+      <path d="M57.4 13.2L60 16.9L57.6 16.4Z" fill="#f08a3c"/>
+      <path d="M57.4 13.4L58.6 15.8L59.4 14.6Z" fill="#1a1a26"/>
+      <circle cx="55.6" cy="13.3" r=".6" fill="#1a1a26"/>
+    </g>
+  </defs>
+  <rect width="120" height="100" fill="url(#wa)"/>
+  <g fill="none" stroke="#fff" stroke-width=".7"><ellipse cx="60" cy="66" rx="12" ry="2.3" stroke-opacity="0.42"/><ellipse cx="60" cy="66" rx="20" ry="3.8" stroke-opacity="0.39"/><ellipse cx="60" cy="66" rx="29" ry="5.5" stroke-opacity="0.36"/><ellipse cx="60" cy="66" rx="40" ry="7.6" stroke-opacity="0.33"/><ellipse cx="60" cy="66" rx="52" ry="9.9" stroke-opacity="0.30"/><ellipse cx="60" cy="66" rx="66" ry="12.5" stroke-opacity="0.27"/><ellipse cx="60" cy="66" rx="82" ry="15.6" stroke-opacity="0.24"/><ellipse cx="60" cy="66" rx="100" ry="19.0" stroke-opacity="0.21"/><ellipse cx="60" cy="66" rx="120" ry="22.8" stroke-opacity="0.18"/><ellipse cx="60" cy="66" rx="142" ry="27.0" stroke-opacity="0.15"/></g>
+  <g clip-path="url(#refl)" opacity=".8" filter="url(#rf)"><use href="#swan" transform="translate(0 124) scale(1 -1)"/><use href="#swan" transform="translate(120 124) scale(-1 -1)"/></g>
+  <use href="#swan"/>
+  <use href="#swan" transform="translate(120 0) scale(-1 1)"/>
+  <path d="M4 62.4q28 1.6 56 .4q28 1.2 56-.4" fill="none" stroke="#e8f3fd" stroke-width=".8" opacity=".6"/>
+</svg>
       </span>
       <span>Evlenmek İsteyenler</span>
     </a>
@@ -296,7 +317,10 @@
           <select id="f-gender" class="input"><option value="hepsi">Fark etmez</option><option value="kadın">Kadın</option><option value="erkek">Erkek</option></select>
         </div>
         <div class="field" style="margin:0"><label>Ülke</label><select id="f-country" class="input"><option value="hepsi">Tümü</option></select></div>
-        <div class="field" style="margin:0"><label>Şehir</label><select id="f-city" class="input"><option value="hepsi">Tümü</option></select></div>
+        <div class="field" style="margin:0"><label>Şehir</label>
+          <input id="f-city" class="input" list="dl-f-city" placeholder="Tümü" autocomplete="off">
+          <datalist id="dl-f-city"></datalist>
+        </div>
         <div class="field" style="margin:0"><label>Medeni Durum</label>
           <select id="f-marital" class="input">
             <option value="hepsi">Fark etmez</option><option value="Bekar">Bekar</option><option value="Boşanmış">Boşanmış</option><option value="Dul">Dul (Eşi vefat etmiş)</option><option value="Ayrı yaşıyor">Ayrı yaşıyor</option>
@@ -352,7 +376,10 @@
       </div>
       <div class="row-2">
         <div class="field"><label>Ülke *</label><select name="country" id="r-country" class="input" required><option value="">Seçiniz</option></select></div>
-        <div class="field"><label>Şehir *</label><select name="city" id="r-city" class="input" required><option value="">Seçiniz</option></select></div>
+        <div class="field"><label>Şehir *</label>
+          <input name="city" id="r-city" class="input" list="dl-r-city" required placeholder="Şehir seç veya yaz" autocomplete="off">
+          <datalist id="dl-r-city"></datalist>
+        </div>
       </div>
       <div class="row-3">
         <div class="field"><label>Boy (cm)</label><input name="height" class="input" type="number" min="100" max="250" placeholder="175"></div>
@@ -419,7 +446,10 @@
       </div>
       <div class="row-2">
         <div class="field"><label>Ülke *</label><select name="country" id="e-country" class="input" required><option value="">Seçiniz</option></select></div>
-        <div class="field"><label>Şehir *</label><select name="city" id="e-city" class="input" required><option value="">Seçiniz</option></select></div>
+        <div class="field"><label>Şehir *</label>
+          <input name="city" id="e-city" class="input" list="dl-e-city" required placeholder="Şehir seç veya yaz" autocomplete="off">
+          <datalist id="dl-e-city"></datalist>
+        </div>
       </div>
       <div class="row-3">
         <div class="field"><label>Boy (cm)</label><input name="height" id="e-height" class="input" type="number" min="100" max="250"></div>
@@ -499,54 +529,67 @@ async function applyPendingProfile() {
   if (!error) { clearPendingProfile(); myProfile = { ...profileData, id: currentUser.id }; toast(`✅ Profilin oluşturuldu, hoş geldin ${String(profileData.name).split(" ")[0]}! 🎉`, 5000); loadProfiles(); }
 }
 
-const LOCATIONS = {
-  "Türkiye": ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Şanlıurfa","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"],
-  "Almanya": ["Berlin","Hamburg","Münih","Köln","Frankfurt","Stuttgart","Düsseldorf","Leipzig","Dortmund","Essen","Bremen","Dresden","Hannover","Nürnberg","Duisburg"],
-  "Hollanda": ["Amsterdam","Rotterdam","Lahey","Utrecht","Eindhoven","Groningen","Tilburg"],
-  "Fransa": ["Paris","Lyon","Marsilya","Toulouse","Nice","Strazburg"],
-  "İngiltere": ["Londra","Manchester","Birmingham","Leeds","Liverpool","Edinburgh"],
-  "Avusturya": ["Viyana","Graz","Linz","Salzburg"],
-  "Belçika": ["Brüksel","Anvers","Gent","Charleroi"],
-  "İsviçre": ["Zürih","Cenevre","Basel","Bern"],
-  "ABD": ["New York","Los Angeles","Chicago","Houston","Miami","Boston","San Francisco"],
-  "Kanada": ["Toronto","Vancouver","Montreal","Ottawa","Calgary"],
-  "Avustralya": ["Sydney","Melbourne","Brisbane","Perth"],
-  "Kıbrıs": ["Lefkoşa","Girne","Gazimağusa","Güzelyurt"],
-  "Azerbaycan": ["Bakü","Gence","Sumqayıt"],
-  "Suudi Arabistan": ["Riyad","Cidde","Mekke","Medine"],
-  "BAE": ["Dubai","Abu Dabi","Şarja"]
+/* ============ ÜLKE & ŞEHİR ============ */
+const TR_CITIES = ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Şanlıurfa","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
+
+const COUNTRY_CODES = "AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BA BW BR IO VG BN BG BF BI KH CM CA CV BQ KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE SZ ET FK FO FJ FI FR GF PF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI XK KW KG LA LV LB LS LR LY LI LT LU MO MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NL NC NZ NI NE NG NU NF KP MK MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA KR SS ES LK BL SH KN LC MF PM VC SD SR SJ SE CH SY TW TJ TZ TH TL TG TK TO TT TN TR TM TC TV UG UA AE GB US UY UZ VU VA VE VN WF EH YE ZM ZW".split(" ");
+
+const dnTr = new Intl.DisplayNames(["tr"], { type: "region" });
+const dnEn = new Intl.DisplayNames(["en"], { type: "region" });
+const COUNTRIES = COUNTRY_CODES
+  .map(c => ({ tr: dnTr.of(c), en: dnEn.of(c) }))
+  .sort((a, b) => a.tr.localeCompare(b.tr, "tr"));
+const TR_TO_EN = Object.fromEntries(COUNTRIES.map(c => [c.tr, c.en]));
+
+// API'nin farklı yazdığı ülke adları (gerekirse ekle)
+const API_ALIAS = {
+  "Türkiye": "Turkey", "Czechia": "Czech Republic",
+  "Côte d’Ivoire": "Cote d'Ivoire", "Congo - Kinshasa": "Democratic Republic of the Congo",
+  "Congo - Brazzaville": "Congo", "Myanmar (Burma)": "Myanmar", "North Macedonia": "Macedonia",
+  "Eswatini": "Swaziland", "Hong Kong SAR China": "Hong Kong", "Macao SAR China": "Macau",
+  "Palestinian Territories": "Palestine", "Vatican City": "Vatican City State",
+  "United States": "United States", "United Kingdom": "United Kingdom"
 };
 
-function fillCountriesAndCities() {
-  ["#r-country","#e-country"].forEach(sel => {
-    const el = $(sel); if (!el) return;
-    el.innerHTML = '<option value="">Seçiniz</option>';
-    Object.keys(LOCATIONS).forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; el.appendChild(o); });
-  });
-  const fCountry = $("#f-country");
-  if (fCountry) {
-    fCountry.innerHTML = '<option value="hepsi">Tümü</option>';
-    Object.keys(LOCATIONS).forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; fCountry.appendChild(o); });
-  }
-  updateCityDropdown("r-country", "r-city");
-  updateCityDropdown("e-country", "e-city");
-  updateCityDropdown("f-country", "f-city");
+// Eski kayıtlarda kullanılan kısa ülke adları -> yeni liste adı
+const LEGACY_COUNTRY = { "ABD": "Amerika Birleşik Devletleri", "BAE": "Birleşik Arap Emirlikleri", "İngiltere": "Birleşik Krallık" };
+const normCountry = c => LEGACY_COUNTRY[c] || c;
+
+const cityCache = {};
+async function getCities(countryTr) {
+  if (countryTr === "Türkiye") return TR_CITIES;
+  if (cityCache[countryTr]) return cityCache[countryTr];
+  const en = TR_TO_EN[countryTr] || countryTr;
+  try {
+    const r = await fetch("https://countriesnow.space/api/v0.1/countries/cities", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ country: API_ALIAS[en] || en })
+    });
+    const j = await r.json();
+    const list = j.error ? [] : [...new Set(j.data || [])].sort((a, b) => a.localeCompare(b));
+    if (list.length) cityCache[countryTr] = list;
+    return list;
+  } catch (e) { return []; }
 }
 
-function updateCityDropdown(countrySelId, citySelId) {
-  const countrySel = $("#" + countrySelId); const citySel = $("#" + citySelId);
-  if (!countrySel || !citySel) return;
-  const country = countrySel.value;
-  citySel.innerHTML = "";
-  if (country && LOCATIONS[country]) {
-    const ph = document.createElement("option"); ph.value = ""; ph.textContent = "Seçiniz"; citySel.appendChild(ph);
-    LOCATIONS[country].forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; citySel.appendChild(o); });
-  } else if (country === "hepsi" || country === "") {
-    const ph = document.createElement("option");
-    ph.value = country === "hepsi" ? "hepsi" : "";
-    ph.textContent = country === "hepsi" ? "Tümü" : "Önce ülke seçin";
-    citySel.appendChild(ph);
-  }
+function fillCountriesAndCities() {
+  const opts = COUNTRIES.map(c => `<option value="${esc(c.tr)}">${esc(c.tr)}</option>`).join("");
+  ["#r-country", "#e-country"].forEach(sel => {
+    const el = $(sel); if (!el) return;
+    el.innerHTML = '<option value="">Seçiniz</option>' + opts;
+  });
+  $("#f-country").innerHTML = '<option value="hepsi">Tümü</option>' + opts;
+}
+
+async function updateCityDropdown(countrySelId, citySelId) {
+  const country = $("#" + countrySelId).value;
+  const dl = $("#dl-" + citySelId);
+  if (!dl) return;
+  dl.innerHTML = "";
+  if (!country || country === "hepsi") return;
+  const cities = await getCities(country);
+  if ($("#" + countrySelId).value !== country) return; // bu arada ülke değiştiyse
+  dl.innerHTML = cities.map(c => `<option value="${esc(c)}">`).join("");
 }
 
 function openModal(id) { $("#" + id).classList.add("open"); document.body.style.overflow = "hidden"; }
@@ -610,16 +653,12 @@ function updateProfileSection() {
         <span class="locked-icon">🔒</span>
         <h3>Profilleri görmek için üye olun</h3>
         <p>Sitemizdeki tüm üye profillerini görebilmek, mesajlaşabilmek ve resim gönderebilmek için ücretsiz üye olmanız gerekiyor.</p>
-        <div class="locked-stats">
-          <div class="locked-stat"><b>48.500+</b><span>Kayıtlı Üye</span></div>
-          <div class="locked-stat"><b>12.400+</b><span>Mutlu Eşleşme</span></div>
-          <div class="locked-stat"><b>%100</b><span>Ücretsiz</span></div>
-        </div>
         <div class="locked-features">
           <span class="locked-feature">Sınırsız profil görüntüleme</span>
           <span class="locked-feature">Anlık mesajlaşma</span>
           <span class="locked-feature">Resim gönderme</span>
           <span class="locked-feature">Profil fotoğrafı</span>
+          <span class="locked-feature">Dünyanın her yerinden üyeler</span>
         </div>
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
           <button class="btn btn-primary" data-action="open-register">Ücretsiz Üye Ol</button>
@@ -674,8 +713,13 @@ async function loadProfiles(filters = {}) {
   grid.innerHTML = `<div class="empty">⏳ Yükleniyor...</div>`;
   let q = db.from("profiles").select("*").order("created_at", { ascending: false });
   if (filters.gender && filters.gender !== "hepsi") q = q.eq("gender", filters.gender);
-  if (filters.country && filters.country !== "hepsi") q = q.eq("country", filters.country);
-  if (filters.city && filters.city !== "hepsi") q = q.eq("city", filters.city);
+  if (filters.country && filters.country !== "hepsi") {
+    // eski kısa adlarla kaydedilmiş üyeleri de yakala
+    const olds = Object.keys(LEGACY_COUNTRY).filter(k => LEGACY_COUNTRY[k] === filters.country);
+    if (olds.length) q = q.in("country", [filters.country, ...olds]);
+    else q = q.eq("country", filters.country);
+  }
+  if (filters.city && filters.city !== "hepsi") q = q.ilike("city", filters.city.replace(/[%_]/g, ""));
   if (filters.marital && filters.marital !== "hepsi") q = q.eq("marital_status", filters.marital);
   if (filters.education && filters.education !== "hepsi") q = q.eq("education", filters.education);
   if (filters.ageMin) q = q.gte("age", filters.ageMin);
@@ -687,7 +731,6 @@ async function loadProfiles(filters = {}) {
   const { data, error } = await q.limit(100);
   if (error) { grid.innerHTML = `<div class="empty"><b>Bağlantı hatası</b>${esc(error.message)}</div>`; return; }
   let list = data || [];
-  // Kendi profilini listeden çıkar
   list = list.filter(p => p.id !== currentUser.id);
   if (filters.search) {
     const s = filters.search.toLowerCase();
@@ -737,6 +780,7 @@ async function handleRegister(e) {
   data.age = Number(data.age);
   data.height = data.height ? Number(data.height) : null;
   data.weight = data.weight ? Number(data.weight) : null;
+  data.city = (data.city || "").trim();
   data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
   const password = data.password; delete data.password;
   if (!data.name || !data.email || !data.age || !data.gender || !data.city || !data.country) { toast("Lütfen zorunlu (*) alanları doldur."); return; }
@@ -802,7 +846,7 @@ function openEditProfile() {
   $("#e-job").value = myProfile.job || "";
   $("#e-bio").value = myProfile.bio || "";
   $("#e-interests").value = (myProfile.interests || []).join(", ");
-  $("#e-country").value = myProfile.country || "Türkiye";
+  $("#e-country").value = normCountry(myProfile.country || "Türkiye");
   updateCityDropdown("e-country", "e-city");
   $("#e-city").value = myProfile.city || "";
   const preview = $("#editPhotoPreview");
@@ -830,6 +874,7 @@ async function handleEditProfile(e) {
   data.age = Number(data.age);
   data.height = data.height ? Number(data.height) : null;
   data.weight = data.weight ? Number(data.weight) : null;
+  data.city = (data.city || "").trim();
   data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
   if (!data.name || !data.age || !data.gender || !data.city || !data.country) { toast("Zorunlu alanları doldur."); return; }
   if (data.age < 18) { toast("18 yaş zorunludur."); return; }
@@ -885,13 +930,13 @@ async function toggleLike(id) {
 }
 
 function getCurrentFilters() {
-  return { gender: $("#f-gender").value, country: $("#f-country").value, city: $("#f-city").value, marital: $("#f-marital").value, education: $("#f-education").value, ageMin: +$("#f-age-min").value || 18, ageMax: +$("#f-age-max").value || 99, heightMin: +$("#f-height-min").value || null, heightMax: +$("#f-height-max").value || null, weightMin: +$("#f-weight-min").value || null, weightMax: +$("#f-weight-max").value || null, search: $("#f-search").value.trim() };
+  return { gender: $("#f-gender").value, country: $("#f-country").value, city: $("#f-city").value.trim(), marital: $("#f-marital").value, education: $("#f-education").value, ageMin: +$("#f-age-min").value || 18, ageMax: +$("#f-age-max").value || 99, heightMin: +$("#f-height-min").value || null, heightMax: +$("#f-height-max").value || null, weightMin: +$("#f-weight-min").value || null, weightMax: +$("#f-weight-max").value || null, search: $("#f-search").value.trim() };
 }
 
 function applyFilters() { loadProfiles(getCurrentFilters()); }
 function resetFilters() {
   $("#f-gender").value = "hepsi"; $("#f-country").value = "hepsi";
-  $("#f-city").innerHTML = '<option value="hepsi">Tümü</option>';
+  $("#f-city").value = ""; $("#dl-f-city").innerHTML = "";
   $("#f-marital").value = "hepsi"; $("#f-education").value = "hepsi";
   $("#f-age-min").value = 18; $("#f-age-max").value = 99;
   $("#f-height-min").value = ""; $("#f-height-max").value = "";
@@ -912,13 +957,14 @@ async function viewProfile(id) {
   const { data: p, error } = await db.from("profiles").select("*").eq("id", id).single();
   if (error || !p) { toast("Profil bulunamadı"); return; }
   const liked = myLikes.has(p.id);
+  const box = (label, val) => `<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">${label}</span><b>${val}</b></div>`;
   const details = [];
-  if (p.marital_status) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Medeni Durum</span><b>${esc(p.marital_status)}</b></div>`);
-  if (p.height) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Boy</span><b>${p.height} cm</b></div>`);
-  if (p.weight) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Kilo</span><b>${p.weight} kg</b></div>`);
-  if (p.education) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Eğitim</span><b>${esc(p.education)}</b></div>`);
-  if (p.job) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Meslek</span><b>${esc(p.job)}</b></div>`);
-  if (p.city) details.push(`<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">Konum</span><b>${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</b></div>`);
+  if (p.marital_status) details.push(box("Medeni Durum", esc(p.marital_status)));
+  if (p.height) details.push(box("Boy", `${p.height} cm`));
+  if (p.weight) details.push(box("Kilo", `${p.weight} kg`));
+  if (p.education) details.push(box("Eğitim", esc(p.education)));
+  if (p.job) details.push(box("Meslek", esc(p.job)));
+  if (p.city) details.push(box("Konum", `${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}`));
   const avatarStyle = p.avatar_url ? `background:url('${esc(p.avatar_url)}') center/cover` : `background:${grad(p.id)}`;
   const avatarContent = p.avatar_url ? "" : initials(p.name);
   $("#detailBody").innerHTML = `
@@ -1080,7 +1126,6 @@ function appendMessage(m, scroll = true) {
   if (m.image_url) inner += `<img src="${esc(m.image_url)}" alt="Resim" data-action="open-lightbox" data-url="${esc(m.image_url)}" loading="lazy">`;
   if (m.content) inner += escapeText(m.content);
   inner += `<time>${timeStr}</time>`;
-  // Kendi mesajlarımıza sil butonu
   if (isMe && m.id && !String(m.id).startsWith("temp-")) {
     inner += `<button class="msg-del" data-action="delete-msg" data-id="${m.id}" title="Sil">✕</button>`;
   }
@@ -1109,7 +1154,6 @@ async function sendMessage() {
     const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
     imageUrl = urlData.publicUrl;
   }
-  // Veritabanına kaydet
   const { data: inserted, error } = await db.from("messages").insert({ sender_id: currentUser.id, receiver_id: activeConvUserId, content: content || "", image_url: imageUrl }).select().single();
   if (error) { toast("Mesaj gönderilemedi: " + error.message); if (sendBtn) sendBtn.disabled = false; return; }
   appendMessage(inserted, true);
@@ -1151,7 +1195,7 @@ document.addEventListener("click", async e => {
     case "close-modal": closeModal(modal); break;
     case "open-edit-profile": closeAllModals(); openEditProfile(); break;
     case "pick-edit-photo": $("#editPhotoInput").click(); break;
-    case "remove-edit-photo":
+    case "remove-edit-photo": {
       cancelPendingProfilePhoto();
       const prev = $("#editPhotoPreview");
       prev.style.backgroundImage = "";
@@ -1160,6 +1204,7 @@ document.addEventListener("click", async e => {
       $("#editPhotoRemoveBtn").style.display = "none";
       myProfile.avatar_url = null;
       break;
+    }
     case "logout": await handleLogout(); break;
     case "toggle-like": await toggleLike(id); break;
     case "toggle-like-modal": await toggleLike(id); await viewProfile(id); break;
@@ -1192,9 +1237,9 @@ $("#editProfileForm").addEventListener("submit", handleEditProfile);
 $("#editPhotoInput").addEventListener("change", handleEditPhotoPick);
 
 document.addEventListener("change", e => {
-  if (e.target.id === "r-country") updateCityDropdown("r-country", "r-city");
-  if (e.target.id === "e-country") updateCityDropdown("e-country", "e-city");
-  if (e.target.id === "f-country") updateCityDropdown("f-country", "f-city");
+  const map = { "r-country": "r-city", "e-country": "e-city", "f-country": "f-city" };
+  const cityId = map[e.target.id];
+  if (cityId) { $("#" + cityId).value = ""; updateCityDropdown(e.target.id, cityId); }
 });
 
 (async function init() {
