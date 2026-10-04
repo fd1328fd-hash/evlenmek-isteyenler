@@ -2,18 +2,20 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>Evlenmek İsteyenler — Ciddi İlişkiler Platformu</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   :root{--rose:#e8437c;--rose-dark:#c72c63;--rose-soft:#ffe6ef;--plum:#6d3b8f;--ink:#1c1a24;--muted:#6c6880;--bg:#fff9fc;--border:#f1e3ea;--shadow:0 12px 34px rgba(109,59,143,.10);--shadow-sm:0 4px 14px rgba(109,59,143,.08);--green:#25d366}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
-  .container{width:min(1180px,92%);margin-inline:auto}
-  button,input,select,textarea{font:inherit;color:inherit}
+  html{overflow-x:hidden;width:100%;max-width:100%}
+  body{overflow-x:hidden;width:100%;max-width:100%;-webkit-text-size-adjust:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  img{max-width:100%;height:auto}
+  .container{width:min(1180px,94%);max-width:100%;margin-inline:auto}
+  button,input,select,textarea{font:inherit;color:inherit;max-width:100%}
   button{cursor:pointer;border:none;background:none}
   a{color:inherit;text-decoration:none}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:999px;font-weight:600;font-size:.94rem;transition:.2s;white-space:nowrap}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:999px;font-weight:600;font-size:.94rem;transition:.2s;white-space:nowrap;max-width:100%}
   .btn:active{transform:scale(.97)}
   .btn-primary{background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;box-shadow:0 8px 22px rgba(232,67,124,.32)}
   .btn-primary:hover{transform:translateY(-2px)}
@@ -21,37 +23,38 @@
   .btn-ghost:hover{border-color:var(--rose);color:var(--rose)}
   .btn-block{width:100%}
   .btn-sm{padding:9px 18px;font-size:.86rem}
-  header{position:sticky;top:0;z-index:80;background:rgba(255,249,252,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;white-space:nowrap}
-  .logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--rose),var(--plum));color:#fff;font-size:1.05rem}
-  .nav-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  header{position:sticky;top:0;z-index:80;background:rgba(255,249,252,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;white-space:nowrap;min-width:0}
+  .logo-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--rose),var(--plum));color:#fff;font-size:1.05rem;flex-shrink:0}
+  .logo span:not(.logo-mark){overflow:hidden;text-overflow:ellipsis}
+  .nav-actions{display:flex;gap:10px;align-items:center;flex-shrink:0}
   .hero{padding:60px 0}
   .hero-inner{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
-  .hero h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin-bottom:18px}
+  .hero h1{font-size:clamp(1.6rem,4vw,2.9rem);line-height:1.15;letter-spacing:-.03em;font-weight:800;margin-bottom:18px;word-wrap:break-word}
   .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--rose),var(--plum));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero p{color:var(--muted);font-size:1.02rem;margin-bottom:28px;max-width:520px}
   .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-  .card-box{background:#fff;border-radius:24px;padding:30px;box-shadow:var(--shadow);border:1px solid var(--border)}
+  .card-box{background:#fff;border-radius:24px;padding:30px;box-shadow:var(--shadow);border:1px solid var(--border);max-width:100%}
   .field{margin-bottom:14px}
   .field label{display:block;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:6px}
-  .input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:.92rem;outline:none;transition:.2s;background:#fff;font-family:inherit}
+  .input{width:100%;max-width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:.92rem;outline:none;transition:.2s;background:#fff;font-family:inherit}
   .input:focus{border-color:var(--rose);box-shadow:0 0 0 4px var(--rose-soft)}
   select.input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236c6880' d='M6 8 0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
   .row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .row-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   section{padding:60px 0}
   .sec-head{text-align:center;max-width:620px;margin:0 auto 40px}
-  .sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.02em;font-weight:800;margin-bottom:12px}
+  .sec-head h2{font-size:clamp(1.5rem,3vw,2.2rem);letter-spacing:-.02em;font-weight:800;margin-bottom:12px}
   .sec-head p{color:var(--muted)}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
-  .profile-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column;animation:pop .35s ease both}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;width:100%}
+  .profile-card{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow-sm);transition:.25s;display:flex;flex-direction:column;animation:pop .35s ease both;max-width:100%;overflow:hidden}
   @keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
   .profile-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-  .card-top{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+  .card-top{display:flex;gap:14px;align-items:center;margin-bottom:14px;min-width:0}
   .avatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:1.05rem;flex-shrink:0}
-  .card-top h4{font-size:1rem;font-weight:700}
-  .card-top .meta{font-size:.82rem;color:var(--muted)}
+  .card-top h4{font-size:1rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .card-top .meta{font-size:.82rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .bio{font-size:.86rem;color:var(--muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .info-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;font-size:.76rem}
   .info-pill{background:#f2e9fa;color:var(--plum);padding:3px 9px;border-radius:7px;font-weight:600}
@@ -64,31 +67,46 @@
   .card-actions{display:flex;gap:8px;margin-top:auto}
   .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted);background:#fff;border:1.5px dashed var(--border);border-radius:20px}
   .empty b{display:block;font-size:1.05rem;color:var(--ink);margin-bottom:6px}
+
+  /* KİLİTLİ EKRAN */
+  .locked-screen{background:#fff;border:1px solid var(--border);border-radius:24px;padding:60px 30px;text-align:center;box-shadow:var(--shadow-sm);grid-column:1/-1;max-width:100%}
+  .locked-icon{font-size:4rem;margin-bottom:20px;display:block}
+  .locked-screen h3{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:800;margin-bottom:12px;letter-spacing:-.02em}
+  .locked-screen p{color:var(--muted);font-size:.98rem;max-width:480px;margin:0 auto 26px}
+  .locked-stats{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+  .locked-stat{text-align:center}
+  .locked-stat b{display:block;font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--rose),var(--plum));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .locked-stat span{font-size:.78rem;color:var(--muted)}
+  .locked-features{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+  .locked-feature{background:#fbf7fa;padding:12px 18px;border-radius:14px;font-size:.86rem;font-weight:600;color:var(--ink)}
+  .locked-feature::before{content:"✓";color:var(--rose);margin-right:6px;font-weight:800}
+
   .overlay{position:fixed;inset:0;background:rgba(23,20,31,.55);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
   .overlay.open{display:flex;animation:fade .2s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
-  .modal{background:#fff;border-radius:26px;width:min(560px,100%);max-height:92vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:rise .25s ease}
+  .modal{background:#fff;border-radius:26px;width:min(560px,100%);max-width:100%;max-height:92vh;overflow-y:auto;padding:32px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:rise .25s ease}
   @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-  .close-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;color:var(--muted);z-index:10}
+  .close-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;color:var(--muted);z-index:10;font-size:.9rem}
   .close-x:hover{background:var(--rose-soft);color:var(--rose)}
-  #toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120px);background:#17141f;color:#fff;padding:14px 26px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:400;transition:transform .35s;max-width:90%;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+  #toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,120px);background:#17141f;color:#fff;padding:14px 26px;border-radius:14px;font-size:.9rem;font-weight:600;z-index:400;transition:transform .35s;width:calc(100% - 32px);max-width:420px;box-shadow:0 16px 40px rgba(0,0,0,.3);text-align:center;line-height:1.5}
   #toast.show{transform:translate(-50%,0)}
-  .user-badge{display:flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600}
+  .user-badge{display:flex;align-items:center;gap:9px;font-size:.86rem;font-weight:600;min-width:0}
   .user-badge .avatar{width:34px;height:34px;border-radius:11px;font-size:.8rem}
-  .icon-btn{position:relative;width:42px;height:42px;border-radius:12px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:1.15rem;transition:.2s}
+  .user-badge span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px}
+  .icon-btn{position:relative;width:42px;height:42px;border-radius:12px;border:1.5px solid var(--border);background:#fff;display:grid;place-items:center;font-size:1.15rem;transition:.2s;flex-shrink:0}
   .icon-btn:hover{border-color:var(--rose);background:var(--rose-soft)}
   .badge{position:absolute;top:-5px;right:-5px;background:var(--rose);color:#fff;font-size:.68rem;font-weight:800;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;padding:0 5px;border:2px solid #fff}
-  .filter-panel{background:#fff;border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:30px}
+  .filter-panel{background:#fff;border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:30px;max-width:100%}
   .filter-panel h3{font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
   .filter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;align-items:end}
-  .filter-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end}
+  .filter-actions{display:flex;gap:10px;margin-top:16px;justify-content:flex-end;flex-wrap:wrap}
   .msg-overlay{position:fixed;inset:0;background:rgba(23,20,31,.55);backdrop-filter:blur(6px);z-index:250;display:none;align-items:center;justify-content:center;padding:20px}
   .msg-overlay.open{display:flex;animation:fade .2s ease}
   .msg-container{background:#fff;border-radius:22px;width:min(1100px,100%);height:min(720px,92vh);display:grid;grid-template-columns:320px 1fr;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative}
   .msg-sidebar{background:#fbf7fa;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
   .msg-sidebar-head{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
   .msg-sidebar-head h3{font-size:1.05rem}
-  .conv-list{flex:1;overflow-y:auto;padding:8px}
+  .conv-list{flex:1;overflow-y:auto;padding:8px;-webkit-overflow-scrolling:touch}
   .conv-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;cursor:pointer;transition:.15s;margin-bottom:2px}
   .conv-item:hover{background:#fff}
   .conv-item.active{background:#fff;box-shadow:var(--shadow-sm)}
@@ -99,32 +117,33 @@
   .conv-meta{text-align:right;flex-shrink:0}
   .conv-meta time{font-size:.7rem;color:var(--muted);display:block}
   .conv-meta .unread{background:var(--rose);color:#fff;font-size:.68rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 5px;margin-top:4px;margin-left:auto;width:fit-content}
-  .msg-main{display:flex;flex-direction:column;overflow:hidden}
+  .msg-main{display:flex;flex-direction:column;overflow:hidden;min-width:0}
   .msg-head{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
   .msg-head .avatar{width:42px;height:42px;border-radius:13px;font-size:.82rem}
-  .msg-head-info{flex:1}
-  .msg-head-info b{font-size:.95rem}
+  .msg-head-info{flex:1;min-width:0}
+  .msg-head-info b{font-size:.95rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .msg-head-info span{font-size:.78rem;color:var(--green);font-weight:600}
-  .msg-body{flex:1;overflow-y:auto;padding:20px 22px;background:#fbf7fa;display:flex;flex-direction:column;gap:8px}
+  .msg-body{flex:1;overflow-y:auto;padding:20px 22px;background:#fbf7fa;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
   .msg{max-width:70%;padding:10px 14px;border-radius:16px;font-size:.9rem;line-height:1.45;word-wrap:break-word;position:relative;animation:msgIn .2s ease}
   @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;border-bottom-right-radius:4px}
   .msg.them{align-self:flex-start;background:#fff;color:var(--ink);border-bottom-left-radius:4px;box-shadow:var(--shadow-sm)}
+  .msg img{max-width:100%;border-radius:10px;display:block;margin-bottom:6px;cursor:pointer;max-height:300px;object-fit:cover}
   .msg time{display:block;font-size:.68rem;opacity:.7;margin-top:3px}
   .msg.me time{text-align:right;color:rgba(255,255,255,.85)}
   .msg.them time{color:var(--muted)}
-  .typing-indicator{align-self:flex-start;background:#fff;padding:12px 16px;border-radius:16px;border-bottom-left-radius:4px;box-shadow:var(--shadow-sm);display:none}
-  .typing-indicator.show{display:flex;gap:4px}
-  .typing-indicator span{width:7px;height:7px;background:#b5aec4;border-radius:50%;animation:bounce 1.2s infinite}
-  .typing-indicator span:nth-child(2){animation-delay:.2s}
-  .typing-indicator span:nth-child(3){animation-delay:.4s}
-  @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
   .msg-input-row{padding:14px 18px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:center;background:#fff}
-  .msg-input-row textarea{flex:1;border:none;outline:none;resize:none;font-size:.92rem;padding:10px 4px;max-height:100px;font-family:inherit;line-height:1.4}
-  .msg-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;display:grid;place-items:center;font-size:1.15rem;box-shadow:0 6px 16px rgba(232,67,124,.35);transition:.2s}
+  .msg-input-row textarea{flex:1;border:none;outline:none;resize:none;font-size:.92rem;padding:10px 4px;max-height:100px;font-family:inherit;line-height:1.4;min-width:0}
+  .msg-img-btn{width:40px;height:40px;border-radius:50%;background:#f6f2f5;display:grid;place-items:center;font-size:1.15rem;color:var(--muted);transition:.2s;flex-shrink:0}
+  .msg-img-btn:hover{background:var(--rose-soft);color:var(--rose)}
+  .msg-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--rose-dark));color:#fff;display:grid;place-items:center;font-size:1.15rem;box-shadow:0 6px 16px rgba(232,67,124,.32);transition:.2s;flex-shrink:0}
   .msg-send:hover{transform:scale(1.05)}
   .msg-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:40px}
   .msg-empty .emoji{font-size:3rem;margin-bottom:14px}
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;cursor:pointer}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:100%;max-height:90vh;border-radius:12px}
+
   @media(max-width:980px){
     .hero-inner{grid-template-columns:1fr;gap:40px}
     .msg-container{grid-template-columns:1fr}
@@ -132,11 +151,84 @@
     .msg-container:not(.chat-open) .msg-main{display:none}
     .row-3{grid-template-columns:1fr 1fr}
     .nav-actions .hide-mobile{display:none}
+    .user-badge span{display:none}
   }
+
+  /* MOBİL DÜZENLEMELER */
   @media(max-width:600px){
+    .container{width:92%}
+    .hero{padding:32px 0}
+    .hero-inner{gap:24px}
+    .hero h1{font-size:1.5rem;line-height:1.2}
+    .hero p{font-size:.9rem;margin-bottom:18px}
+    .hero-cta{flex-direction:column;gap:8px}
+    .hero-cta .btn{width:100%;padding:12px}
+    .card-box{padding:20px 16px;border-radius:18px}
+    .nav{height:58px;gap:6px}
+    .logo{font-size:.9rem;gap:6px}
+    .logo-mark{width:30px;height:30px;font-size:.8rem;border-radius:9px}
+    .nav-actions{gap:4px}
+    .btn{padding:10px 14px;font-size:.84rem}
+    .btn-sm{padding:8px 12px;font-size:.78rem}
+    .icon-btn{width:36px;height:36px;font-size:1rem;border-radius:10px}
+    .user-badge .avatar{width:30px;height:30px;font-size:.72rem}
+    section{padding:30px 0}
+    .sec-head{margin-bottom:20px}
+    .sec-head h2{font-size:1.3rem}
+    .sec-head p{font-size:.85rem}
     .row-2,.row-3{grid-template-columns:1fr}
-    .modal{padding:24px 20px}
-    section{padding:44px 0}
+    .filter-panel{padding:14px 12px;border-radius:16px;margin-bottom:18px}
+    .filter-grid{grid-template-columns:1fr;gap:8px}
+    .filter-actions{flex-direction:column;gap:8px;margin-top:10px}
+    .filter-actions .btn{width:100%}
+    .grid{grid-template-columns:1fr;gap:12px}
+    .profile-card{padding:16px;border-radius:16px}
+    .card-actions{flex-wrap:wrap;gap:6px}
+    .card-actions .btn{flex:1 1 100%}
+    .like-btn{flex:1;width:auto;height:40px}
+    .modal{padding:22px 16px;border-radius:18px;width:96%!important;max-height:94vh}
+    .close-x{top:10px;right:10px;width:30px;height:30px}
+    .input{padding:13px 12px;font-size:16px;border-radius:10px}
+    textarea.input{font-size:16px}
+    #toast{font-size:.82rem;padding:11px 16px;bottom:14px}
+    .locked-screen{padding:32px 16px;border-radius:18px}
+    .locked-screen h3{font-size:1.15rem}
+    .locked-icon{font-size:2.6rem;margin-bottom:14px}
+    .locked-screen p{font-size:.88rem}
+    .locked-stats{gap:12px;margin-bottom:22px}
+    .locked-stat b{font-size:1.25rem}
+    .locked-stat span{font-size:.72rem}
+    .locked-features{gap:8px;margin-bottom:22px}
+    .locked-feature{padding:8px 12px;font-size:.78rem}
+
+    /* MESAJLAŞMA MOBİL */
+    .msg-overlay{padding:0}
+    .msg-container{height:100vh;height:100dvh;border-radius:0;max-height:100dvh;width:100%}
+    .msg-sidebar-head{padding:14px 16px}
+    .msg-sidebar-head h3{font-size:1rem}
+    .conv-list{padding:6px}
+    .conv-item{padding:10px;gap:10px}
+    .conv-item .avatar{width:42px;height:42px;border-radius:12px}
+    .conv-info b{font-size:.88rem}
+    .conv-info span{font-size:.74rem}
+    .msg-head{padding:10px 12px;gap:8px}
+    .msg-head .avatar{width:36px;height:36px;border-radius:11px;font-size:.75rem}
+    .msg-head-info b{font-size:.88rem}
+    .msg-head-info span{font-size:.7rem}
+    .msg-head .icon-btn{width:34px;height:34px;font-size:.85rem}
+    .msg-body{padding:12px 14px;gap:6px}
+    .msg{max-width:82%;font-size:.88rem;padding:9px 13px}
+    .msg img{max-height:220px}
+    .msg-input-row{padding:10px 12px;gap:8px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+    .msg-input-row textarea{font-size:16px;padding:8px 4px}
+    .msg-send{width:38px;height:38px;font-size:1rem}
+    .msg-img-btn{width:36px;height:36px;font-size:1rem}
+  }
+
+  @media(max-width:360px){
+    .hero h1{font-size:1.3rem}
+    .logo span:not(.logo-mark){display:none}
+    .msg{max-width:88%}
   }
 </style>
 </head>
@@ -144,7 +236,7 @@
 
 <header>
   <div class="container nav">
-    <a href="#" class="logo"><span class="logo-mark">💍</span> Evlenmek İsteyenler</a>
+    <a href="#" class="logo"><span class="logo-mark">💍</span> <span>Evlenmek İsteyenler</span></a>
     <div class="nav-actions" id="navActions">
       <button class="btn btn-ghost btn-sm" data-action="open-login">Giriş Yap</button>
       <button class="btn btn-primary btn-sm" data-action="open-register">Ücretsiz Kayıt</button>
@@ -159,7 +251,7 @@
       <p>Gerçek üyeler, gelişmiş filtreleme ve anlık mesajlaşma. Evlilik ve uzun soluklu ilişki hedefleyenlerin buluşma noktası.</p>
       <div class="hero-cta">
         <button class="btn btn-primary" data-action="open-register">Hemen Üye Ol — Ücretsiz</button>
-        <button class="btn btn-ghost" data-action="scroll-profiles">Profilleri Gör</button>
+        <button class="btn btn-ghost" data-action="open-login">Giriş Yap</button>
       </div>
     </div>
     <div class="card-box">
@@ -188,7 +280,7 @@
       <p id="profileCount">Yükleniyor...</p>
     </div>
 
-    <div class="filter-panel">
+    <div class="filter-panel" id="filterPanel" style="display:none">
       <h3>🎯 Gelişmiş Filtreleme</h3>
       <div class="filter-grid">
         <div class="field" style="margin:0">
@@ -264,7 +356,7 @@
     </div>
 
     <div class="grid" id="profileGrid">
-      <div class="empty">⏳ Profiller yükleniyor...</div>
+      <div class="empty">⏳ Yükleniyor...</div>
     </div>
   </div>
 </section>
@@ -368,15 +460,15 @@
   </div>
 </div>
 
+<div class="lightbox" id="lightbox" data-action="close-lightbox">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 <div id="toast"></div>
 
 <script>
-/* ============================================================
-   SUPABASE BİLGİLERİ (Anahtar içine gömülü)
-============================================================ */
 const SUPABASE_URL = "https://mrlyghqqyvrdcwwmhpwj.supabase.co";
 const SUPABASE_KEY = "sb_publishable_EW46ECy6Lv4Z1qJ_UPPx1A_JbU3G_rG";
-/* ============================================================ */
 
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -401,12 +493,33 @@ const grad = id => {
 const initials = n => String(n || "?").trim().split(/\s+/).map(x => x[0]).join("").slice(0, 2).toUpperCase();
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 
-function toast(msg, ms = 3000) {
+function toast(msg, ms = 3500) {
   const t = $("#toast");
-  t.textContent = msg;
+  t.innerHTML = msg;
   t.classList.add("show");
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove("show"), ms);
+}
+
+function savePendingProfile(data) { try { localStorage.setItem("gb_pending_profile", JSON.stringify(data)); } catch(e) {} }
+function getPendingProfile() { try { const raw = localStorage.getItem("gb_pending_profile"); return raw ? JSON.parse(raw) : null; } catch(e) { return null; } }
+function clearPendingProfile() { try { localStorage.removeItem("gb_pending_profile"); } catch(e) {} }
+
+async function applyPendingProfile() {
+  if (!currentUser) return;
+  const pending = getPendingProfile();
+  if (!pending || pending._userId !== currentUser.id) return;
+  const { data: existing } = await db.from("profiles").select("id").eq("id", currentUser.id).maybeSingle();
+  if (existing) { clearPendingProfile(); return; }
+  const { _userId, ...profileData } = pending;
+  profileData.interests = profileData.interests || [];
+  const { error } = await db.from("profiles").insert({ id: currentUser.id, ...profileData });
+  if (!error) {
+    clearPendingProfile();
+    myProfile = { ...profileData, id: currentUser.id };
+    toast(`✅ Profilin oluşturuldu, hoş geldin ${String(profileData.name).split(" ")[0]}! 🎉`, 5000);
+    loadProfiles();
+  }
 }
 
 const LOCATIONS = {
@@ -432,18 +545,14 @@ function fillCountriesAndCities() {
   if (rCountry) {
     rCountry.innerHTML = '<option value="">Seçiniz</option>';
     Object.keys(LOCATIONS).forEach(c => {
-      const o = document.createElement("option");
-      o.value = c; o.textContent = c;
-      rCountry.appendChild(o);
+      const o = document.createElement("option"); o.value = c; o.textContent = c; rCountry.appendChild(o);
     });
   }
   const fCountry = $("#f-country");
   if (fCountry) {
     fCountry.innerHTML = '<option value="hepsi">Tümü</option>';
     Object.keys(LOCATIONS).forEach(c => {
-      const o = document.createElement("option");
-      o.value = c; o.textContent = c;
-      fCountry.appendChild(o);
+      const o = document.createElement("option"); o.value = c; o.textContent = c; fCountry.appendChild(o);
     });
   }
   updateCityDropdown("r-country", "r-city");
@@ -457,14 +566,8 @@ function updateCityDropdown(countrySelId, citySelId) {
   const country = countrySel.value;
   citySel.innerHTML = "";
   if (country && LOCATIONS[country]) {
-    const ph = document.createElement("option");
-    ph.value = ""; ph.textContent = "Seçiniz";
-    citySel.appendChild(ph);
-    LOCATIONS[country].forEach(c => {
-      const o = document.createElement("option");
-      o.value = c; o.textContent = c;
-      citySel.appendChild(o);
-    });
+    const ph = document.createElement("option"); ph.value = ""; ph.textContent = "Seçiniz"; citySel.appendChild(ph);
+    LOCATIONS[country].forEach(c => { const o = document.createElement("option"); o.value = c; o.textContent = c; citySel.appendChild(o); });
   } else if (country === "hepsi" || country === "") {
     const ph = document.createElement("option");
     ph.value = country === "hepsi" ? "hepsi" : "";
@@ -491,11 +594,13 @@ async function checkSession() {
   if (data.session) {
     currentUser = data.session.user;
     await loadMyProfile();
+    await applyPendingProfile();
     await loadMyLikes();
     await initRealtime();
     await refreshUnreadCount();
   }
   updateNavbar();
+  updateProfileSection();
 }
 
 async function loadMyProfile() {
@@ -519,12 +624,54 @@ function updateNavbar() {
       </div>
       <button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>
     `;
+  } else if (currentUser && !myProfile) {
+    nav.innerHTML = `
+      <div class="user-badge">
+        <div class="avatar" style="background:${grad(currentUser.id)}">?</div>
+      </div>
+      <button class="btn btn-ghost btn-sm" data-action="logout">Çıkış</button>
+    `;
   } else {
     nav.innerHTML = `
       <button class="btn btn-ghost btn-sm" data-action="open-login">Giriş Yap</button>
       <button class="btn btn-primary btn-sm" data-action="open-register">Ücretsiz Kayıt</button>
     `;
   }
+}
+
+function updateProfileSection() {
+  const filterPanel = $("#filterPanel");
+  const grid = $("#profileGrid");
+
+  if (!currentUser || !myProfile) {
+    filterPanel.style.display = "none";
+    grid.innerHTML = `
+      <div class="locked-screen">
+        <span class="locked-icon">🔒</span>
+        <h3>Profilleri görmek için üye olun</h3>
+        <p>Sitemizdeki tüm üye profillerini görebilmek, mesajlaşabilmek ve resim gönderebilmek için ücretsiz üye olmanız gerekiyor.</p>
+        <div class="locked-stats">
+          <div class="locked-stat"><b>48.500+</b><span>Kayıtlı Üye</span></div>
+          <div class="locked-stat"><b>12.400+</b><span>Mutlu Eşleşme</span></div>
+          <div class="locked-stat"><b>%100</b><span>Ücretsiz</span></div>
+        </div>
+        <div class="locked-features">
+          <span class="locked-feature">Sınırsız profil görüntüleme</span>
+          <span class="locked-feature">Anlık mesajlaşma</span>
+          <span class="locked-feature">Resim gönderme</span>
+          <span class="locked-feature">Gelişmiş filtreleme</span>
+        </div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" data-action="open-register">Ücretsiz Üye Ol</button>
+          <button class="btn btn-ghost" data-action="open-login">Giriş Yap</button>
+        </div>
+      </div>
+    `;
+    $("#profileCount").textContent = "Üye olmadan profilleri göremezsiniz";
+    return;
+  }
+
+  filterPanel.style.display = "block";
 }
 
 async function initRealtime() {
@@ -554,6 +701,7 @@ async function refreshUnreadCount() {
 }
 
 async function loadProfiles(filters = {}) {
+  if (!currentUser || !myProfile) { updateProfileSection(); return; }
   const grid = $("#profileGrid");
   grid.innerHTML = `<div class="empty">⏳ Yükleniyor...</div>`;
   let q = db.from("profiles").select("*").order("created_at", { ascending: false });
@@ -595,7 +743,7 @@ async function loadProfiles(filters = {}) {
       <article class="profile-card">
         <div class="card-top">
           <div class="avatar" style="background:${grad(p.id)}">${initials(p.name)}</div>
-          <div>
+          <div style="min-width:0;flex:1">
             <h4>${esc(p.name)}, ${p.age}</h4>
             <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</div>
           </div>
@@ -627,15 +775,45 @@ async function handleRegister(e) {
   data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
   const password = data.password;
   delete data.password;
+
   if (!data.name || !data.email || !data.age || !data.gender || !data.city || !data.country) { toast("Lütfen zorunlu (*) alanları doldur."); return; }
   if (data.age < 18) { toast("18 yaşından küçükler üye olamaz."); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { toast("Geçerli e-posta gir."); return; }
   if (password.length < 6) { toast("Şifre en az 6 karakter olmalı."); return; }
+
   const btn = e.target.querySelector("button[type=submit]");
   btn.disabled = true; btn.textContent = "Kayıt oluyor...";
-  const { data: authData, error: authErr } = await db.auth.signUp({ email: data.email, password });
-  if (authErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; toast("Hata: " + authErr.message); return; }
+
+  const { data: authData, error: authErr } = await db.auth.signUp({ email: data.email, password, options: { emailRedirectTo: window.location.origin } });
+
+  if (authErr) {
+    btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
+    let msg = authErr.message;
+    if (msg.includes("already registered")) msg = "Bu e-posta adresi zaten kayıtlı. Giriş yapmayı deneyin.";
+    toast("Hata: " + msg);
+    return;
+  }
+
   const userId = authData.user.id;
+
+  if (!authData.session) {
+    const pending = {
+      _userId: userId,
+      name: data.name, age: data.age, gender: data.gender,
+      country: data.country || "Türkiye", city: data.city,
+      job: data.job || "", bio: data.bio || "",
+      marital_status: data.marital_status || "Bekar",
+      height: data.height, weight: data.weight,
+      education: data.education || "", interests: data.interests
+    };
+    savePendingProfile(pending);
+    btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
+    e.target.reset();
+    closeAllModals();
+    toast("✅ <b>Kayıt başarılı!</b><br>📧 E-postana onay linki gönderdik.<br>Linke tıkladıktan sonra buraya gelip <b>giriş yap</b> — profilin otomatik oluşacak.", 9000);
+    return;
+  }
+
   const { error: profErr } = await db.from("profiles").insert({
     id: userId, name: data.name, age: data.age, gender: data.gender,
     country: data.country || "Türkiye", city: data.city,
@@ -644,12 +822,19 @@ async function handleRegister(e) {
     height: data.height, weight: data.weight,
     education: data.education || "", interests: data.interests
   });
-  if (profErr) { btn.disabled = false; btn.textContent = "Hesabımı Oluştur"; toast("Profil kaydedilemedi: " + profErr.message); return; }
+
+  if (profErr) {
+    btn.disabled = false; btn.textContent = "Hesabımı Oluştur";
+    toast("Profil kaydedilemedi: " + profErr.message);
+    return;
+  }
+
   currentUser = authData.user;
   myProfile = { ...data, id: userId };
   myLikes = new Set();
   closeAllModals();
   updateNavbar();
+  updateProfileSection();
   await initRealtime();
   loadProfiles();
   toast(`Hoş geldin ${data.name.split(" ")[0]}! 🎉`);
@@ -664,14 +849,22 @@ async function handleLogin(e) {
   btn.disabled = true; btn.textContent = "Giriş yapılıyor...";
   const { data, error } = await db.auth.signInWithPassword({ email, password });
   btn.disabled = false; btn.textContent = "Giriş Yap";
-  if (error) { toast("Hata: " + error.message); return; }
+  if (error) {
+    let msg = error.message;
+    if (msg.includes("Email not confirmed")) msg = "📧 E-postanı henüz onaylamadın. Gelen kutunu kontrol et.";
+    else if (msg.includes("Invalid login")) msg = "E-posta veya şifre hatalı.";
+    toast("Hata: " + msg);
+    return;
+  }
   currentUser = data.user;
   await loadMyProfile();
+  await applyPendingProfile();
   await loadMyLikes();
   await initRealtime();
   await refreshUnreadCount();
   closeAllModals();
   updateNavbar();
+  updateProfileSection();
   loadProfiles();
   toast("Giriş başarılı ✓");
 }
@@ -683,12 +876,12 @@ async function handleLogout() {
   activeConvUserId = null;
   closeMessages();
   updateNavbar();
-  loadProfiles();
+  updateProfileSection();
   toast("Çıkış yapıldı");
 }
 
 async function toggleLike(id) {
-  if (!currentUser) { toast("Beğenmek için giriş yap."); openModal("loginModal"); return; }
+  if (!currentUser || !myProfile) { toast("Beğenmek için üye ol."); openModal("registerModal"); return; }
   if (currentUser.id === id) return;
   if (myLikes.has(id)) {
     await db.from("likes").delete().eq("liker_id", currentUser.id).eq("liked_id", id);
@@ -705,50 +898,39 @@ async function toggleLike(id) {
 
 function getCurrentFilters() {
   return {
-    gender: $("#f-gender").value,
-    country: $("#f-country").value,
-    city: $("#f-city").value,
-    marital: $("#f-marital").value,
-    education: $("#f-education").value,
-    ageMin: +$("#f-age-min").value || 18,
-    ageMax: +$("#f-age-max").value || 99,
-    heightMin: +$("#f-height-min").value || null,
-    heightMax: +$("#f-height-max").value || null,
-    weightMin: +$("#f-weight-min").value || null,
-    weightMax: +$("#f-weight-max").value || null,
+    gender: $("#f-gender").value, country: $("#f-country").value, city: $("#f-city").value,
+    marital: $("#f-marital").value, education: $("#f-education").value,
+    ageMin: +$("#f-age-min").value || 18, ageMax: +$("#f-age-max").value || 99,
+    heightMin: +$("#f-height-min").value || null, heightMax: +$("#f-height-max").value || null,
+    weightMin: +$("#f-weight-min").value || null, weightMax: +$("#f-weight-max").value || null,
     search: $("#f-search").value.trim()
   };
 }
 
 function applyFilters() { loadProfiles(getCurrentFilters()); }
 function resetFilters() {
-  $("#f-gender").value = "hepsi";
-  $("#f-country").value = "hepsi";
+  $("#f-gender").value = "hepsi"; $("#f-country").value = "hepsi";
   $("#f-city").innerHTML = '<option value="hepsi">Tümü</option>';
-  $("#f-marital").value = "hepsi";
-  $("#f-education").value = "hepsi";
-  $("#f-age-min").value = 18;
-  $("#f-age-max").value = 99;
-  $("#f-height-min").value = "";
-  $("#f-height-max").value = "";
-  $("#f-weight-min").value = "";
-  $("#f-weight-max").value = "";
+  $("#f-marital").value = "hepsi"; $("#f-education").value = "hepsi";
+  $("#f-age-min").value = 18; $("#f-age-max").value = 99;
+  $("#f-height-min").value = ""; $("#f-height-max").value = "";
+  $("#f-weight-min").value = ""; $("#f-weight-max").value = "";
   $("#f-search").value = "";
   loadProfiles();
   toast("Filtreler sıfırlandı");
 }
 function quickSearch() {
+  if (!currentUser || !myProfile) { toast("Filtreleme için üye ol."); openModal("registerModal"); return; }
   const gender = $("#q-gender").value;
   const min = +$("#q-min").value || 18;
   const max = +$("#q-max").value || 99;
-  $("#f-gender").value = gender;
-  $("#f-age-min").value = min;
-  $("#f-age-max").value = max;
+  $("#f-gender").value = gender; $("#f-age-min").value = min; $("#f-age-max").value = max;
   loadProfiles({ gender, ageMin: min, ageMax: max });
   document.getElementById("profiller").scrollIntoView({ behavior: "smooth" });
 }
 
 async function viewProfile(id) {
+  if (!currentUser || !myProfile) { toast("Profil görüntülemek için üye ol."); openModal("registerModal"); return; }
   const { data: p, error } = await db.from("profiles").select("*").eq("id", id).single();
   if (error || !p) { toast("Profil bulunamadı"); return; }
   const liked = myLikes.has(p.id);
@@ -764,7 +946,7 @@ async function viewProfile(id) {
     <button class="close-x" data-action="close-modal" data-modal="detailModal">✕</button>
     <div class="card-top" style="margin-bottom:20px">
       <div class="avatar" style="background:${grad(p.id)};width:78px;height:78px;font-size:1.5rem;border-radius:22px">${initials(p.name)}</div>
-      <div>
+      <div style="min-width:0;flex:1">
         <h3 style="font-size:1.3rem">${esc(p.name)}, ${p.age}</h3>
         <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}</div>
       </div>
@@ -777,20 +959,19 @@ async function viewProfile(id) {
       ${(p.interests || []).map(t => `<span class="tag">${esc(t)}</span>`).join("") || "<span style='color:var(--muted);font-size:.86rem'>Belirtilmemiş</span>"}
     </div>
     ${!isMe && currentUser ? `
-      <div style="display:flex;gap:10px">
-        <button class="btn ${liked ? "btn-ghost" : "btn-primary"}" data-action="toggle-like-modal" data-id="${p.id}" style="flex:1">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn ${liked ? "btn-ghost" : "btn-primary"}" data-action="toggle-like-modal" data-id="${p.id}" style="flex:1;min-width:120px">
           ${liked ? "♥ Beğenildi" : "♡ Beğen"}
         </button>
-        <button class="btn btn-primary" data-action="start-chat" data-id="${p.id}" style="flex:1">💬 Mesaj Gönder</button>
+        <button class="btn btn-primary" data-action="start-chat" data-id="${p.id}" style="flex:1;min-width:120px">💬 Mesaj</button>
       </div>
     ` : ""}
-    ${!currentUser ? `<button class="btn btn-primary btn-block" data-action="open-login">Beğenmek için giriş yap</button>` : ""}
   `;
   openModal("detailModal");
 }
 
 function openMessages() {
-  if (!currentUser) { toast("Mesajlaşmak için giriş yap."); openModal("loginModal"); return; }
+  if (!currentUser || !myProfile) { toast("Mesajlaşmak için üye ol."); openModal("registerModal"); return; }
   $("#msgOverlay").classList.add("open");
   document.body.style.overflow = "hidden";
   refreshConversationList();
@@ -804,11 +985,9 @@ function closeMessages() {
 
 async function refreshConversationList() {
   if (!currentUser) return;
-  const { data, error } = await db.from("messages")
-    .select("*")
+  const { data, error } = await db.from("messages").select("*")
     .or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`)
-    .order("created_at", { ascending: false })
-    .limit(500);
+    .order("created_at", { ascending: false }).limit(500);
   if (error) { console.warn(error); return; }
   const convs = {};
   (data || []).forEach(m => {
@@ -833,7 +1012,7 @@ async function refreshConversationList() {
     const last = conv.last;
     const isActive = id === activeConvUserId;
     const time = formatTime(last.created_at);
-    const preview = (last.sender_id === currentUser.id ? "Sen: " : "") + last.content;
+    const preview = (last.sender_id === currentUser.id ? "Sen: " : "") + (last.content || (last.image_url ? "📷 Resim" : ""));
     return `
       <div class="conv-item ${isActive ? "active" : ""}" data-action="open-conv" data-id="${id}">
         <div class="avatar" style="background:${grad(id)}">${initials(u.name)}</div>
@@ -851,9 +1030,7 @@ async function refreshConversationList() {
 }
 
 function formatTime(iso) {
-  const d = new Date(iso);
-  const now = new Date();
-  const diff = (now - d) / 1000;
+  const d = new Date(iso), now = new Date(), diff = (now - d) / 1000;
   if (diff < 60) return "şimdi";
   if (diff < 3600) return Math.floor(diff / 60) + " dk";
   if (diff < 86400) return d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0");
@@ -870,18 +1047,18 @@ async function openConversation(otherId) {
   const u = allUsers[otherId] || { name: "Kullanıcı" };
   $("#msgMain").innerHTML = `
     <div class="msg-head">
-      <button class="icon-btn" style="width:36px;height:36px;font-size:.85rem;display:none" id="msgBack" data-action="msg-back">←</button>
+      <button class="icon-btn" id="msgBack" data-action="msg-back" style="display:none">←</button>
       <div class="avatar" style="background:${grad(otherId)}">${initials(u.name)}</div>
       <div class="msg-head-info">
         <b>${esc(u.name)}</b>
         <span>çevrimiçi</span>
       </div>
-      <button class="icon-btn" style="width:36px;height:36px;font-size:.85rem" data-action="close-messages">✕</button>
+      <button class="icon-btn" data-action="close-messages">✕</button>
     </div>
-    <div class="msg-body" id="msgBody">
-      <div class="typing-indicator" id="typingIndicator"><span></span><span></span><span></span></div>
-    </div>
+    <div class="msg-body" id="msgBody"></div>
     <div class="msg-input-row">
+      <button class="msg-img-btn" data-action="pick-image" title="Resim gönder">📷</button>
+      <input type="file" id="msgImageInput" accept="image/*" style="display:none">
       <textarea id="msgInput" placeholder="Mesajını yaz..." rows="1"></textarea>
       <button class="msg-send" data-action="send-msg">➤</button>
     </div>
@@ -893,59 +1070,71 @@ async function openConversation(otherId) {
     .order("created_at", { ascending: true });
   const body = $("#msgBody");
   (msgs || []).forEach(m => appendMessage(m, false));
-  await db.from("messages").update({ is_read: true })
-    .eq("receiver_id", currentUser.id).eq("sender_id", otherId).eq("is_read", false);
+  await db.from("messages").update({ is_read: true }).eq("receiver_id", currentUser.id).eq("sender_id", otherId).eq("is_read", false);
   refreshUnreadCount();
   refreshConversationList();
   scrollToBottom();
   const input = $("#msgInput");
   input.focus();
-  input.addEventListener("keydown", e => {
-    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+  input.addEventListener("input", () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 100) + "px"; });
+  const fileInput = $("#msgImageInput");
+  fileInput.addEventListener("change", handleImagePick);
+}
+
+async function handleImagePick(e) {
+  const file = e.target.files[0];
+  if (!file || !activeConvUserId) return;
+  if (file.size > 5 * 1024 * 1024) { toast("Resim 5 MB'tan büyük olamaz."); e.target.value = ""; return; }
+  if (!file.type.startsWith("image/")) { toast("Lütfen bir resim dosyası seç."); e.target.value = ""; return; }
+  toast("📤 Resim yükleniyor...", 2000);
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const fileName = `${currentUser.id}/${Date.now()}.${ext}`;
+  const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
+  if (upErr) { toast("Resim yüklenemedi: " + upErr.message); return; }
+  const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
+  const imageUrl = urlData.publicUrl;
+  const { error } = await db.from("messages").insert({
+    sender_id: currentUser.id, receiver_id: activeConvUserId, content: "", image_url: imageUrl
   });
-  input.addEventListener("input", () => {
-    input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 100) + "px";
-  });
+  if (error) { toast("Mesaj gönderilemedi: " + error.message); return; }
+  appendMessage({
+    sender_id: currentUser.id, receiver_id: activeConvUserId, content: "", image_url: imageUrl,
+    created_at: new Date().toISOString(), id: "temp-" + Date.now()
+  }, true);
+  refreshConversationList();
+  e.target.value = "";
 }
 
 function appendMessage(m, scroll = true) {
   const body = $("#msgBody");
   if (!body) return;
-  const indicator = $("#typingIndicator");
   const isMe = m.sender_id === currentUser.id;
   const div = document.createElement("div");
   div.className = "msg " + (isMe ? "me" : "them");
   const time = new Date(m.created_at);
-  div.innerHTML = `${escapeText(m.content)}<time>${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}</time>`;
-  if (indicator) body.insertBefore(div, indicator);
-  else body.appendChild(div);
+  const timeStr = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`;
+  let inner = "";
+  if (m.image_url) inner += `<img src="${esc(m.image_url)}" alt="Resim" data-action="open-lightbox" data-url="${esc(m.image_url)}" loading="lazy">`;
+  if (m.content) inner += escapeText(m.content);
+  inner += `<time>${timeStr}</time>`;
+  div.innerHTML = inner;
+  body.appendChild(div);
   if (scroll) scrollToBottom();
 }
 
-function escapeText(t) {
-  return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])).replace(/\n/g, "<br>");
-}
-function scrollToBottom() {
-  const body = $("#msgBody");
-  if (body) body.scrollTop = body.scrollHeight;
-}
+function escapeText(t) { return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])).replace(/\n/g, "<br>"); }
+function scrollToBottom() { const body = $("#msgBody"); if (body) body.scrollTop = body.scrollHeight; }
 
 async function sendMessage() {
   const input = $("#msgInput");
   if (!input || !activeConvUserId) return;
   const content = input.value.trim();
   if (!content) return;
-  input.value = "";
-  input.style.height = "auto";
-  const tempMsg = {
-    sender_id: currentUser.id, receiver_id: activeConvUserId,
-    content, created_at: new Date().toISOString(), id: "temp-" + Date.now()
-  };
+  input.value = ""; input.style.height = "auto";
+  const tempMsg = { sender_id: currentUser.id, receiver_id: activeConvUserId, content, created_at: new Date().toISOString(), id: "temp-" + Date.now() };
   appendMessage(tempMsg, true);
-  const { error } = await db.from("messages").insert({
-    sender_id: currentUser.id, receiver_id: activeConvUserId, content
-  });
+  const { error } = await db.from("messages").insert({ sender_id: currentUser.id, receiver_id: activeConvUserId, content });
   if (error) { toast("Mesaj gönderilemedi: " + error.message); return; }
   refreshConversationList();
 }
@@ -953,10 +1142,14 @@ async function sendMessage() {
 async function startChatWith(userId) {
   if (!currentUser) { toast("Mesaj göndermek için giriş yap."); openModal("loginModal"); return; }
   if (currentUser.id === userId) return;
+  if (!myProfile) { toast("Önce profilinin oluşması gerekiyor."); return; }
   closeModal("detailModal");
   openMessages();
   await openConversation(userId);
 }
+
+function openLightbox(url) { $("#lightboxImg").src = url; $("#lightbox").classList.add("open"); }
+function closeLightbox() { $("#lightbox").classList.remove("open"); $("#lightboxImg").src = ""; }
 
 document.addEventListener("click", async e => {
   const t = e.target.closest("[data-action]");
@@ -976,13 +1169,15 @@ document.addEventListener("click", async e => {
     case "quick-search": quickSearch(); break;
     case "apply-filters": applyFilters(); break;
     case "reset-filters": resetFilters(); break;
-    case "scroll-profiles": document.getElementById("profiller").scrollIntoView({ behavior: "smooth" }); break;
     case "open-messages": openMessages(); break;
     case "close-messages": closeMessages(); break;
     case "open-conv": await openConversation(id); break;
     case "send-msg": await sendMessage(); break;
     case "start-chat": await startChatWith(id); break;
     case "msg-back": $("#msgContainer").classList.remove("chat-open"); break;
+    case "pick-image": if ($("#msgImageInput")) $("#msgImageInput").click(); break;
+    case "open-lightbox": openLightbox(t.dataset.url); break;
+    case "close-lightbox": closeLightbox(); break;
   }
 });
 
@@ -993,6 +1188,7 @@ $$(".overlay").forEach(ov => {
 document.addEventListener("keydown", e => {
   if (e.key === "Escape") {
     closeAllModals();
+    closeLightbox();
     if ($("#msgOverlay").classList.contains("open")) closeMessages();
   }
 });
@@ -1012,6 +1208,17 @@ document.addEventListener("change", e => {
       currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
       if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
       updateNavbar();
+      updateProfileSection();
+    } else if (event === "SIGNED_IN") {
+      const { data } = await db.auth.getSession();
+      if (data.session) {
+        currentUser = data.session.user;
+        await loadMyProfile();
+        await applyPendingProfile();
+        updateNavbar();
+        updateProfileSection();
+        loadProfiles();
+      }
     }
   });
   await checkSession();
