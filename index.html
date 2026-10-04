@@ -167,7 +167,6 @@
   .photo-upload .actions{flex:1;min-width:0}
   .photo-upload .actions p{font-size:.82rem;color:var(--muted);margin-bottom:8px}
   .photo-upload .actions .btn{padding:8px 14px;font-size:.82rem}
-  /* DİL SEÇİCİ */
   .lang-switcher{position:relative;flex-shrink:0}
   .lang-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;border:1.5px solid var(--border);border-radius:12px;background:#fff;font-size:.85rem;font-weight:600;transition:.2s;cursor:pointer;white-space:nowrap}
   .lang-btn:hover{border-color:var(--rose);background:var(--rose-soft);color:var(--rose)}
@@ -561,12 +560,10 @@ const SUPABASE_KEY = "sb_publishable_EW46ECy6Lv4Z1qJ_UPPx1A_JbU3G_rG";
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ============================================================
-   11 DİLLİ SİSTEM
-============================================================ */
 const LANGS = [
   { code: "tr", flag: "🇹🇷", name: "Türkçe" },
   { code: "en", flag: "🇬🇧", name: "English" },
+  { code: "hi", flag: "🇮🇳", name: "हिन्दी" },
   { code: "ar", flag: "🇸🇦", name: "العربية" },
   { code: "fa", flag: "🇮🇷", name: "فارسی" },
   { code: "ku", flag: "🏴", name: "Kurdî" },
@@ -579,613 +576,18 @@ const LANGS = [
 ];
 
 const I18N = {
-  tr: { login:"Giriş Yap", signup:"Ücretsiz Kayıt", logout:"Çıkış",
-    heroTitle:'Hayat arkadaşını <em>ciddi</em> arayanlar burada bulur.',
-    heroDesc:"Gerçek üyeler, gelişmiş filtreleme ve anlık mesajlaşma. Evlilik ve uzun soluklu ilişki hedefleyenlerin buluşma noktası.",
-    heroCta:"Hemen Üye Ol — Ücretsiz", loginBtn:"Giriş Yap",
-    quickSearch:"🔍 Hızlı Arama", whoMeet:"Kimle tanışmak istiyorsun?",
-    any:"Fark etmez", female:"Kadın", male:"Erkek",
-    minAge:"En az yaş", maxAge:"En çok yaş", findProfiles:"Uygun Profilleri Bul",
-    realMembers:"Gerçek Üyeler", loading:"Yükleniyor...",
-    membersFound:"üye bulundu", noMembers:"Sonuç bulunamadı 😕",
-    advancedFilter:"🎯 Gelişmiş Filtreleme",
-    gender:"Cinsiyet", country:"Ülke", city:"Şehir",
-    maritalStatus:"Medeni Durum", education:"Eğitim",
-    all:"Tümü", dontCare:"Fark etmez",
-    minAgeL:"Min. Yaş", maxAgeL:"Maks. Yaş",
-    minHeightL:"Min. Boy (cm)", maxHeightL:"Maks. Boy (cm)",
-    minWeightL:"Min. Kilo (kg)", maxWeightL:"Maks. Kilo (kg)",
-    searchPh:"öğretmen, Ayşe...", resetFilters:"Filtreleri Sıfırla", filter:"Filtrele",
-    single:"Bekar", divorced:"Boşanmış", widowed:"Dul", separated:"Ayrı yaşıyor",
-    primary:"İlköğretim", highSchool:"Lise", university:"Üniversite", masters:"Yüksek Lisans", phd:"Doktora",
-    createAccount:"Ücretsiz Hesap Oluştur", accountDesc:"Birkaç bilgi yeterli, hemen başla.",
-    fullName:"Ad Soyad", email:"E-posta", age:"Yaş",
-    select:"Seçiniz", height:"Boy (cm)", weight:"Kilo (kg)",
-    job:"Meslek", bio:"Kısa Tanıtım", interests:"İlgi Alanları (virgülle ayır)",
-    interestsPh:"Kitap, Yoga, Seyahat", password:"Şifre",
-    createMyAccount:"Hesabımı Oluştur",
-    alreadyMember:"Zaten üye misin?", loginLink:"Giriş yap",
-    welcomeBack:"Tekrar hoş geldin 👋", loginDesc:"Hesabına giriş yap.",
-    noAccount:"Hesabın yok mu?", signupLink:"Ücretsiz kayıt ol",
-    editProfile:"Profilimi Düzenle", updateInfo:"Bilgilerini güncelle ve kaydet.",
-    profilePhoto:"Profil Fotoğrafı", photoHint:"JPG veya PNG, max 5 MB",
-    uploadPhoto:"📷 Fotoğraf Yükle", removePhoto:"🗑️ Kaldır",
-    cancel:"İptal", save:"Kaydet", saving:"Kaydediliyor...",
-    messages:"💬 Mesajlar", selectChat:"Bir sohbet seç",
-    selectChatDesc:"Soldaki listeden bir kişiye tıkla ve konuşmaya başla.",
-    typeMessage:"Mesajını yaz...", online:"çevrimiçi", noChats:"Henüz mesajlaşma yok.",
-    startChat:'Bir profilden "💬" butonuna basarak başla.',
-    profileBtn:"Profili Gör", messageBtn:"💬 Mesaj", likeBtn:"Beğen", likedBtn:"♥ Beğenildi",
-    aboutSection:"Hakkında", interestsSection:"İlgi Alanları",
-    lockedTitle:"Profilleri görmek için üye olun",
-    lockedDesc:"Sitemizdeki tüm üye profillerini görebilmek, mesajlaşabilmek ve resim gönderebilmek için ücretsiz üye olmanız gerekiyor.",
-    featureUnlimited:"Sınırsız profil görüntüleme", featureMessaging:"Anlık mesajlaşma",
-    featureImages:"Resim gönderme", featurePhoto:"Profil fotoğrafı", featureWorldwide:"Dünyanın her yerinden üyeler",
-    freeSignup:"Ücretsiz Üye Ol", loginShort:"Giriş Yap",
-    confirmDelete:"Bu mesajı herkesten silmek istediğinize emin misiniz?",
-    msgDeleted:"🗑️ Mesaj silindi", imageRemoved:"Resim kaldırıldı",
-    welcomeToast:"Hoş geldin", loginSuccess:"Giriş başarılı ✓",
-    logoutDone:"Çıkış yapıldı", profileUpdated:"✅ Profilin güncellendi!",
-    only18:"18 yaşından küçükler üye olamaz.", invalidEmail:"Geçerli e-posta gir.",
-    passwordShort:"Şifre en az 6 karakter olmalı.", fillRequired:"Lütfen zorunlu (*) alanları doldur.",
-    emailRegistered:"Bu e-posta zaten kayıtlı. Giriş yapmayı deneyin.",
-    emailNotConfirmed:"📧 E-postanı henüz onaylamadın. Gelen kutunu kontrol et.",
-    invalidLogin:"E-posta veya şifre hatalı.",
-    registerSuccess:"✅ <b>Kayıt başarılı!</b><br>📧 E-postana onay linki gönderdik.<br>Linke tıkladıktan sonra <b>giriş yap</b> — profilin otomatik oluşacak.",
-    uploading:"📤 Resim yükleniyor...", imageTooBig:"Resim 5 MB'tan büyük olamaz.",
-    pickImage:"Lütfen bir resim dosyası seç.", sendForBtn:"Göndermek için ➤ butonuna bas"
-  },
-  en: { login:"Login", signup:"Free Signup", logout:"Logout",
-    heroTitle:'Those <em>seriously</em> seeking a life partner find them here.',
-    heroDesc:"Real members, advanced filtering and instant messaging. The meeting point for those seeking marriage and long-term relationships.",
-    heroCta:"Join Now — Free", loginBtn:"Login",
-    quickSearch:"🔍 Quick Search", whoMeet:"Who do you want to meet?",
-    any:"Any", female:"Female", male:"Male",
-    minAge:"Min age", maxAge:"Max age", findProfiles:"Find Suitable Profiles",
-    realMembers:"Real Members", loading:"Loading...",
-    membersFound:"members found", noMembers:"No results found 😕",
-    advancedFilter:"🎯 Advanced Filtering",
-    gender:"Gender", country:"Country", city:"City",
-    maritalStatus:"Marital Status", education:"Education",
-    all:"All", dontCare:"Doesn't matter",
-    minAgeL:"Min Age", maxAgeL:"Max Age",
-    minHeightL:"Min Height (cm)", maxHeightL:"Max Height (cm)",
-    minWeightL:"Min Weight (kg)", maxWeightL:"Max Weight (kg)",
-    searchPh:"teacher, Jane...", resetFilters:"Reset Filters", filter:"Filter",
-    single:"Single", divorced:"Divorced", widowed:"Widowed", separated:"Separated",
-    primary:"Primary", highSchool:"High School", university:"University", masters:"Master's", phd:"PhD",
-    createAccount:"Create Free Account", accountDesc:"A few details and you're in.",
-    fullName:"Full Name", email:"Email", age:"Age",
-    select:"Select", height:"Height (cm)", weight:"Weight (kg)",
-    job:"Occupation", bio:"Short Bio", interests:"Interests (comma separated)",
-    interestsPh:"Books, Yoga, Travel", password:"Password",
-    createMyAccount:"Create My Account",
-    alreadyMember:"Already a member?", loginLink:"Login",
-    welcomeBack:"Welcome back 👋", loginDesc:"Sign in to your account.",
-    noAccount:"Don't have an account?", signupLink:"Sign up free",
-    editProfile:"Edit My Profile", updateInfo:"Update your information and save.",
-    profilePhoto:"Profile Photo", photoHint:"JPG or PNG, max 5 MB",
-    uploadPhoto:"📷 Upload Photo", removePhoto:"🗑️ Remove",
-    cancel:"Cancel", save:"Save", saving:"Saving...",
-    messages:"💬 Messages", selectChat:"Select a chat",
-    selectChatDesc:"Click a person on the left and start chatting.",
-    typeMessage:"Type a message...", online:"online", noChats:"No messages yet.",
-    startChat:'Press "💬" on a profile to start.',
-    profileBtn:"View Profile", messageBtn:"💬 Message", likeBtn:"Like", likedBtn:"♥ Liked",
-    aboutSection:"About", interestsSection:"Interests",
-    lockedTitle:"Sign up to view profiles",
-    lockedDesc:"To view all member profiles, send messages and share images, you need a free account.",
-    featureUnlimited:"Unlimited profile browsing", featureMessaging:"Instant messaging",
-    featureImages:"Send images", featurePhoto:"Profile photo", featureWorldwide:"Members from all over the world",
-    freeSignup:"Sign Up Free", loginShort:"Login",
-    confirmDelete:"Are you sure you want to delete this message for everyone?",
-    msgDeleted:"🗑️ Message deleted", imageRemoved:"Image removed",
-    welcomeToast:"Welcome", loginSuccess:"Login successful ✓",
-    logoutDone:"Logged out", profileUpdated:"✅ Profile updated!",
-    only18:"Users under 18 cannot register.", invalidEmail:"Enter a valid email.",
-    passwordShort:"Password must be at least 6 characters.", fillRequired:"Please fill the required (*) fields.",
-    emailRegistered:"This email is already registered. Try logging in.",
-    emailNotConfirmed:"📧 Please confirm your email first. Check your inbox.",
-    invalidLogin:"Invalid email or password.",
-    registerSuccess:"✅ <b>Registration successful!</b><br>📧 We sent a confirmation link to your email.<br>Click the link and <b>log in</b> — your profile will be created automatically.",
-    uploading:"📤 Uploading image...", imageTooBig:"Image cannot exceed 5 MB.",
-    pickImage:"Please select an image file.", sendForBtn:"Press ➤ to send"
-  },
-  ar: { login:"تسجيل الدخول", signup:"تسجيل مجاني", logout:"خروج",
-    heroTitle:'من يبحثون <em>بجدية</em> عن شريك الحياة يجدونه هنا.',
-    heroDesc:"أعضاء حقيقيون، تصفية متقدمة ومراسلة فورية. نقطة لقاء الباحثين عن الزواج والعلاقات طويلة الأمد.",
-    heroCta:"اشترك الآن — مجاناً", loginBtn:"تسجيل الدخول",
-    quickSearch:"🔍 بحث سريع", whoMeet:"بمن تريد أن تلتقي؟",
-    any:"لا يهم", female:"أنثى", male:"ذكر",
-    minAge:"الحد الأدنى للعمر", maxAge:"الحد الأقصى للعمر", findProfiles:"ابحث عن ملفات مناسبة",
-    realMembers:"أعضاء حقيقيون", loading:"جاري التحميل...",
-    membersFound:"عضو", noMembers:"لا توجد نتائج 😕",
-    advancedFilter:"🎯 تصفية متقدمة",
-    gender:"الجنس", country:"الدولة", city:"المدينة",
-    maritalStatus:"الحالة الاجتماعية", education:"التعليم",
-    all:"الكل", dontCare:"لا يهم",
-    minAgeL:"أدنى عمر", maxAgeL:"أقصى عمر",
-    minHeightL:"أدنى طول (سم)", maxHeightL:"أقصى طول (سم)",
-    minWeightL:"أدنى وزن (كغ)", maxWeightL:"أقصى وزن (كغ)",
-    searchPh:"مدرس، سارة...", resetFilters:"إعادة تعيين", filter:"تصفية",
-    single:"أعزب", divorced:"مطلق", widowed:"أرمل", separated:"منفصل",
-    primary:"ابتدائي", highSchool:"ثانوي", university:"جامعي", masters:"ماجستير", phd:"دكتوراه",
-    createAccount:"إنشاء حساب مجاني", accountDesc:"بضع معلومات فقط.",
-    fullName:"الاسم الكامل", email:"البريد الإلكتروني", age:"العمر",
-    select:"اختر", height:"الطول (سم)", weight:"الوزن (كغ)",
-    job:"المهنة", bio:"نبذة قصيرة", interests:"الاهتمامات (مفصولة بفواصل)",
-    interestsPh:"كتب، يوغا، سفر", password:"كلمة المرور",
-    createMyAccount:"إنشاء حسابي",
-    alreadyMember:"هل أنت عضو بالفعل؟", loginLink:"تسجيل الدخول",
-    welcomeBack:"مرحباً بعودتك 👋", loginDesc:"سجّل الدخول إلى حسابك.",
-    noAccount:"ليس لديك حساب؟", signupLink:"سجّل مجاناً",
-    editProfile:"تعديل ملفي", updateInfo:"حدّث معلوماتك واحفظ.",
-    profilePhoto:"صورة الملف", photoHint:"JPG أو PNG، 5 ميجا كحد أقصى",
-    uploadPhoto:"📷 تحميل صورة", removePhoto:"🗑️ إزالة",
-    cancel:"إلغاء", save:"حفظ", saving:"جاري الحفظ...",
-    messages:"💬 الرسائل", selectChat:"اختر محادثة",
-    selectChatDesc:"انقر على شخص من القائمة لبدء المحادثة.",
-    typeMessage:"اكتب رسالة...", online:"متصل", noChats:"لا توجد رسائل بعد.",
-    startChat:'اضغط على "💬" في ملف لبدء المحادثة.',
-    profileBtn:"عرض الملف", messageBtn:"💬 رسالة", likeBtn:"إعجاب", likedBtn:"♥ أعجبني",
-    aboutSection:"نبذة", interestsSection:"الاهتمامات",
-    lockedTitle:"سجّل لعرض الملفات",
-    lockedDesc:"لعرض ملفات الأعضاء وإرسال الرسائل والصور، تحتاج إلى حساب مجاني.",
-    featureUnlimited:"تصفح غير محدود", featureMessaging:"مراسلة فورية",
-    featureImages:"إرسال صور", featurePhoto:"صورة شخصية", featureWorldwide:"أعضاء من جميع أنحاء العالم",
-    freeSignup:"سجّل مجاناً", loginShort:"تسجيل الدخول",
-    confirmDelete:"هل أنت متأكد من حذف هذه الرسالة للجميع؟",
-    msgDeleted:"🗑️ تم حذف الرسالة", imageRemoved:"تمت إزالة الصورة",
-    welcomeToast:"مرحباً", loginSuccess:"تم تسجيل الدخول ✓",
-    logoutDone:"تم تسجيل الخروج", profileUpdated:"✅ تم تحديث ملفك!",
-    only18:"لا يمكن لمن هم تحت 18 التسجيل.", invalidEmail:"أدخل بريداً صحيحاً.",
-    passwordShort:"كلمة المرور 6 أحرف على الأقل.", fillRequired:"املأ الحقول المطلوبة (*).",
-    emailRegistered:"هذا البريد مسجل بالفعل.", emailNotConfirmed:"📧 أكّد بريدك أولاً.",
-    invalidLogin:"البريد أو كلمة المرور خاطئة.",
-    registerSuccess:"✅ <b>تم التسجيل بنجاح!</b><br>📧 أرسلنا رابط التأكيد.<br>اضغط الرابط ثم <b>سجّل الدخول</b>.",
-    uploading:"📤 جاري الرفع...", imageTooBig:"لا تتجاوز 5 ميغا.",
-    pickImage:"الرجاء اختيار صورة.", sendForBtn:"اضغط ➤ للإرسال"
-  },
-  fa: { login:"ورود", signup:"ثبت‌نام رایگان", logout:"خروج",
-    heroTitle:'کسانی که <em>جدی</em> به دنبال همسر هستند، اینجا پیدا می‌کنند.',
-    heroDesc:"اعضای واقعی، فیلتر پیشرفته و پیام‌رسانی فوری. نقطه دیدار جویندگان ازدواج و روابط بلندمدت.",
-    heroCta:"همین حالا عضو شوید — رایگان", loginBtn:"ورود",
-    quickSearch:"🔍 جستجوی سریع", whoMeet:"می‌خواهید با چه کسی آشنا شوید؟",
-    any:"مهم نیست", female:"زن", male:"مرد",
-    minAge:"حداقل سن", maxAge:"حداکثر سن", findProfiles:"یافتن پروفایل‌ها",
-    realMembers:"اعضای واقعی", loading:"در حال بارگذاری...",
-    membersFound:"عضو", noMembers:"نتیجه‌ای یافت نشد 😕",
-    advancedFilter:"🎯 فیلتر پیشرفته",
-    gender:"جنسیت", country:"کشور", city:"شهر",
-    maritalStatus:"وضعیت تأهل", education:"تحصیلات",
-    all:"همه", dontCare:"مهم نیست",
-    minAgeL:"حداقل سن", maxAgeL:"حداکثر سن",
-    minHeightL:"حداقل قد", maxHeightL:"حداکثر قد",
-    minWeightL:"حداقل وزن", maxWeightL:"حداکثر وزن",
-    searchPh:"معلم، سارا...", resetFilters:"پاک کردن", filter:"فیلتر",
-    single:"مجرد", divorced:"جدا شده", widowed:"بیوه", separated:"جدا",
-    primary:"ابتدایی", highSchool:"دبیرستان", university:"دانشگاه", masters:"کارشناسی ارشد", phd:"دکترا",
-    createAccount:"ایجاد حساب رایگان", accountDesc:"چند اطلاعات کافی است.",
-    fullName:"نام و نام خانوادگی", email:"ایمیل", age:"سن",
-    select:"انتخاب", height:"قد", weight:"وزن",
-    job:"شغل", bio:"توضیح کوتاه", interests:"علایق (با کاما)",
-    interestsPh:"کتاب، یوگا، سفر", password:"رمز عبور",
-    createMyAccount:"ایجاد حساب من",
-    alreadyMember:"قبلاً عضو شده‌اید؟", loginLink:"ورود",
-    welcomeBack:"خوش آمدید 👋", loginDesc:"به حساب خود وارد شوید.",
-    noAccount:"حساب ندارید؟", signupLink:"ثبت‌نام رایگان",
-    editProfile:"ویرایش پروفایل", updateInfo:"اطلاعات خود را به‌روز کنید.",
-    profilePhoto:"عکس پروفایل", photoHint:"JPG یا PNG، حداکثر 5 مگابایت",
-    uploadPhoto:"📷 آپلود عکس", removePhoto:"🗑️ حذف",
-    cancel:"لغو", save:"ذخیره", saving:"در حال ذخیره...",
-    messages:"💬 پیام‌ها", selectChat:"یک گفتگو انتخاب کنید",
-    selectChatDesc:"روی یک نفر کلیک کنید و شروع به گفتگو کنید.",
-    typeMessage:"پیام خود را بنویسید...", online:"آنلاین", noChats:"هنوز پیامی نیست.",
-    startChat:'روی "💬" بزنید.',
-    profileBtn:"مشاهده", messageBtn:"💬 پیام", likeBtn:"پسندیدن", likedBtn:"♥ پسندیده",
-    aboutSection:"درباره", interestsSection:"علایق",
-    lockedTitle:"برای دیدن پروفایل‌ها ثبت‌نام کنید",
-    lockedDesc:"برای دیدن پروفایل‌ها و ارسال پیام و تصویر، به حساب رایگان نیاز دارید.",
-    featureUnlimited:"مشاهده نامحدود", featureMessaging:"پیام‌رسانی فوری",
-    featureImages:"ارسال تصویر", featurePhoto:"عکس پروفایل", featureWorldwide:"اعضا از سراسر جهان",
-    freeSignup:"ثبت‌نام رایگان", loginShort:"ورود",
-    confirmDelete:"مطمئنید این پیام برای همه حذف شود؟",
-    msgDeleted:"🗑️ پیام حذف شد", imageRemoved:"تصویر حذف شد",
-    welcomeToast:"خوش آمدید", loginSuccess:"ورود موفق ✓",
-    logoutDone:"خارج شدید", profileUpdated:"✅ پروفایل به‌روزرسانی شد!",
-    only18:"زیر 18 سال نمی‌توانند ثبت‌نام کنند.", invalidEmail:"ایمیل معتبر وارد کنید.",
-    passwordShort:"رمز حداقل 6 کاراکتر.", fillRequired:"فیلدهای الزامی (*) را پر کنید.",
-    emailRegistered:"این ایمیل قبلاً ثبت شده.", emailNotConfirmed:"📧 ابتدا ایمیل خود را تأیید کنید.",
-    invalidLogin:"ایمیل یا رمز اشتباه است.",
-    registerSuccess:"✅ <b>ثبت‌نام موفق!</b><br>📧 لینک تأیید ارسال شد.<br>روی لینک کلیک کنید و <b>وارد شوید</b>.",
-    uploading:"📤 در حال آپلود...", imageTooBig:"تصویر بیش از 5 مگابایت نباشد.",
-    pickImage:"لطفاً یک تصویر انتخاب کنید.", sendForBtn:"برای ارسال ➤ را بزنید"
-  },
-  ku: { login:"Têketin", signup:"Qeydkirina belaş", logout:"Derketin",
-    heroTitle:'Yên ku <em>bi cidî</em> hevjîna jiyanê digerin li vir dibînin.',
-    heroDesc:"Endamên rastîn, parzûna pêşkeftî û peyama bilez. Cihê hevdîtina yên zewac û têkiliyên dirêj dixwazin.",
-    heroCta:"Niha Endam Bibin — Belaş", loginBtn:"Têketin",
-    quickSearch:"🔍 Lêgerîna Bilez", whoMeet:"Tu dixwazî bi kê re hevdîtinê bikî?",
-    any:"Fereq nake", female:"Jin", male:"Mêr",
-    minAge:"Temenê kêmtirîn", maxAge:"Temenê herî zêde", findProfiles:"Profîlên Guncan Bibîne",
-    realMembers:"Endamên Rastîn", loading:"Tê barkirin...",
-    membersFound:"endam", noMembers:"Encam nehat dîtin 😕",
-    advancedFilter:"🎯 Parzûna Pêşkeftî",
-    gender:"Zayend", country:"Welat", city:"Bajar",
-    maritalStatus:"Rewşa Zewacê", education:"Perwerde",
-    all:"Hemû", dontCare:"Fereq nake",
-    minAgeL:"Temenê Min.", maxAgeL:"Temenê Maks.",
-    minHeightL:"Bilindahiya Min.", maxHeightL:"Bilindahiya Maks.",
-    minWeightL:"Giraniya Min.", maxWeightL:"Giraniya Maks.",
-    searchPh:"mamoste, Ayşe...", resetFilters:"Paqij Bike", filter:"Parzûn",
-    single:"Bekar", divorced:"Jêbûyî", widowed:"Bîwe", separated:"Cuda",
-    primary:"Seretayî", highSchool:"Lîse", university:"Zanîngeh", masters:"Master", phd:"Doktora",
-    createAccount:"Hesabek Belaş Çêbike", accountDesc:"Çend agahî bes e.",
-    fullName:"Nav û Paşnav", email:"E-name", age:"Temen",
-    select:"Hilbijêre", height:"Bilindahî", weight:"Giranî",
-    job:"Kar", bio:"Danasîn", interests:"Berjewendî (bi komayê)",
-    interestsPh:"Pirtûk, Yoga, Rêwîtî", password:"Şîfre",
-    createMyAccount:"Hesabê Min Çêbike",
-    alreadyMember:"Jixwe endam î?", loginLink:"Têkeve",
-    welcomeBack:"Bi xêr hatî 👋", loginDesc:"Têkeve hesabê xwe.",
-    noAccount:"Hesabê te tune?", signupLink:"Belaş qeyd bibe",
-    editProfile:"Profîla Min Biguherîne", updateInfo:"Agahiyên xwe nûve bike.",
-    profilePhoto:"Wêneya Profîlê", photoHint:"JPG an PNG, max 5 MB",
-    uploadPhoto:"📷 Wêne Bar Bike", removePhoto:"🗑️ Rake",
-    cancel:"Betal", save:"Tomar Bike", saving:"Tê tomarkirin...",
-    messages:"💬 Peyam", selectChat:"Sohbetek hilbijêre",
-    selectChatDesc:"Li kesekî bikirtînin û dest bi axaftinê bikin.",
-    typeMessage:"Peyama xwe binivîse...", online:"serhêl", noChats:"Hê peyam tune.",
-    startChat:'Li ser "💬" bikirtînin.',
-    profileBtn:"Bibîne", messageBtn:"💬 Peyam", likeBtn:"Biecibîne", likedBtn:"♥ Hat ecibandin",
-    aboutSection:"Derbarê", interestsSection:"Berjewendî",
-    lockedTitle:"Ji bo dîtina profîlan qeyd bibe",
-    lockedDesc:"Ji bo dîtina profîlan û şandina peyam û wêneyan, hesabek belaş hewce ye.",
-    featureUnlimited:"Dîtina bêsînor", featureMessaging:"Peyama bilez",
-    featureImages:"Şandina wêne", featurePhoto:"Wêneya profîlê", featureWorldwide:"Endam ji çar aliyan",
-    freeSignup:"Belaş Qeyd Bibe", loginShort:"Têketin",
-    confirmDelete:"Piştrast î ku ev peyam were jêbirin?",
-    msgDeleted:"🗑️ Peyam hate jêbirin", imageRemoved:"Wêne hate rakirin",
-    welcomeToast:"Bi xêr hatî", loginSuccess:"Têketin serketî ✓",
-    logoutDone:"Derketin", profileUpdated:"✅ Profîl hate nûvekirin!",
-    only18:"Kesên di bin 18 salî de nikarin qeyd bibin.", invalidEmail:"E-name derbasdar binivîse.",
-    passwordShort:"Şîfre herî kêm 6 tîp.", fillRequired:"Qadên pêwîst (*) dagire.",
-    emailRegistered:"Ev e-name jixwe tomar e.", emailNotConfirmed:"📧 Pêşî e-nameyê piştrast bike.",
-    invalidLogin:"E-name an şîfre şaş e.",
-    registerSuccess:"✅ <b>Qeyd serketî!</b><br>📧 Girêdana piştrastkirinê hat şandin.<br>Li girêdanê bikirtîne û <b>têkeve</b>.",
-    uploading:"📤 Wêne tê barkirin...", imageTooBig:"Wêne >5 MB nabe.",
-    pickImage:"Pelek wêneyê hilbijêre.", sendForBtn:"Ji bo şandinê ➤ bikirtîne"
-  },
-  ru: { login:"Вход", signup:"Регистрация", logout:"Выход",
-    heroTitle:'Те, кто <em>серьёзно</em> ищет спутника жизни, находят его здесь.',
-    heroDesc:"Настоящие участники, продвинутая фильтрация и мгновенные сообщения. Место встречи тех, кто ищет брак и долгосрочные отношения.",
-    heroCta:"Присоединиться — бесплатно", loginBtn:"Войти",
-    quickSearch:"🔍 Быстрый поиск", whoMeet:"С кем вы хотите познакомиться?",
-    any:"Не важно", female:"Женщина", male:"Мужчина",
-    minAge:"Мин. возраст", maxAge:"Макс. возраст", findProfiles:"Найти подходящие профили",
-    realMembers:"Настоящие участники", loading:"Загрузка...",
-    membersFound:"участников", noMembers:"Ничего не найдено 😕",
-    advancedFilter:"🎯 Расширенная фильтрация",
-    gender:"Пол", country:"Страна", city:"Город",
-    maritalStatus:"Семейное положение", education:"Образование",
-    all:"Все", dontCare:"Не важно",
-    minAgeL:"Мин. возраст", maxAgeL:"Макс. возраст",
-    minHeightL:"Мин. рост", maxHeightL:"Макс. рост",
-    minWeightL:"Мин. вес", maxWeightL:"Макс. вес",
-    searchPh:"учитель, Анна...", resetFilters:"Сбросить", filter:"Фильтр",
-    single:"Холост", divorced:"Разведён", widowed:"Вдовец", separated:"Живёт отдельно",
-    primary:"Начальное", highSchool:"Среднее", university:"Университет", masters:"Магистр", phd:"Доктор",
-    createAccount:"Создать бесплатный аккаунт", accountDesc:"Несколько данных — и вы в деле.",
-    fullName:"Имя и фамилия", email:"Эл. почта", age:"Возраст",
-    select:"Выберите", height:"Рост", weight:"Вес",
-    job:"Профессия", bio:"Коротко о себе", interests:"Интересы (через запятую)",
-    interestsPh:"Книги, йога, путешествия", password:"Пароль",
-    createMyAccount:"Создать аккаунт",
-    alreadyMember:"Уже есть аккаунт?", loginLink:"Войти",
-    welcomeBack:"С возвращением 👋", loginDesc:"Войдите в свой аккаунт.",
-    noAccount:"Нет аккаунта?", signupLink:"Зарегистрироваться",
-    editProfile:"Редактировать профиль", updateInfo:"Обновите данные и сохраните.",
-    profilePhoto:"Фото профиля", photoHint:"JPG или PNG, макс. 5 МБ",
-    uploadPhoto:"📷 Загрузить фото", removePhoto:"🗑️ Удалить",
-    cancel:"Отмена", save:"Сохранить", saving:"Сохранение...",
-    messages:"💬 Сообщения", selectChat:"Выберите чат",
-    selectChatDesc:"Нажмите на человека слева и начните общение.",
-    typeMessage:"Введите сообщение...", online:"онлайн", noChats:"Пока нет сообщений.",
-    startChat:'Нажмите "💬" в профиле.',
-    profileBtn:"Профиль", messageBtn:"💬 Сообщение", likeBtn:"Нравится", likedBtn:"♥ Понравилось",
-    aboutSection:"О себе", interestsSection:"Интересы",
-    lockedTitle:"Зарегистрируйтесь, чтобы видеть профили",
-    lockedDesc:"Чтобы просматривать профили и писать сообщения, нужен бесплатный аккаунт.",
-    featureUnlimited:"Неограниченный просмотр", featureMessaging:"Мгновенные сообщения",
-    featureImages:"Отправка изображений", featurePhoto:"Фото профиля", featureWorldwide:"Участники со всего мира",
-    freeSignup:"Регистрация бесплатно", loginShort:"Вход",
-    confirmDelete:"Вы уверены, что хотите удалить это сообщение для всех?",
-    msgDeleted:"🗑️ Сообщение удалено", imageRemoved:"Изображение удалено",
-    welcomeToast:"Добро пожаловать", loginSuccess:"Вход выполнен ✓",
-    logoutDone:"Вы вышли", profileUpdated:"✅ Профиль обновлён!",
-    only18:"Лица младше 18 не могут регистрироваться.", invalidEmail:"Введите корректный email.",
-    passwordShort:"Пароль минимум 6 символов.", fillRequired:"Заполните обязательные (*) поля.",
-    emailRegistered:"Этот email уже зарегистрирован.", emailNotConfirmed:"📧 Сначала подтвердите email.",
-    invalidLogin:"Неверный email или пароль.",
-    registerSuccess:"✅ <b>Регистрация успешна!</b><br>📧 Мы отправили ссылку.<br>Перейдите и <b>войдите</b>.",
-    uploading:"📤 Загрузка...", imageTooBig:"Изображение не более 5 МБ.",
-    pickImage:"Выберите файл изображения.", sendForBtn:"Нажмите ➤ для отправки"
-  },
-  es: { login:"Iniciar sesión", signup:"Registro gratis", logout:"Salir",
-    heroTitle:'Quienes <em>en serio</em> buscan pareja la encuentran aquí.',
-    heroDesc:"Miembros reales, filtrado avanzado y mensajería instantánea. El punto de encuentro para quienes buscan matrimonio y relaciones duraderas.",
-    heroCta:"Únete ahora — Gratis", loginBtn:"Entrar",
-    quickSearch:"🔍 Búsqueda rápida", whoMeet:"¿Con quién quieres conocer?",
-    any:"Da igual", female:"Mujer", male:"Hombre",
-    minAge:"Edad mínima", maxAge:"Edad máxima", findProfiles:"Encontrar perfiles",
-    realMembers:"Miembros reales", loading:"Cargando...",
-    membersFound:"miembros", noMembers:"Sin resultados 😕",
-    advancedFilter:"🎯 Filtrado avanzado",
-    gender:"Género", country:"País", city:"Ciudad",
-    maritalStatus:"Estado civil", education:"Educación",
-    all:"Todos", dontCare:"Da igual",
-    minAgeL:"Edad mín.", maxAgeL:"Edad máx.",
-    minHeightL:"Altura mín.", maxHeightL:"Altura máx.",
-    minWeightL:"Peso mín.", maxWeightL:"Peso máx.",
-    searchPh:"profesor, Ana...", resetFilters:"Reiniciar", filter:"Filtrar",
-    single:"Soltero", divorced:"Divorciado", widowed:"Viudo", separated:"Separado",
-    primary:"Primaria", highSchool:"Secundaria", university:"Universidad", masters:"Máster", phd:"Doctorado",
-    createAccount:"Crear cuenta gratis", accountDesc:"Solo unos datos y listo.",
-    fullName:"Nombre completo", email:"Correo", age:"Edad",
-    select:"Selecciona", height:"Altura", weight:"Peso",
-    job:"Profesión", bio:"Bio corta", interests:"Intereses (separados por comas)",
-    interestsPh:"Libros, yoga, viajes", password:"Contraseña",
-    createMyAccount:"Crear mi cuenta",
-    alreadyMember:"¿Ya eres miembro?", loginLink:"Iniciar sesión",
-    welcomeBack:"Bienvenido de nuevo 👋", loginDesc:"Inicia sesión en tu cuenta.",
-    noAccount:"¿No tienes cuenta?", signupLink:"Regístrate gratis",
-    editProfile:"Editar mi perfil", updateInfo:"Actualiza tu información.",
-    profilePhoto:"Foto de perfil", photoHint:"JPG o PNG, máx. 5 MB",
-    uploadPhoto:"📷 Subir foto", removePhoto:"🗑️ Quitar",
-    cancel:"Cancelar", save:"Guardar", saving:"Guardando...",
-    messages:"💬 Mensajes", selectChat:"Selecciona un chat",
-    selectChatDesc:"Haz clic en alguien y empieza a chatear.",
-    typeMessage:"Escribe un mensaje...", online:"en línea", noChats:"Aún no hay mensajes.",
-    startChat:'Pulsa "💬" en un perfil.',
-    profileBtn:"Ver perfil", messageBtn:"💬 Mensaje", likeBtn:"Me gusta", likedBtn:"♥ Te gusta",
-    aboutSection:"Acerca de", interestsSection:"Intereses",
-    lockedTitle:"Regístrate para ver los perfiles",
-    lockedDesc:"Para ver todos los perfiles y enviar mensajes, necesitas una cuenta gratis.",
-    featureUnlimited:"Navegación ilimitada", featureMessaging:"Mensajería instantánea",
-    featureImages:"Enviar imágenes", featurePhoto:"Foto de perfil", featureWorldwide:"Miembros de todo el mundo",
-    freeSignup:"Regístrate gratis", loginShort:"Entrar",
-    confirmDelete:"¿Seguro que quieres eliminar este mensaje para todos?",
-    msgDeleted:"🗑️ Mensaje eliminado", imageRemoved:"Imagen eliminada",
-    welcomeToast:"Bienvenido", loginSuccess:"Sesión iniciada ✓",
-    logoutDone:"Sesión cerrada", profileUpdated:"✅ ¡Perfil actualizado!",
-    only18:"Los menores de 18 no pueden registrarse.", invalidEmail:"Introduce un correo válido.",
-    passwordShort:"La contraseña debe tener 6 caracteres.", fillRequired:"Rellena los campos obligatorios (*).",
-    emailRegistered:"Este correo ya está registrado.", emailNotConfirmed:"📧 Primero confirma tu correo.",
-    invalidLogin:"Correo o contraseña incorrectos.",
-    registerSuccess:"✅ <b>¡Registro exitoso!</b><br>📧 Enviamos un enlace.<br>Haz clic e <b>inicia sesión</b>.",
-    uploading:"📤 Subiendo...", imageTooBig:"La imagen no puede superar 5 MB.",
-    pickImage:"Selecciona una imagen.", sendForBtn:"Pulsa ➤ para enviar"
-  },
-  fr: { login:"Connexion", signup:"Inscription gratuite", logout:"Déconnexion",
-    heroTitle:'Ceux qui cherchent <em>sérieusement</em> un partenaire le trouvent ici.',
-    heroDesc:"Membres réels, filtrage avancé et messagerie instantanée. Le point de rencontre pour ceux qui cherchent le mariage et les relations durables.",
-    heroCta:"Rejoignez — Gratuit", loginBtn:"Se connecter",
-    quickSearch:"🔍 Recherche rapide", whoMeet:"Qui voulez-vous rencontrer ?",
-    any:"Peu importe", female:"Femme", male:"Homme",
-    minAge:"Âge min", maxAge:"Âge max", findProfiles:"Trouver des profils",
-    realMembers:"Vrais membres", loading:"Chargement...",
-    membersFound:"membres", noMembers:"Aucun résultat 😕",
-    advancedFilter:"🎯 Filtrage avancé",
-    gender:"Genre", country:"Pays", city:"Ville",
-    maritalStatus:"Situation familiale", education:"Éducation",
-    all:"Tous", dontCare:"Peu importe",
-    minAgeL:"Âge min.", maxAgeL:"Âge max.",
-    minHeightL:"Taille min.", maxHeightL:"Taille max.",
-    minWeightL:"Poids min.", maxWeightL:"Poids max.",
-    searchPh:"professeur, Marie...", resetFilters:"Réinitialiser", filter:"Filtrer",
-    single:"Célibataire", divorced:"Divorcé", widowed:"Veuf", separated:"Séparé",
-    primary:"Primaire", highSchool:"Lycée", university:"Université", masters:"Master", phd:"Doctorat",
-    createAccount:"Créer un compte gratuit", accountDesc:"Quelques infos suffisent.",
-    fullName:"Nom complet", email:"E-mail", age:"Âge",
-    select:"Sélectionner", height:"Taille", weight:"Poids",
-    job:"Profession", bio:"Bio courte", interests:"Centres d'intérêt (virgules)",
-    interestsPh:"Livres, yoga, voyages", password:"Mot de passe",
-    createMyAccount:"Créer mon compte",
-    alreadyMember:"Déjà membre ?", loginLink:"Connexion",
-    welcomeBack:"Bon retour 👋", loginDesc:"Connectez-vous à votre compte.",
-    noAccount:"Pas de compte ?", signupLink:"Inscription gratuite",
-    editProfile:"Modifier mon profil", updateInfo:"Mettez à jour et enregistrez.",
-    profilePhoto:"Photo de profil", photoHint:"JPG ou PNG, max 5 Mo",
-    uploadPhoto:"📷 Télécharger", removePhoto:"🗑️ Retirer",
-    cancel:"Annuler", save:"Enregistrer", saving:"Enregistrement...",
-    messages:"💬 Messages", selectChat:"Sélectionnez une discussion",
-    selectChatDesc:"Cliquez sur une personne et commencez à discuter.",
-    typeMessage:"Écrivez un message...", online:"en ligne", noChats:"Aucun message.",
-    startChat:'Appuyez sur "💬" sur un profil.',
-    profileBtn:"Voir le profil", messageBtn:"💬 Message", likeBtn:"J'aime", likedBtn:"♥ Aimé",
-    aboutSection:"À propos", interestsSection:"Centres d'intérêt",
-    lockedTitle:"Inscrivez-vous pour voir les profils",
-    lockedDesc:"Pour voir tous les profils et envoyer des messages, il faut un compte gratuit.",
-    featureUnlimited:"Consultation illimitée", featureMessaging:"Messagerie instantanée",
-    featureImages:"Envoi d'images", featurePhoto:"Photo de profil", featureWorldwide:"Membres du monde entier",
-    freeSignup:"Inscription gratuite", loginShort:"Connexion",
-    confirmDelete:"Voulez-vous vraiment supprimer ce message pour tout le monde ?",
-    msgDeleted:"🗑️ Message supprimé", imageRemoved:"Image supprimée",
-    welcomeToast:"Bienvenue", loginSuccess:"Connexion réussie ✓",
-    logoutDone:"Déconnecté", profileUpdated:"✅ Profil mis à jour !",
-    only18:"Les moins de 18 ans ne peuvent pas s'inscrire.", invalidEmail:"Entrez un e-mail valide.",
-    passwordShort:"Mot de passe : 6 caractères min.", fillRequired:"Remplissez les champs obligatoires (*).",
-    emailRegistered:"Cet e-mail est déjà enregistré.", emailNotConfirmed:"📧 Confirmez d'abord votre e-mail.",
-    invalidLogin:"E-mail ou mot de passe incorrect.",
-    registerSuccess:"✅ <b>Inscription réussie !</b><br>📧 Lien envoyé.<br>Cliquez et <b>connectez-vous</b>.",
-    uploading:"📤 Envoi...", imageTooBig:"L'image ne doit pas dépasser 5 Mo.",
-    pickImage:"Sélectionnez un fichier image.", sendForBtn:"Appuyez sur ➤ pour envoyer"
-  },
-  zh: { login:"登录", signup:"免费注册", logout:"退出",
-    heroTitle:'认真<em>寻找</em>人生伴侣的人在这里找到他们。',
-    heroDesc:"真实会员、高级筛选和即时消息。寻求婚姻和长期关系人士的相聚之地。",
-    heroCta:"立即加入 — 免费", loginBtn:"登录",
-    quickSearch:"🔍 快速搜索", whoMeet:"你想认识谁？",
-    any:"不限", female:"女性", male:"男性",
-    minAge:"最小年龄", maxAge:"最大年龄", findProfiles:"查找合适的资料",
-    realMembers:"真实会员", loading:"加载中...",
-    membersFound:"位会员", noMembers:"未找到结果 😕",
-    advancedFilter:"🎯 高级筛选",
-    gender:"性别", country:"国家", city:"城市",
-    maritalStatus:"婚姻状况", education:"教育",
-    all:"全部", dontCare:"不限",
-    minAgeL:"最小年龄", maxAgeL:"最大年龄",
-    minHeightL:"最低身高", maxHeightL:"最高身高",
-    minWeightL:"最低体重", maxWeightL:"最高体重",
-    searchPh:"老师、小美...", resetFilters:"重置筛选", filter:"筛选",
-    single:"未婚", divorced:"离异", widowed:"丧偶", separated:"分居",
-    primary:"小学", highSchool:"高中", university:"大学", masters:"硕士", phd:"博士",
-    createAccount:"创建免费账户", accountDesc:"只需几项信息。",
-    fullName:"姓名", email:"电子邮件", age:"年龄",
-    select:"请选择", height:"身高", weight:"体重",
-    job:"职业", bio:"简介", interests:"兴趣爱好（用逗号分隔）",
-    interestsPh:"阅读、瑜伽、旅行", password:"密码",
-    createMyAccount:"创建我的账户",
-    alreadyMember:"已经是会员？", loginLink:"登录",
-    welcomeBack:"欢迎回来 👋", loginDesc:"登录您的账户。",
-    noAccount:"没有账户？", signupLink:"免费注册",
-    editProfile:"编辑我的资料", updateInfo:"更新并保存您的信息。",
-    profilePhoto:"个人资料照片", photoHint:"JPG 或 PNG，最大 5 MB",
-    uploadPhoto:"📷 上传照片", removePhoto:"🗑️ 移除",
-    cancel:"取消", save:"保存", saving:"保存中...",
-    messages:"💬 消息", selectChat:"选择一个聊天",
-    selectChatDesc:"点击左侧的联系人开始聊天。",
-    typeMessage:"输入消息...", online:"在线", noChats:"暂无消息。",
-    startChat:'点击资料上的 "💬" 开始。',
-    profileBtn:"查看资料", messageBtn:"💬 消息", likeBtn:"喜欢", likedBtn:"♥ 已喜欢",
-    aboutSection:"关于", interestsSection:"兴趣爱好",
-    lockedTitle:"注册后查看资料",
-    lockedDesc:"要查看所有会员资料、发送消息和图片，需要一个免费账户。",
-    featureUnlimited:"无限浏览资料", featureMessaging:"即时消息",
-    featureImages:"发送图片", featurePhoto:"个人资料照片", featureWorldwide:"来自世界各地的会员",
-    freeSignup:"免费注册", loginShort:"登录",
-    confirmDelete:"确定要为所有人删除这条消息吗？",
-    msgDeleted:"🗑️ 消息已删除", imageRemoved:"图片已移除",
-    welcomeToast:"欢迎", loginSuccess:"登录成功 ✓",
-    logoutDone:"已退出", profileUpdated:"✅ 资料已更新！",
-    only18:"18岁以下不能注册。", invalidEmail:"请输入有效的电子邮件。",
-    passwordShort:"密码至少6位。", fillRequired:"请填写必填项（*）。",
-    emailRegistered:"该邮箱已注册。", emailNotConfirmed:"📧 请先确认您的邮箱。",
-    invalidLogin:"邮箱或密码错误。",
-    registerSuccess:"✅ <b>注册成功！</b><br>📧 已发送确认链接。<br>点击链接并<b>登录</b>。",
-    uploading:"📤 上传中...", imageTooBig:"图片不能超过5 MB。",
-    pickImage:"请选择图片文件。", sendForBtn:"按 ➤ 发送"
-  },
-  ja: { login:"ログイン", signup:"無料登録", logout:"ログアウト",
-    heroTitle:'真剣に<em>人生のパートナー</em>を探す人がここで見つけます。',
-    heroDesc:"本物のメンバー、高度なフィルタリング、インスタントメッセージ。結婚や長期的な関係を求める人々の出会いの場。",
-    heroCta:"今すぐ参加 — 無料", loginBtn:"ログイン",
-    quickSearch:"🔍 クイック検索", whoMeet:"誰と出会いたいですか？",
-    any:"どちらでも", female:"女性", male:"男性",
-    minAge:"最小年齢", maxAge:"最大年齢", findProfiles:"適切なプロフィールを検索",
-    realMembers:"本物のメンバー", loading:"読み込み中...",
-    membersFound:"人", noMembers:"結果なし 😕",
-    advancedFilter:"🎯 高度なフィルタリング",
-    gender:"性別", country:"国", city:"都市",
-    maritalStatus:"婚姻状況", education:"学歴",
-    all:"すべて", dontCare:"どちらでも",
-    minAgeL:"最小年齢", maxAgeL:"最大年齢",
-    minHeightL:"最小身長", maxHeightL:"最大身長",
-    minWeightL:"最小体重", maxWeightL:"最大体重",
-    searchPh:"先生、花子...", resetFilters:"リセット", filter:"フィルター",
-    single:"未婚", divorced:"離婚", widowed:"死別", separated:"別居",
-    primary:"小学校", highSchool:"高校", university:"大学", masters:"修士", phd:"博士",
-    createAccount:"無料アカウントを作成", accountDesc:"少しの情報で完了。",
-    fullName:"氏名", email:"メール", age:"年齢",
-    select:"選択", height:"身長", weight:"体重",
-    job:"職業", bio:"自己紹介", interests:"趣味（カンマ区切り）",
-    interestsPh:"読書、ヨガ、旅行", password:"パスワード",
-    createMyAccount:"アカウントを作成",
-    alreadyMember:"すでにメンバー？", loginLink:"ログイン",
-    welcomeBack:"お帰りなさい 👋", loginDesc:"アカウントにログイン。",
-    noAccount:"アカウントがない？", signupLink:"無料登録",
-    editProfile:"プロフィールを編集", updateInfo:"情報を更新して保存。",
-    profilePhoto:"プロフィール写真", photoHint:"JPG または PNG、最大5 MB",
-    uploadPhoto:"📷 写真をアップロード", removePhoto:"🗑️ 削除",
-    cancel:"キャンセル", save:"保存", saving:"保存中...",
-    messages:"💬 メッセージ", selectChat:"チャットを選択",
-    selectChatDesc:"左のリストから人をクリックして会話を始めましょう。",
-    typeMessage:"メッセージを入力...", online:"オンライン", noChats:"まだメッセージはありません。",
-    startChat:'プロフィールの "💬" を押して始めましょう。',
-    profileBtn:"プロフィールを見る", messageBtn:"💬 メッセージ", likeBtn:"いいね", likedBtn:"♥ いいね済み",
-    aboutSection:"概要", interestsSection:"趣味",
-    lockedTitle:"登録してプロフィールを見る",
-    lockedDesc:"すべてのプロフィールを見たり、メッセージや画像を送るには無料アカウントが必要です。",
-    featureUnlimited:"無制限の閲覧", featureMessaging:"インスタントメッセージ",
-    featureImages:"画像を送信", featurePhoto:"プロフィール写真", featureWorldwide:"世界中のメンバー",
-    freeSignup:"無料登録", loginShort:"ログイン",
-    confirmDelete:"このメッセージを全員から削除してもよろしいですか？",
-    msgDeleted:"🗑️ 削除しました", imageRemoved:"画像を削除しました",
-    welcomeToast:"ようこそ", loginSuccess:"ログイン成功 ✓",
-    logoutDone:"ログアウトしました", profileUpdated:"✅ プロフィールを更新しました！",
-    only18:"18歳未満は登録できません。", invalidEmail:"有効なメールを入力してください。",
-    passwordShort:"パスワードは6文字以上。", fillRequired:"必須項目（*）を入力してください。",
-    emailRegistered:"このメールは既に登録されています。", emailNotConfirmed:"📧 先にメールを確認してください。",
-    invalidLogin:"メールまたはパスワードが間違っています。",
-    registerSuccess:"✅ <b>登録成功！</b><br>📧 確認リンクを送信しました。<br>リンクをクリックして<b>ログイン</b>。",
-    uploading:"📤 アップロード中...", imageTooBig:"画像は5 MBまでです。",
-    pickImage:"画像ファイルを選択してください。", sendForBtn:"➤ を押して送信"
-  },
-  ko: { login:"로그인", signup:"무료 가입", logout:"로그아웃",
-    heroTitle:'진지하게 <em>인생 반려자</em>를 찾는 사람들이 여기서 만납니다.',
-    heroDesc:"실제 회원, 고급 필터링, 즉시 메시지. 결혼과 장기적 관계를 원하는 사람들의 만남의 장소.",
-    heroCta:"지금 가입 — 무료", loginBtn:"로그인",
-    quickSearch:"🔍 빠른 검색", whoMeet:"누구를 만나고 싶으세요?",
-    any:"상관없음", female:"여성", male:"남성",
-    minAge:"최소 나이", maxAge:"최대 나이", findProfiles:"적합한 프로필 찾기",
-    realMembers:"실제 회원", loading:"로딩 중...",
-    membersFound:"명", noMembers:"결과가 없습니다 😕",
-    advancedFilter:"🎯 고급 필터링",
-    gender:"성별", country:"국가", city:"도시",
-    maritalStatus:"결혼 상태", education:"학력",
-    all:"전체", dontCare:"상관없음",
-    minAgeL:"최소 나이", maxAgeL:"최대 나이",
-    minHeightL:"최소 키", maxHeightL:"최대 키",
-    minWeightL:"최소 몸무게", maxWeightL:"최대 몸무게",
-    searchPh:"선생님, 미영...", resetFilters:"초기화", filter:"필터",
-    single:"미혼", divorced:"이혼", widowed:"사별", separated:"별거",
-    primary:"초등", highSchool:"고등", university:"대학", masters:"석사", phd:"박사",
-    createAccount:"무료 계정 만들기", accountDesc:"몇 가지만 입력하면 완료.",
-    fullName:"이름", email:"이메일", age:"나이",
-    select:"선택", height:"키", weight:"몸무게",
-    job:"직업", bio:"짧은 소개", interests:"관심사 (쉼표로 구분)",
-    interestsPh:"독서, 요가, 여행", password:"비밀번호",
-    createMyAccount:"내 계정 만들기",
-    alreadyMember:"이미 회원이신가요?", loginLink:"로그인",
-    welcomeBack:"다시 오신 것을 환영합니다 👋", loginDesc:"계정에 로그인하세요.",
-    noAccount:"계정이 없으신가요?", signupLink:"무료 가입",
-    editProfile:"내 프로필 편집", updateInfo:"정보를 업데이트하고 저장하세요.",
-    profilePhoto:"프로필 사진", photoHint:"JPG 또는 PNG, 최대 5 MB",
-    uploadPhoto:"📷 사진 업로드", removePhoto:"🗑️ 제거",
-    cancel:"취소", save:"저장", saving:"저장 중...",
-    messages:"💬 메시지", selectChat:"채팅을 선택하세요",
-    selectChatDesc:"왼쪽에서 사람을 클릭해 대화를 시작하세요.",
-    typeMessage:"메시지를 입력하세요...", online:"온라인", noChats:"아직 메시지가 없습니다.",
-    startChat:'프로필에서 "💬"을 눌러 시작하세요.',
-    profileBtn:"프로필 보기", messageBtn:"💬 메시지", likeBtn:"좋아요", likedBtn:"♥ 좋아함",
-    aboutSection:"소개", interestsSection:"관심사",
-    lockedTitle:"가입하고 프로필 보기",
-    lockedDesc:"모든 프로필을 보고 메시지를 보내려면 무료 계정이 필요합니다.",
-    featureUnlimited:"무제한 열람", featureMessaging:"즉시 메시지",
-    featureImages:"이미지 보내기", featurePhoto:"프로필 사진", featureWorldwide:"전 세계 회원",
-    freeSignup:"무료 가입", loginShort:"로그인",
-    confirmDelete:"이 메시지를 모두에게서 삭제하시겠습니까?",
-    msgDeleted:"🗑️ 삭제되었습니다", imageRemoved:"이미지가 제거되었습니다",
-    welcomeToast:"환영합니다", loginSuccess:"로그인 성공 ✓",
-    logoutDone:"로그아웃됨", profileUpdated:"✅ 프로필이 업데이트되었습니다!",
-    only18:"18세 미만은 가입할 수 없습니다.", invalidEmail:"유효한 이메일을 입력하세요.",
-    passwordShort:"비밀번호는 6자 이상.", fillRequired:"필수 (*) 항목을 채워주세요.",
-    emailRegistered:"이 이메일은 이미 등록되어 있습니다.", emailNotConfirmed:"📧 먼저 이메일을 확인하세요.",
-    invalidLogin:"이메일 또는 비밀번호가 잘못되었습니다.",
-    registerSuccess:"✅ <b>가입 성공!</b><br>📧 확인 링크를 보냈습니다.<br>링크를 클릭하고 <b>로그인</b>하세요.",
-    uploading:"📤 업로드 중...", imageTooBig:"이미지는 5 MB까지입니다.",
-    pickImage:"이미지 파일을 선택하세요.", sendForBtn:"➤ 을 눌러 전송"
-  }
+tr:{login:"Giriş Yap",signup:"Ücretsiz Kayıt",logout:"Çıkış",heroTitle:'Hayat arkadaşını <em>ciddi</em> arayanlar burada bulur.',heroDesc:"Gerçek üyeler, gelişmiş filtreleme ve anlık mesajlaşma. Evlilik ve uzun soluklu ilişki hedefleyenlerin buluşma noktası.",heroCta:"Hemen Üye Ol — Ücretsiz",loginBtn:"Giriş Yap",quickSearch:"🔍 Hızlı Arama",whoMeet:"Kimle tanışmak istiyorsun?",any:"Fark etmez",female:"Kadın",male:"Erkek",minAge:"En az yaş",maxAge:"En çok yaş",findProfiles:"Uygun Profilleri Bul",realMembers:"Gerçek Üyeler",loading:"Yükleniyor...",membersFound:"üye bulundu",noMembers:"Sonuç bulunamadı 😕",advancedFilter:"🎯 Gelişmiş Filtreleme",gender:"Cinsiyet",country:"Ülke",city:"Şehir",maritalStatus:"Medeni Durum",education:"Eğitim",all:"Tümü",dontCare:"Fark etmez",minAgeL:"Min. Yaş",maxAgeL:"Maks. Yaş",minHeightL:"Min. Boy (cm)",maxHeightL:"Maks. Boy (cm)",minWeightL:"Min. Kilo (kg)",maxWeightL:"Maks. Kilo (kg)",searchPh:"öğretmen, Ayşe...",resetFilters:"Filtreleri Sıfırla",filter:"Filtrele",single:"Bekar",divorced:"Boşanmış",widowed:"Dul",separated:"Ayrı yaşıyor",primary:"İlköğretim",highSchool:"Lise",university:"Üniversite",masters:"Yüksek Lisans",phd:"Doktora",createAccount:"Ücretsiz Hesap Oluştur",accountDesc:"Birkaç bilgi yeterli, hemen başla.",fullName:"Ad Soyad",email:"E-posta",age:"Yaş",select:"Seçiniz",height:"Boy (cm)",weight:"Kilo (kg)",job:"Meslek",bio:"Kısa Tanıtım",interests:"İlgi Alanları (virgülle ayır)",interestsPh:"Kitap, Yoga, Seyahat",password:"Şifre",createMyAccount:"Hesabımı Oluştur",alreadyMember:"Zaten üye misin?",loginLink:"Giriş yap",welcomeBack:"Tekrar hoş geldin 👋",loginDesc:"Hesabına giriş yap.",noAccount:"Hesabın yok mu?",signupLink:"Ücretsiz kayıt ol",editProfile:"Profilimi Düzenle",updateInfo:"Bilgilerini güncelle ve kaydet.",profilePhoto:"Profil Fotoğrafı",photoHint:"JPG veya PNG, max 5 MB",uploadPhoto:"📷 Fotoğraf Yükle",removePhoto:"🗑️ Kaldır",cancel:"İptal",save:"Kaydet",messages:"💬 Mesajlar",selectChat:"Bir sohbet seç",selectChatDesc:"Soldaki listeden bir kişiye tıkla ve konuşmaya başla.",noChats:"Henüz mesajlaşma yok.",online:"çevrimiçi",profileBtn:"Profili Gör",messageBtn:"💬 Mesaj",lockedTitle:"Profilleri görmek için üye olun",lockedDesc:"Sitemizdeki tüm üye profillerini görebilmek, mesajlaşabilmek ve resim gönderebilmek için ücretsiz üye olmanız gerekiyor.",featureUnlimited:"Sınırsız profil görüntüleme",featureMessaging:"Anlık mesajlaşma",featureImages:"Resim gönderme",featurePhoto:"Profil fotoğrafı",featureWorldwide:"Dünyanın her yerinden üyeler",freeSignup:"Ücretsiz Üye Ol",loginShort:"Giriş Yap",confirmDelete:"Bu mesajı herkesten silmek istediğinize emin misiniz?",msgDeleted:"🗑️ Mesaj silindi",welcomeToast:"Hoş geldin",loginSuccess:"Giriş başarılı ✓",logoutDone:"Çıkış yapıldı",profileUpdated:"✅ Profilin güncellendi!",only18:"18 yaşından küçükler üye olamaz.",invalidEmail:"Geçerli e-posta gir.",passwordShort:"Şifre en az 6 karakter olmalı.",fillRequired:"Lütfen zorunlu (*) alanları doldur.",emailRegistered:"Bu e-posta zaten kayıtlı. Giriş yapmayı deneyin.",emailNotConfirmed:"📧 E-postanı henüz onaylamadın.",invalidLogin:"E-posta veya şifre hatalı.",registerSuccess:"✅ <b>Kayıt başarılı!</b><br>📧 E-postana onay linki gönderdik.<br>Linke tıklayıp <b>giriş yap</b> — profilin otomatik oluşacak.",uploading:"📤 Resim yükleniyor...",imageTooBig:"Resim 5 MB'tan büyük olamaz.",pickImage:"Lütfen bir resim dosyası seç.",sendForBtn:"Göndermek için ➤ butonuna bas"},
+en:{login:"Login",signup:"Free Signup",logout:"Logout",heroTitle:'Those <em>seriously</em> seeking a life partner find them here.',heroDesc:"Real members, advanced filtering and instant messaging. The meeting point for those seeking marriage and long-term relationships.",heroCta:"Join Now — Free",loginBtn:"Login",quickSearch:"🔍 Quick Search",whoMeet:"Who do you want to meet?",any:"Any",female:"Female",male:"Male",minAge:"Min age",maxAge:"Max age",findProfiles:"Find Suitable Profiles",realMembers:"Real Members",loading:"Loading...",membersFound:"members found",noMembers:"No results found 😕",advancedFilter:"🎯 Advanced Filtering",gender:"Gender",country:"Country",city:"City",maritalStatus:"Marital Status",education:"Education",all:"All",dontCare:"Doesn't matter",minAgeL:"Min Age",maxAgeL:"Max Age",minHeightL:"Min Height (cm)",maxHeightL:"Max Height (cm)",minWeightL:"Min Weight (kg)",maxWeightL:"Max Weight (kg)",searchPh:"teacher, Jane...",resetFilters:"Reset Filters",filter:"Filter",single:"Single",divorced:"Divorced",widowed:"Widowed",separated:"Separated",primary:"Primary",highSchool:"High School",university:"University",masters:"Master's",phd:"PhD",createAccount:"Create Free Account",accountDesc:"A few details and you're in.",fullName:"Full Name",email:"Email",age:"Age",select:"Select",height:"Height (cm)",weight:"Weight (kg)",job:"Occupation",bio:"Short Bio",interests:"Interests (comma separated)",interestsPh:"Books, Yoga, Travel",password:"Password",createMyAccount:"Create My Account",alreadyMember:"Already a member?",loginLink:"Login",welcomeBack:"Welcome back 👋",loginDesc:"Sign in to your account.",noAccount:"Don't have an account?",signupLink:"Sign up free",editProfile:"Edit My Profile",updateInfo:"Update your information and save.",profilePhoto:"Profile Photo",photoHint:"JPG or PNG, max 5 MB",uploadPhoto:"📷 Upload Photo",removePhoto:"🗑️ Remove",cancel:"Cancel",save:"Save",messages:"💬 Messages",selectChat:"Select a chat",selectChatDesc:"Click a person on the left and start chatting.",noChats:"No messages yet.",online:"online",profileBtn:"View Profile",messageBtn:"💬 Message",lockedTitle:"Sign up to view profiles",lockedDesc:"To view all member profiles, send messages and share images, you need a free account.",featureUnlimited:"Unlimited profile browsing",featureMessaging:"Instant messaging",featureImages:"Send images",featurePhoto:"Profile photo",featureWorldwide:"Members from all over the world",freeSignup:"Sign Up Free",loginShort:"Login",confirmDelete:"Are you sure you want to delete this message for everyone?",msgDeleted:"🗑️ Message deleted",welcomeToast:"Welcome",loginSuccess:"Login successful ✓",logoutDone:"Logged out",profileUpdated:"✅ Profile updated!",only18:"Users under 18 cannot register.",invalidEmail:"Enter a valid email.",passwordShort:"Password must be at least 6 characters.",fillRequired:"Please fill the required (*) fields.",emailRegistered:"This email is already registered.",emailNotConfirmed:"📧 Please confirm your email first.",invalidLogin:"Invalid email or password.",registerSuccess:"✅ <b>Registration successful!</b><br>📧 Confirmation link sent.<br>Click and <b>log in</b>.",uploading:"📤 Uploading...",imageTooBig:"Image cannot exceed 5 MB.",pickImage:"Please select an image file.",sendForBtn:"Press ➤ to send"},
+hi:{login:"लॉग इन",signup:"मुफ़्त पंजीकरण",logout:"लॉग आउट",heroTitle:'जो <em>गंभीरता से</em> जीवनसाथी खोजते हैं, वे यहाँ पाते हैं।',heroDesc:"असली सदस्य, उन्नत फ़िल्टरिंग और तत्काल संदेश। विवाह और दीर्घकालिक संबंध चाहने वालों का मिलन स्थल।",heroCta:"अभी जुड़ें — मुफ़्त",loginBtn:"लॉग इन",quickSearch:"🔍 त्वरित खोज",whoMeet:"आप किससे मिलना चाहते हैं?",any:"कोई भी",female:"महिला",male:"पुरुष",minAge:"न्यूनतम आयु",maxAge:"अधिकतम आयु",findProfiles:"उपयुक्त प्रोफ़ाइल खोजें",realMembers:"असली सदस्य",loading:"लोड हो रहा है...",membersFound:"सदस्य मिले",noMembers:"कोई परिणाम नहीं मिला 😕",advancedFilter:"🎯 उन्नत फ़िल्टरिंग",gender:"लिंग",country:"देश",city:"शहर",maritalStatus:"वैवाहिक स्थिति",education:"शिक्षा",all:"सभी",dontCare:"कोई फ़र्क़ नहीं",minAgeL:"न्यूनतम आयु",maxAgeL:"अधिकतम आयु",minHeightL:"न्यूनतम ऊँचाई (सेमी)",maxHeightL:"अधिकतम ऊँचाई (सेमी)",minWeightL:"न्यूनतम वज़न (किग्रा)",maxWeightL:"अधिकतम वज़न (किग्रा)",searchPh:"शिक्षक, प्रिया...",resetFilters:"फ़िल्टर रीसेट करें",filter:"फ़िल्टर",single:"अविवाहित",divorced:"तलाकशुदा",widowed:"विधवा/विधुर",separated:"अलग रह रहे",primary:"प्राथमिक",highSchool:"हाई स्कूल",university:"विश्वविद्यालय",masters:"मास्टर",phd:"पीएचडी",createAccount:"मुफ़्त खाता बनाएँ",accountDesc:"कुछ जानकारी और आप तैयार हैं।",fullName:"पूरा नाम",email:"ईमेल",age:"आयु",select:"चुनें",height:"ऊँचाई (सेमी)",weight:"वज़न (किग्रा)",job:"व्यवसाय",bio:"संक्षिप्त परिचय",interests:"रुचियाँ (कॉमा से अलग करें)",interestsPh:"किताबें, योग, यात्रा",password:"पासवर्ड",createMyAccount:"मेरा खाता बनाएँ",alreadyMember:"पहले से सदस्य हैं?",loginLink:"लॉग इन",welcomeBack:"वापस स्वागत है 👋",loginDesc:"अपने खाते में साइन इन करें।",noAccount:"खाता नहीं है?",signupLink:"मुफ़्त पंजीकरण",editProfile:"मेरी प्रोफ़ाइल संपादित करें",updateInfo:"अपनी जानकारी अपडेट करें और सहेजें।",profilePhoto:"प्रोफ़ाइल फ़ोटो",photoHint:"JPG या PNG, अधिकतम 5 MB",uploadPhoto:"📷 फ़ोटो अपलोड करें",removePhoto:"🗑️ हटाएँ",cancel:"रद्द करें",save:"सहेजें",messages:"💬 संदेश",selectChat:"चैट चुनें",selectChatDesc:"बाएँ से किसी व्यक्ति पर क्लिक करें और बातचीत शुरू करें।",noChats:"अभी कोई संदेश नहीं।",online:"ऑनलाइन",profileBtn:"प्रोफ़ाइल देखें",messageBtn:"💬 संदेश",lockedTitle:"प्रोफ़ाइल देखने के लिए साइन अप करें",lockedDesc:"सभी सदस्य प्रोफ़ाइल देखने और संदेश भेजने के लिए मुफ़्त खाता चाहिए।",featureUnlimited:"असीमित ब्राउज़िंग",featureMessaging:"तत्काल संदेश",featureImages:"तस्वीरें भेजें",featurePhoto:"प्रोफ़ाइल फ़ोटो",featureWorldwide:"दुनिया भर के सदस्य",freeSignup:"मुफ़्त साइन अप",loginShort:"लॉग इन",confirmDelete:"क्या आप वाकई इस संदेश को हटाना चाहते हैं?",msgDeleted:"🗑️ संदेश हटा दिया",welcomeToast:"स्वागत है",loginSuccess:"लॉग इन सफल ✓",logoutDone:"लॉग आउट हो गया",profileUpdated:"✅ प्रोफ़ाइल अपडेट हुई!",only18:"18 वर्ष से कम पंजीकरण नहीं कर सकते।",invalidEmail:"मान्य ईमेल दर्ज करें।",passwordShort:"पासवर्ड कम से कम 6 अक्षर।",fillRequired:"कृपया आवश्यक (*) फ़ील्ड भरें।",emailRegistered:"यह ईमेल पहले से पंजीकृत है।",emailNotConfirmed:"📧 पहले ईमेल सत्यापित करें।",invalidLogin:"अमान्य ईमेल या पासवर्ड।",registerSuccess:"✅ <b>पंजीकरण सफल!</b><br>📧 पुष्टि लिंक भेजा।<br>लिंक पर क्लिक करें और <b>लॉग इन करें</b>।",uploading:"📤 अपलोड हो रहा है...",imageTooBig:"तस्वीर 5 MB से अधिक नहीं।",pickImage:"कृपया तस्वीर चुनें।",sendForBtn:"भेजने के लिए ➤ दबाएँ"},
+ar:{login:"تسجيل الدخول",signup:"تسجيل مجاني",logout:"خروج",heroTitle:'من يبحثون <em>بجدية</em> عن شريك الحياة يجدونه هنا.',heroDesc:"أعضاء حقيقيون، تصفية متقدمة ومراسلة فورية.",heroCta:"اشترك الآن — مجاناً",loginBtn:"تسجيل الدخول",quickSearch:"🔍 بحث سريع",whoMeet:"بمن تريد أن تلتقي؟",any:"لا يهم",female:"أنثى",male:"ذكر",minAge:"الحد الأدنى للعمر",maxAge:"الحد الأقصى",findProfiles:"ابحث عن ملفات",realMembers:"أعضاء حقيقيون",loading:"جاري التحميل...",membersFound:"عضو",noMembers:"لا توجد نتائج 😕",advancedFilter:"🎯 تصفية متقدمة",gender:"الجنس",country:"الدولة",city:"المدينة",maritalStatus:"الحالة الاجتماعية",education:"التعليم",all:"الكل",dontCare:"لا يهم",minAgeL:"أدنى عمر",maxAgeL:"أقصى عمر",minHeightL:"أدنى طول",maxHeightL:"أقصى طول",minWeightL:"أدنى وزن",maxWeightL:"أقصى وزن",searchPh:"مدرس، سارة...",resetFilters:"إعادة تعيين",filter:"تصفية",single:"أعزب",divorced:"مطلق",widowed:"أرمل",separated:"منفصل",primary:"ابتدائي",highSchool:"ثانوي",university:"جامعي",masters:"ماجستير",phd:"دكتوراه",createAccount:"إنشاء حساب مجاني",accountDesc:"بضع معلومات فقط.",fullName:"الاسم الكامل",email:"البريد",age:"العمر",select:"اختر",height:"الطول",weight:"الوزن",job:"المهنة",bio:"نبذة",interests:"الاهتمامات",interestsPh:"كتب، يوغا، سفر",password:"كلمة المرور",createMyAccount:"إنشاء حسابي",alreadyMember:"عضو بالفعل؟",loginLink:"تسجيل الدخول",welcomeBack:"مرحباً بعودتك 👋",loginDesc:"سجّل الدخول.",noAccount:"ليس لديك حساب؟",signupLink:"سجّل مجاناً",editProfile:"تعديل ملفي",updateInfo:"حدّث معلوماتك.",profilePhoto:"صورة الملف",photoHint:"JPG أو PNG، 5 ميجا",uploadPhoto:"📷 تحميل صورة",removePhoto:"🗑️ إزالة",cancel:"إلغاء",save:"حفظ",messages:"💬 الرسائل",selectChat:"اختر محادثة",selectChatDesc:"انقر على شخص لبدء المحادثة.",noChats:"لا توجد رسائل.",online:"متصل",profileBtn:"عرض الملف",messageBtn:"💬 رسالة",lockedTitle:"سجّل لعرض الملفات",lockedDesc:"لعرض الملفات وإرسال الرسائل، تحتاج حساب مجاني.",featureUnlimited:"تصفح غير محدود",featureMessaging:"مراسلة فورية",featureImages:"إرسال صور",featurePhoto:"صورة شخصية",featureWorldwide:"أعضاء من كل العالم",freeSignup:"سجّل مجاناً",loginShort:"تسجيل",confirmDelete:"هل أنت متأكد من الحذف؟",msgDeleted:"🗑️ تم الحذف",welcomeToast:"مرحباً",loginSuccess:"تم الدخول ✓",logoutDone:"تم الخروج",profileUpdated:"✅ تم التحديث!",only18:"لا يمكن لمن هم تحت 18 التسجيل.",invalidEmail:"أدخل بريداً صحيحاً.",passwordShort:"كلمة المرور 6 أحرف.",fillRequired:"املأ الحقول المطلوبة (*).",emailRegistered:"البريد مسجل بالفعل.",emailNotConfirmed:"📧 أكّد بريدك أولاً.",invalidLogin:"البريد أو كلمة المرور خاطئة.",registerSuccess:"✅ <b>تم التسجيل!</b><br>📧 أرسلنا رابطاً.<br>اضغط و<b>سجّل الدخول</b>.",uploading:"📤 جاري الرفع...",imageTooBig:"لا تتجاوز 5 ميغا.",pickImage:"اختر صورة.",sendForBtn:"اضغط ➤ للإرسال"},
+fa:{login:"ورود",signup:"ثبت‌نام رایگان",logout:"خروج",heroTitle:'کسانی که <em>جدی</em> به دنبال همسر هستند، اینجا پیدا می‌کنند.',heroDesc:"اعضای واقعی، فیلتر پیشرفته و پیام‌رسانی فوری.",heroCta:"همین حالا عضو شوید — رایگان",loginBtn:"ورود",quickSearch:"🔍 جستجوی سریع",whoMeet:"با چه کسی آشنا شوید؟",any:"مهم نیست",female:"زن",male:"مرد",minAge:"حداقل سن",maxAge:"حداکثر سن",findProfiles:"یافتن پروفایل‌ها",realMembers:"اعضای واقعی",loading:"در حال بارگذاری...",membersFound:"عضو",noMembers:"نتیجه‌ای یافت نشد 😕",advancedFilter:"🎯 فیلتر پیشرفته",gender:"جنسیت",country:"کشور",city:"شهر",maritalStatus:"وضعیت تأهل",education:"تحصیلات",all:"همه",dontCare:"مهم نیست",minAgeL:"حداقل سن",maxAgeL:"حداکثر سن",minHeightL:"حداقل قد",maxHeightL:"حداکثر قد",minWeightL:"حداقل وزن",maxWeightL:"حداکثر وزن",searchPh:"معلم، سارا...",resetFilters:"پاک کردن",filter:"فیلتر",single:"مجرد",divorced:"جدا شده",widowed:"بیوه",separated:"جدا",primary:"ابتدایی",highSchool:"دبیرستان",university:"دانشگاه",masters:"کارشناسی ارشد",phd:"دکترا",createAccount:"ایجاد حساب رایگان",accountDesc:"چند اطلاعات کافی است.",fullName:"نام و نام خانوادگی",email:"ایمیل",age:"سن",select:"انتخاب",height:"قد",weight:"وزن",job:"شغل",bio:"توضیح کوتاه",interests:"علایق",interestsPh:"کتاب، یوگا، سفر",password:"رمز عبور",createMyAccount:"ایجاد حساب من",alreadyMember:"قبلاً عضو شده‌اید؟",loginLink:"ورود",welcomeBack:"خوش آمدید 👋",loginDesc:"به حساب خود وارد شوید.",noAccount:"حساب ندارید؟",signupLink:"ثبت‌نام رایگان",editProfile:"ویرایش پروفایل",updateInfo:"اطلاعات خود را به‌روز کنید.",profilePhoto:"عکس پروفایل",photoHint:"JPG یا PNG، 5 مگابایت",uploadPhoto:"📷 آپلود عکس",removePhoto:"🗑️ حذف",cancel:"لغو",save:"ذخیره",messages:"💬 پیام‌ها",selectChat:"یک گفتگو انتخاب کنید",selectChatDesc:"روی یک نفر کلیک کنید.",noChats:"هنوز پیامی نیست.",online:"آنلاین",profileBtn:"مشاهده",messageBtn:"💬 پیام",lockedTitle:"برای دیدن پروفایل‌ها ثبت‌نام کنید",lockedDesc:"برای دیدن پروفایل‌ها و ارسال پیام، به حساب رایگان نیاز دارید.",featureUnlimited:"مشاهده نامحدود",featureMessaging:"پیام‌رسانی فوری",featureImages:"ارسال تصویر",featurePhoto:"عکس پروفایل",featureWorldwide:"اعضا از سراسر جهان",freeSignup:"ثبت‌نام رایگان",loginShort:"ورود",confirmDelete:"مطمئنید حذف شود؟",msgDeleted:"🗑️ حذف شد",welcomeToast:"خوش آمدید",loginSuccess:"ورود موفق ✓",logoutDone:"خارج شدید",profileUpdated:"✅ به‌روزرسانی شد!",only18:"زیر 18 سال نمی‌توانند.",invalidEmail:"ایمیل معتبر وارد کنید.",passwordShort:"رمز حداقل 6 کاراکتر.",fillRequired:"فیلدهای الزامی (*) را پر کنید.",emailRegistered:"این ایمیل قبلاً ثبت شده.",emailNotConfirmed:"📧 ابتدا ایمیل را تأیید کنید.",invalidLogin:"ایمیل یا رمز اشتباه.",registerSuccess:"✅ <b>ثبت‌نام موفق!</b><br>📧 لینک ارسال شد.<br>روی لینک کلیک کنید و <b>وارد شوید</b>.",uploading:"📤 در حال آپلود...",imageTooBig:"تصویر بیش از 5 مگابایت نباشد.",pickImage:"تصویر انتخاب کنید.",sendForBtn:"برای ارسال ➤ را بزنید"},
+ku:{login:"Têketin",signup:"Qeydkirina belaş",logout:"Derketin",heroTitle:'Yên ku <em>bi cidî</em> hevjîna jiyanê digerin li vir dibînin.',heroDesc:"Endamên rastîn, parzûna pêşkeftî û peyama bilez.",heroCta:"Niha Endam Bibin — Belaş",loginBtn:"Têketin",quickSearch:"🔍 Lêgerîna Bilez",whoMeet:"Tu dixwazî bi kê re hevdîtinê bikî?",any:"Fereq nake",female:"Jin",male:"Mêr",minAge:"Temenê kêmtirîn",maxAge:"Temenê herî zêde",findProfiles:"Profîlên Guncan Bibîne",realMembers:"Endamên Rastîn",loading:"Tê barkirin...",membersFound:"endam",noMembers:"Encam nehat dîtin 😕",advancedFilter:"🎯 Parzûna Pêşkeftî",gender:"Zayend",country:"Welat",city:"Bajar",maritalStatus:"Rewşa Zewacê",education:"Perwerde",all:"Hemû",dontCare:"Fereq nake",minAgeL:"Temenê Min.",maxAgeL:"Temenê Maks.",minHeightL:"Bilindahiya Min.",maxHeightL:"Bilindahiya Maks.",minWeightL:"Giraniya Min.",maxWeightL:"Giraniya Maks.",searchPh:"mamoste...",resetFilters:"Paqij Bike",filter:"Parzûn",single:"Bekar",divorced:"Jêbûyî",widowed:"Bîwe",separated:"Cuda",primary:"Seretayî",highSchool:"Lîse",university:"Zanîngeh",masters:"Master",phd:"Doktora",createAccount:"Hesabek Belaş Çêbike",accountDesc:"Çend agahî bes e.",fullName:"Nav û Paşnav",email:"E-name",age:"Temen",select:"Hilbijêre",height:"Bilindahî",weight:"Giranî",job:"Kar",bio:"Danasîn",interests:"Berjewendî",interestsPh:"Pirtûk, Yoga, Rêwîtî",password:"Şîfre",createMyAccount:"Hesabê Min Çêbike",alreadyMember:"Jixwe endam î?",loginLink:"Têkeve",welcomeBack:"Bi xêr hatî 👋",loginDesc:"Têkeve hesabê xwe.",noAccount:"Hesabê te tune?",signupLink:"Belaş qeyd bibe",editProfile:"Profîla Min Biguherîne",updateInfo:"Agahiyên xwe nûve bike.",profilePhoto:"Wêneya Profîlê",photoHint:"JPG an PNG, 5 MB",uploadPhoto:"📷 Wêne Bar Bike",removePhoto:"🗑️ Rake",cancel:"Betal",save:"Tomar Bike",messages:"💬 Peyam",selectChat:"Sohbetek hilbijêre",selectChatDesc:"Li kesekî bikirtînin.",noChats:"Hê peyam tune.",online:"serhêl",profileBtn:"Bibîne",messageBtn:"💬 Peyam",lockedTitle:"Ji bo dîtina profîlan qeyd bibe",lockedDesc:"Ji bo dîtina profîlan, hesabek belaş hewce ye.",featureUnlimited:"Dîtina bêsînor",featureMessaging:"Peyama bilez",featureImages:"Şandina wêne",featurePhoto:"Wêneya profîlê",featureWorldwide:"Endam ji çar aliyan",freeSignup:"Belaş Qeyd Bibe",loginShort:"Têketin",confirmDelete:"Piştrast î?",msgDeleted:"🗑️ Hate jêbirin",welcomeToast:"Bi xêr hatî",loginSuccess:"Têketin serketî ✓",logoutDone:"Derketin",profileUpdated:"✅ Hate nûvekirin!",only18:"Di bin 18 salî de nikarin.",invalidEmail:"E-name derbasdar binivîse.",passwordShort:"Şîfre herî kêm 6 tîp.",fillRequired:"Qadên pêwîst (*) dagire.",emailRegistered:"Ev e-name jixwe tomar e.",emailNotConfirmed:"📧 Pêşî e-nameyê piştrast bike.",invalidLogin:"E-name an şîfre şaş e.",registerSuccess:"✅ <b>Qeyd serketî!</b><br>📧 Girêdana piştrastkirinê hat şandin.<br>Li girêdanê bikirtîne.",uploading:"📤 Wêne tê barkirin...",imageTooBig:"Wêne >5 MB nabe.",pickImage:"Pelek wêneyê hilbijêre.",sendForBtn:"Ji bo şandinê ➤ bikirtîne"},
+ru:{login:"Вход",signup:"Регистрация",logout:"Выход",heroTitle:'Те, кто <em>серьёзно</em> ищет спутника жизни, находят его здесь.',heroDesc:"Настоящие участники, продвинутая фильтрация и мгновенные сообщения.",heroCta:"Присоединиться — бесплатно",loginBtn:"Войти",quickSearch:"🔍 Быстрый поиск",whoMeet:"С кем вы хотите познакомиться?",any:"Не важно",female:"Женщина",male:"Мужчина",minAge:"Мин. возраст",maxAge:"Макс. возраст",findProfiles:"Найти профили",realMembers:"Настоящие участники",loading:"Загрузка...",membersFound:"участников",noMembers:"Ничего не найдено 😕",advancedFilter:"🎯 Расширенная фильтрация",gender:"Пол",country:"Страна",city:"Город",maritalStatus:"Семейное положение",education:"Образование",all:"Все",dontCare:"Не важно",minAgeL:"Мин. возраст",maxAgeL:"Макс. возраст",minHeightL:"Мин. рост",maxHeightL:"Макс. рост",minWeightL:"Мин. вес",maxWeightL:"Макс. вес",searchPh:"учитель, Анна...",resetFilters:"Сбросить",filter:"Фильтр",single:"Холост",divorced:"Разведён",widowed:"Вдовец",separated:"Живёт отдельно",primary:"Начальное",highSchool:"Среднее",university:"Университет",masters:"Магистр",phd:"Доктор",createAccount:"Создать аккаунт",accountDesc:"Несколько данных и всё.",fullName:"Имя и фамилия",email:"Эл. почта",age:"Возраст",select:"Выберите",height:"Рост",weight:"Вес",job:"Профессия",bio:"О себе",interests:"Интересы",interestsPh:"Книги, йога, путешествия",password:"Пароль",createMyAccount:"Создать аккаунт",alreadyMember:"Уже есть аккаунт?",loginLink:"Войти",welcomeBack:"С возвращением 👋",loginDesc:"Войдите в аккаунт.",noAccount:"Нет аккаунта?",signupLink:"Зарегистрироваться",editProfile:"Редактировать профиль",updateInfo:"Обновите данные.",profilePhoto:"Фото профиля",photoHint:"JPG или PNG, 5 МБ",uploadPhoto:"📷 Загрузить фото",removePhoto:"🗑️ Удалить",cancel:"Отмена",save:"Сохранить",messages:"💬 Сообщения",selectChat:"Выберите чат",selectChatDesc:"Нажмите на человека.",noChats:"Пока нет сообщений.",online:"онлайн",profileBtn:"Профиль",messageBtn:"💬 Сообщение",lockedTitle:"Зарегистрируйтесь",lockedDesc:"Нужен бесплатный аккаунт.",featureUnlimited:"Неограниченный просмотр",featureMessaging:"Мгновенные сообщения",featureImages:"Отправка фото",featurePhoto:"Фото профиля",featureWorldwide:"Участники со всего мира",freeSignup:"Регистрация",loginShort:"Вход",confirmDelete:"Удалить сообщение для всех?",msgDeleted:"🗑️ Удалено",welcomeToast:"Добро пожаловать",loginSuccess:"Вход выполнен ✓",logoutDone:"Вы вышли",profileUpdated:"✅ Профиль обновлён!",only18:"Младше 18 не могут.",invalidEmail:"Корректный email.",passwordShort:"Минимум 6 символов.",fillRequired:"Заполните поля (*).",emailRegistered:"Email уже зарегистрирован.",emailNotConfirmed:"📧 Подтвердите email.",invalidLogin:"Неверный email или пароль.",registerSuccess:"✅ <b>Регистрация успешна!</b><br>📧 Ссылка отправлена.<br>Перейдите и <b>войдите</b>.",uploading:"📤 Загрузка...",imageTooBig:"Не более 5 МБ.",pickImage:"Выберите файл.",sendForBtn:"Нажмите ➤ для отправки"},
+es:{login:"Iniciar sesión",signup:"Registro gratis",logout:"Salir",heroTitle:'Quienes <em>en serio</em> buscan pareja la encuentran aquí.',heroDesc:"Miembros reales, filtrado avanzado y mensajería instantánea.",heroCta:"Únete — Gratis",loginBtn:"Entrar",quickSearch:"🔍 Búsqueda rápida",whoMeet:"¿Con quién quieres conocer?",any:"Da igual",female:"Mujer",male:"Hombre",minAge:"Edad mínima",maxAge:"Edad máxima",findProfiles:"Encontrar perfiles",realMembers:"Miembros reales",loading:"Cargando...",membersFound:"miembros",noMembers:"Sin resultados 😕",advancedFilter:"🎯 Filtrado avanzado",gender:"Género",country:"País",city:"Ciudad",maritalStatus:"Estado civil",education:"Educación",all:"Todos",dontCare:"Da igual",minAgeL:"Edad mín.",maxAgeL:"Edad máx.",minHeightL:"Altura mín.",maxHeightL:"Altura máx.",minWeightL:"Peso mín.",maxWeightL:"Peso máx.",searchPh:"profesor, Ana...",resetFilters:"Reiniciar",filter:"Filtrar",single:"Soltero",divorced:"Divorciado",widowed:"Viudo",separated:"Separado",primary:"Primaria",highSchool:"Secundaria",university:"Universidad",masters:"Máster",phd:"Doctorado",createAccount:"Crear cuenta gratis",accountDesc:"Solo unos datos.",fullName:"Nombre completo",email:"Correo",age:"Edad",select:"Selecciona",height:"Altura",weight:"Peso",job:"Profesión",bio:"Bio",interests:"Intereses",interestsPh:"Libros, yoga, viajes",password:"Contraseña",createMyAccount:"Crear mi cuenta",alreadyMember:"¿Ya eres miembro?",loginLink:"Iniciar sesión",welcomeBack:"Bienvenido 👋",loginDesc:"Inicia sesión.",noAccount:"¿Sin cuenta?",signupLink:"Regístrate gratis",editProfile:"Editar mi perfil",updateInfo:"Actualiza tu información.",profilePhoto:"Foto de perfil",photoHint:"JPG o PNG, máx. 5 MB",uploadPhoto:"📷 Subir foto",removePhoto:"🗑️ Quitar",cancel:"Cancelar",save:"Guardar",messages:"💬 Mensajes",selectChat:"Selecciona un chat",selectChatDesc:"Haz clic en alguien.",noChats:"Aún no hay mensajes.",online:"en línea",profileBtn:"Ver perfil",messageBtn:"💬 Mensaje",lockedTitle:"Regístrate para ver perfiles",lockedDesc:"Necesitas una cuenta gratis.",featureUnlimited:"Navegación ilimitada",featureMessaging:"Mensajería instantánea",featureImages:"Enviar imágenes",featurePhoto:"Foto de perfil",featureWorldwide:"Miembros de todo el mundo",freeSignup:"Regístrate gratis",loginShort:"Entrar",confirmDelete:"¿Eliminar este mensaje para todos?",msgDeleted:"🗑️ Eliminado",welcomeToast:"Bienvenido",loginSuccess:"Sesión iniciada ✓",logoutDone:"Sesión cerrada",profileUpdated:"✅ ¡Perfil actualizado!",only18:"Menores de 18 no pueden.",invalidEmail:"Correo válido.",passwordShort:"Contraseña 6 caracteres.",fillRequired:"Rellena los campos (*).",emailRegistered:"Correo ya registrado.",emailNotConfirmed:"📧 Confirma tu correo.",invalidLogin:"Correo o contraseña incorrectos.",registerSuccess:"✅ <b>¡Registro exitoso!</b><br>📧 Enlace enviado.<br>Haz clic e <b>inicia sesión</b>.",uploading:"📤 Subiendo...",imageTooBig:"Máx 5 MB.",pickImage:"Selecciona imagen.",sendForBtn:"Pulsa ➤ para enviar"},
+fr:{login:"Connexion",signup:"Inscription gratuite",logout:"Déconnexion",heroTitle:'Ceux qui cherchent <em>sérieusement</em> un partenaire le trouvent ici.',heroDesc:"Membres réels, filtrage avancé et messagerie instantanée.",heroCta:"Rejoignez — Gratuit",loginBtn:"Se connecter",quickSearch:"🔍 Recherche rapide",whoMeet:"Qui voulez-vous rencontrer ?",any:"Peu importe",female:"Femme",male:"Homme",minAge:"Âge min",maxAge:"Âge max",findProfiles:"Trouver des profils",realMembers:"Vrais membres",loading:"Chargement...",membersFound:"membres",noMembers:"Aucun résultat 😕",advancedFilter:"🎯 Filtrage avancé",gender:"Genre",country:"Pays",city:"Ville",maritalStatus:"Situation familiale",education:"Éducation",all:"Tous",dontCare:"Peu importe",minAgeL:"Âge min.",maxAgeL:"Âge max.",minHeightL:"Taille min.",maxHeightL:"Taille max.",minWeightL:"Poids min.",maxWeightL:"Poids max.",searchPh:"professeur...",resetFilters:"Réinitialiser",filter:"Filtrer",single:"Célibataire",divorced:"Divorcé",widowed:"Veuf",separated:"Séparé",primary:"Primaire",highSchool:"Lycée",university:"Université",masters:"Master",phd:"Doctorat",createAccount:"Créer un compte",accountDesc:"Quelques infos.",fullName:"Nom complet",email:"E-mail",age:"Âge",select:"Sélectionner",height:"Taille",weight:"Poids",job:"Profession",bio:"Bio",interests:"Centres d'intérêt",interestsPh:"Livres, yoga, voyages",password:"Mot de passe",createMyAccount:"Créer mon compte",alreadyMember:"Déjà membre ?",loginLink:"Connexion",welcomeBack:"Bon retour 👋",loginDesc:"Connectez-vous.",noAccount:"Pas de compte ?",signupLink:"Inscription gratuite",editProfile:"Modifier mon profil",updateInfo:"Mettez à jour.",profilePhoto:"Photo de profil",photoHint:"JPG ou PNG, max 5 Mo",uploadPhoto:"📷 Télécharger",removePhoto:"🗑️ Retirer",cancel:"Annuler",save:"Enregistrer",messages:"💬 Messages",selectChat:"Sélectionnez une discussion",selectChatDesc:"Cliquez sur une personne.",noChats:"Aucun message.",online:"en ligne",profileBtn:"Voir le profil",messageBtn:"💬 Message",lockedTitle:"Inscrivez-vous",lockedDesc:"Compte gratuit requis.",featureUnlimited:"Consultation illimitée",featureMessaging:"Messagerie instantanée",featureImages:"Envoi d'images",featurePhoto:"Photo de profil",featureWorldwide:"Membres du monde entier",freeSignup:"Inscription gratuite",loginShort:"Connexion",confirmDelete:"Supprimer ce message pour tout le monde ?",msgDeleted:"🗑️ Supprimé",welcomeToast:"Bienvenue",loginSuccess:"Connexion réussie ✓",logoutDone:"Déconnecté",profileUpdated:"✅ Profil mis à jour !",only18:"Moins de 18 ans interdits.",invalidEmail:"E-mail valide.",passwordShort:"6 caractères min.",fillRequired:"Remplissez les champs (*).",emailRegistered:"E-mail déjà enregistré.",emailNotConfirmed:"📧 Confirmez votre e-mail.",invalidLogin:"E-mail ou mot de passe incorrect.",registerSuccess:"✅ <b>Inscription réussie !</b><br>📧 Lien envoyé.<br>Cliquez et <b>connectez-vous</b>.",uploading:"📤 Envoi...",imageTooBig:"Max 5 Mo.",pickImage:"Sélectionnez une image.",sendForBtn:"Appuyez sur ➤ pour envoyer"},
+zh:{login:"登录",signup:"免费注册",logout:"退出",heroTitle:'认真<em>寻找</em>人生伴侣的人在这里找到他们。',heroDesc:"真实会员、高级筛选和即时消息。",heroCta:"立即加入 — 免费",loginBtn:"登录",quickSearch:"🔍 快速搜索",whoMeet:"你想认识谁？",any:"不限",female:"女性",male:"男性",minAge:"最小年龄",maxAge:"最大年龄",findProfiles:"查找资料",realMembers:"真实会员",loading:"加载中...",membersFound:"位会员",noMembers:"未找到结果 😕",advancedFilter:"🎯 高级筛选",gender:"性别",country:"国家",city:"城市",maritalStatus:"婚姻状况",education:"教育",all:"全部",dontCare:"不限",minAgeL:"最小年龄",maxAgeL:"最大年龄",minHeightL:"最低身高",maxHeightL:"最高身高",minWeightL:"最低体重",maxWeightL:"最高体重",searchPh:"老师...",resetFilters:"重置",filter:"筛选",single:"未婚",divorced:"离异",widowed:"丧偶",separated:"分居",primary:"小学",highSchool:"高中",university:"大学",masters:"硕士",phd:"博士",createAccount:"创建账户",accountDesc:"只需几项信息。",fullName:"姓名",email:"电子邮件",age:"年龄",select:"请选择",height:"身高",weight:"体重",job:"职业",bio:"简介",interests:"兴趣爱好",interestsPh:"阅读、瑜伽、旅行",password:"密码",createMyAccount:"创建账户",alreadyMember:"已经是会员？",loginLink:"登录",welcomeBack:"欢迎回来 👋",loginDesc:"登录您的账户。",noAccount:"没有账户？",signupLink:"免费注册",editProfile:"编辑资料",updateInfo:"更新并保存。",profilePhoto:"个人资料照片",photoHint:"JPG 或 PNG，最大 5 MB",uploadPhoto:"📷 上传照片",removePhoto:"🗑️ 移除",cancel:"取消",save:"保存",messages:"💬 消息",selectChat:"选择一个聊天",selectChatDesc:"点击联系人开始聊天。",noChats:"暂无消息。",online:"在线",profileBtn:"查看资料",messageBtn:"💬 消息",lockedTitle:"注册后查看资料",lockedDesc:"需要免费账户。",featureUnlimited:"无限浏览",featureMessaging:"即时消息",featureImages:"发送图片",featurePhoto:"个人资料照片",featureWorldwide:"来自世界各地",freeSignup:"免费注册",loginShort:"登录",confirmDelete:"要为所有人删除这条消息吗？",msgDeleted:"🗑️ 已删除",welcomeToast:"欢迎",loginSuccess:"登录成功 ✓",logoutDone:"已退出",profileUpdated:"✅ 资料已更新！",only18:"18岁以下不能注册。",invalidEmail:"请输入有效电子邮件。",passwordShort:"密码至少6位。",fillRequired:"请填写必填项（*）。",emailRegistered:"该邮箱已注册。",emailNotConfirmed:"📧 请先确认邮箱。",invalidLogin:"邮箱或密码错误。",registerSuccess:"✅ <b>注册成功！</b><br>📧 已发送确认链接。<br>点击并<b>登录</b>。",uploading:"📤 上传中...",imageTooBig:"不能超过5 MB。",pickImage:"请选择图片。",sendForBtn:"按 ➤ 发送"},
+ja:{login:"ログイン",signup:"無料登録",logout:"ログアウト",heroTitle:'真剣に<em>人生のパートナー</em>を探す人がここで見つけます。',heroDesc:"本物のメンバー、高度なフィルタリング、インスタントメッセージ。",heroCta:"今すぐ参加 — 無料",loginBtn:"ログイン",quickSearch:"🔍 クイック検索",whoMeet:"誰と出会いたいですか？",any:"どちらでも",female:"女性",male:"男性",minAge:"最小年齢",maxAge:"最大年齢",findProfiles:"プロフィールを検索",realMembers:"本物のメンバー",loading:"読み込み中...",membersFound:"人",noMembers:"結果なし 😕",advancedFilter:"🎯 高度なフィルタリング",gender:"性別",country:"国",city:"都市",maritalStatus:"婚姻状況",education:"学歴",all:"すべて",dontCare:"どちらでも",minAgeL:"最小年齢",maxAgeL:"最大年齢",minHeightL:"最小身長",maxHeightL:"最大身長",minWeightL:"最小体重",maxWeightL:"最大体重",searchPh:"先生...",resetFilters:"リセット",filter:"フィルター",single:"未婚",divorced:"離婚",widowed:"死別",separated:"別居",primary:"小学校",highSchool:"高校",university:"大学",masters:"修士",phd:"博士",createAccount:"無料アカウント",accountDesc:"少しの情報で完了。",fullName:"氏名",email:"メール",age:"年齢",select:"選択",height:"身長",weight:"体重",job:"職業",bio:"自己紹介",interests:"趣味",interestsPh:"読書、ヨガ、旅行",password:"パスワード",createMyAccount:"アカウント作成",alreadyMember:"すでにメンバー？",loginLink:"ログイン",welcomeBack:"お帰りなさい 👋",loginDesc:"アカウントにログイン。",noAccount:"アカウントがない？",signupLink:"無料登録",editProfile:"プロフィール編集",updateInfo:"情報を更新して保存。",profilePhoto:"プロフィール写真",photoHint:"JPG または PNG、最大5 MB",uploadPhoto:"📷 写真をアップロード",removePhoto:"🗑️ 削除",cancel:"キャンセル",save:"保存",messages:"💬 メッセージ",selectChat:"チャットを選択",selectChatDesc:"左のリストから人をクリック。",noChats:"まだメッセージはありません。",online:"オンライン",profileBtn:"プロフィールを見る",messageBtn:"💬 メッセージ",lockedTitle:"登録してプロフィールを見る",lockedDesc:"無料アカウントが必要です。",featureUnlimited:"無制限の閲覧",featureMessaging:"インスタントメッセージ",featureImages:"画像を送信",featurePhoto:"プロフィール写真",featureWorldwide:"世界中のメンバー",freeSignup:"無料登録",loginShort:"ログイン",confirmDelete:"このメッセージを全員から削除しますか？",msgDeleted:"🗑️ 削除しました",welcomeToast:"ようこそ",loginSuccess:"ログイン成功 ✓",logoutDone:"ログアウトしました",profileUpdated:"✅ プロフィールを更新しました！",only18:"18歳未満は登録できません。",invalidEmail:"有効なメールを入力。",passwordShort:"パスワードは6文字以上。",fillRequired:"必須項目（*）を入力。",emailRegistered:"このメールは既に登録されています。",emailNotConfirmed:"📧 先にメールを確認してください。",invalidLogin:"メールまたはパスワードが間違っています。",registerSuccess:"✅ <b>登録成功！</b><br>📧 確認リンクを送信しました。<br>リンクをクリックして<b>ログイン</b>。",uploading:"📤 アップロード中...",imageTooBig:"画像は5 MBまで。",pickImage:"画像ファイルを選択してください。",sendForBtn:"➤ を押して送信"},
+ko:{login:"로그인",signup:"무료 가입",logout:"로그아웃",heroTitle:'진지하게 <em>인생 반려자</em>를 찾는 사람들이 여기서 만납니다.',heroDesc:"실제 회원, 고급 필터링, 즉시 메시지.",heroCta:"지금 가입 — 무료",loginBtn:"로그인",quickSearch:"🔍 빠른 검색",whoMeet:"누구를 만나고 싶으세요?",any:"상관없음",female:"여성",male:"남성",minAge:"최소 나이",maxAge:"최대 나이",findProfiles:"프로필 찾기",realMembers:"실제 회원",loading:"로딩 중...",membersFound:"명",noMembers:"결과 없음 😕",advancedFilter:"🎯 고급 필터링",gender:"성별",country:"국가",city:"도시",maritalStatus:"결혼 상태",education:"학력",all:"전체",dontCare:"상관없음",minAgeL:"최소 나이",maxAgeL:"최대 나이",minHeightL:"최소 키",maxHeightL:"최대 키",minWeightL:"최소 몸무게",maxWeightL:"최대 몸무게",searchPh:"선생님...",resetFilters:"초기화",filter:"필터",single:"미혼",divorced:"이혼",widowed:"사별",separated:"별거",primary:"초등",highSchool:"고등",university:"대학",masters:"석사",phd:"박사",createAccount:"무료 계정 만들기",accountDesc:"몇 가지만 입력하면 완료.",fullName:"이름",email:"이메일",age:"나이",select:"선택",height:"키",weight:"몸무게",job:"직업",bio:"소개",interests:"관심사",interestsPh:"독서, 요가, 여행",password:"비밀번호",createMyAccount:"내 계정 만들기",alreadyMember:"이미 회원?",loginLink:"로그인",welcomeBack:"환영합니다 👋",loginDesc:"계정에 로그인.",noAccount:"계정이 없으신가요?",signupLink:"무료 가입",editProfile:"내 프로필 편집",updateInfo:"정보를 업데이트하세요.",profilePhoto:"프로필 사진",photoHint:"JPG 또는 PNG, 최대 5 MB",uploadPhoto:"📷 사진 업로드",removePhoto:"🗑️ 제거",cancel:"취소",save:"저장",messages:"💬 메시지",selectChat:"채팅 선택",selectChatDesc:"왼쪽에서 사람을 클릭하세요.",noChats:"아직 메시지가 없습니다.",online:"온라인",profileBtn:"프로필 보기",messageBtn:"💬 메시지",lockedTitle:"가입하고 프로필 보기",lockedDesc:"무료 계정이 필요합니다.",featureUnlimited:"무제한 열람",featureMessaging:"즉시 메시지",featureImages:"이미지 보내기",featurePhoto:"프로필 사진",featureWorldwide:"전 세계 회원",freeSignup:"무료 가입",loginShort:"로그인",confirmDelete:"이 메시지를 모두에게서 삭제하시겠습니까?",msgDeleted:"🗑️ 삭제됨",welcomeToast:"환영합니다",loginSuccess:"로그인 성공 ✓",logoutDone:"로그아웃됨",profileUpdated:"✅ 프로필 업데이트됨!",only18:"18세 미만은 가입할 수 없습니다.",invalidEmail:"유효한 이메일을 입력하세요.",passwordShort:"비밀번호는 6자 이상.",fillRequired:"필수 (*) 항목을 채워주세요.",emailRegistered:"이 이메일은 이미 등록되어 있습니다.",emailNotConfirmed:"📧 먼저 이메일을 확인하세요.",invalidLogin:"이메일 또는 비밀번호 오류.",registerSuccess:"✅ <b>가입 성공!</b><br>📧 확인 링크를 보냈습니다.<br>링크를 클릭하고 <b>로그인</b>.",uploading:"📤 업로드 중...",imageTooBig:"이미지는 5 MB까지.",pickImage:"이미지 파일을 선택하세요.",sendForBtn:"➤ 을 눌러 전송"}
 };
 
 let currentLang = "tr";
@@ -1221,17 +623,12 @@ function setLanguage(code) {
 
 function applyTranslations() {
   document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.dataset.i18n;
-    const txt = t(key);
+    const txt = t(el.dataset.i18n);
     if (el.dataset.i18nHtml === "1") el.innerHTML = txt;
     else el.textContent = txt;
   });
-  document.querySelectorAll("[data-i18n-ph]").forEach(el => {
-    el.placeholder = t(el.dataset.i18nPh);
-  });
-  document.querySelectorAll("[data-i18n-opt]").forEach(el => {
-    el.textContent = t(el.dataset.i18nOpt);
-  });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-opt]").forEach(el => { el.textContent = t(el.dataset.i18nOpt); });
   if (typeof allProfiles !== "undefined" && allProfiles.length) {
     const pc = document.getElementById("profileCount");
     if (pc) pc.textContent = `${allProfiles.length} ${t("membersFound")}`;
@@ -1240,19 +637,15 @@ function applyTranslations() {
 
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
-const GRADS = [
-  "linear-gradient(135deg,#e8437c,#c72c63)","linear-gradient(135deg,#6d3b8f,#9b5fc0)","linear-gradient(135deg,#2e9e8f,#1f7a6e)",
-  "linear-gradient(135deg,#e08c2e,#c06a12)","linear-gradient(135deg,#3b7dd8,#2a5aa0)","linear-gradient(135deg,#d84a6b,#a52e4d)",
-  "linear-gradient(135deg,#5a4bd8,#3f32a8)","linear-gradient(135deg,#0f9b8e,#0a6f66)"
-];
+const GRADS = ["linear-gradient(135deg,#e8437c,#c72c63)","linear-gradient(135deg,#6d3b8f,#9b5fc0)","linear-gradient(135deg,#2e9e8f,#1f7a6e)","linear-gradient(135deg,#e08c2e,#c06a12)","linear-gradient(135deg,#3b7dd8,#2a5aa0)","linear-gradient(135deg,#d84a6b,#a52e4d)","linear-gradient(135deg,#5a4bd8,#3f32a8)","linear-gradient(135deg,#0f9b8e,#0a6f66)"];
 const grad = id => { let h = 0; for (let i = 0; i < (id || "").length; i++) h = (h + id.charCodeAt(i)) % GRADS.length; return GRADS[h]; };
 const initials = n => String(n || "?").trim().split(/\s+/).map(x => x[0]).join("").slice(0, 2).toUpperCase();
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 
 function toast(msg, ms = 3500) { const el = $("#toast"); el.innerHTML = msg; el.classList.add("show"); clearTimeout(el._timer); el._timer = setTimeout(() => el.classList.remove("show"), ms); }
 
-function savePendingProfile(data) { try { localStorage.setItem("gb_pending_profile", JSON.stringify(data)); } catch(e) {} }
-function getPendingProfile() { try { const raw = localStorage.getItem("gb_pending_profile"); return raw ? JSON.parse(raw) : null; } catch(e) { return null; } }
+function savePendingProfile(d) { try { localStorage.setItem("gb_pending_profile", JSON.stringify(d)); } catch(e) {} }
+function getPendingProfile() { try { const r = localStorage.getItem("gb_pending_profile"); return r ? JSON.parse(r) : null; } catch(e) { return null; } }
 function clearPendingProfile() { try { localStorage.removeItem("gb_pending_profile"); } catch(e) {} }
 
 async function applyPendingProfile() {
@@ -1267,7 +660,6 @@ async function applyPendingProfile() {
   if (!error) { clearPendingProfile(); myProfile = { ...profileData, id: currentUser.id }; toast(`✅ ${t("welcomeToast")} ${String(profileData.name).split(" ")[0]}! 🎉`, 5000); loadProfiles(); }
 }
 
-/* ÜLKE & ŞEHİR */
 const TR_CITIES = ["Adana","Adıyaman","Afyonkarahisar","Ağrı","Aksaray","Amasya","Ankara","Antalya","Ardahan","Artvin","Aydın","Balıkesir","Bartın","Batman","Bayburt","Bilecik","Bingöl","Bitlis","Bolu","Burdur","Bursa","Çanakkale","Çankırı","Çorum","Denizli","Diyarbakır","Düzce","Edirne","Elazığ","Erzincan","Erzurum","Eskişehir","Gaziantep","Giresun","Gümüşhane","Hakkari","Hatay","Iğdır","Isparta","İstanbul","İzmir","Kahramanmaraş","Karabük","Karaman","Kars","Kastamonu","Kayseri","Kırıkkale","Kırklareli","Kırşehir","Kilis","Kocaeli","Konya","Kütahya","Malatya","Manisa","Mardin","Mersin","Muğla","Muş","Nevşehir","Niğde","Ordu","Osmaniye","Rize","Sakarya","Samsun","Siirt","Sinop","Sivas","Şanlıurfa","Şırnak","Tekirdağ","Tokat","Trabzon","Tunceli","Uşak","Van","Yalova","Yozgat","Zonguldak"];
 const COUNTRY_CODES = "AF AX AL DZ AS AD AO AI AQ AG AR AM AW AU AT AZ BS BH BD BB BY BE BZ BJ BM BT BO BA BW BR IO VG BN BG BF BI KH CM CA CV BQ KY CF TD CL CN CX CC CO KM CG CD CK CR CI HR CU CW CY CZ DK DJ DM DO EC EG SV GQ ER EE SZ ET FK FO FJ FI FR GF PF GA GM GE DE GH GI GR GL GD GP GU GT GG GN GW GY HT HN HK HU IS IN ID IR IQ IE IM IL IT JM JP JE JO KZ KE KI XK KW KG LA LV LB LS LR LY LI LT LU MO MG MW MY MV ML MT MH MQ MR MU YT MX FM MD MC MN ME MS MA MZ MM NA NR NP NL NC NZ NI NE NG NU NF KP MK MP NO OM PK PW PS PA PG PY PE PH PN PL PT PR QA RE RO RU RW WS SM ST SA SN RS SC SL SG SX SK SI SB SO ZA KR SS ES LK BL SH KN LC MF PM VC SD SR SJ SE CH SY TW TJ TZ TH TL TG TK TO TT TN TR TM TC TV UG UA AE GB US UY UZ VU VA VE VN WF EH YE ZM ZW".split(" ");
 const dnTr = new Intl.DisplayNames(["tr"], { type: "region" });
@@ -1337,24 +729,22 @@ function updateNavbar() {
   const nav = $("#navActions");
   if (currentUser && myProfile) {
     const badge = unreadCount > 0 ? `<span class="badge">${unreadCount > 99 ? "99+" : unreadCount}</span>` : "";
-    const avatarStyle = myProfile.avatar_url ? `background:url('${esc(myProfile.avatar_url)}') center/cover` : `background:${grad(currentUser.id)}`;
-    const avatarContent = myProfile.avatar_url ? "" : initials(myProfile.name);
+    const avStyle = myProfile.avatar_url ? `background:url('${esc(myProfile.avatar_url)}') center/cover` : `background:${grad(currentUser.id)}`;
+    const avContent = myProfile.avatar_url ? "" : initials(myProfile.name);
     nav.innerHTML = `
-      <button class="icon-btn" data-action="open-messages" title="${t("messages")}">💬${badge}</button>
-      <button class="icon-btn" data-action="open-edit-profile" title="${t("editProfile")}">⚙️</button>
-      <div class="user-badge" data-action="open-edit-profile" title="${t("editProfile")}">
-        <div class="avatar" style="${avatarStyle}">${avatarContent}</div>
+      <button class="icon-btn" data-action="open-messages">💬${badge}</button>
+      <button class="icon-btn" data-action="open-edit-profile">⚙️</button>
+      <div class="user-badge" data-action="open-edit-profile">
+        <div class="avatar" style="${avStyle}">${avContent}</div>
         <span class="hide-mobile">${esc(myProfile.name)}</span>
       </div>
-      <button class="btn btn-ghost btn-sm" data-action="logout" data-i18n="logout">${t("logout")}</button>
-    `;
+      <button class="btn btn-ghost btn-sm" data-action="logout">${t("logout")}</button>`;
   } else if (currentUser && !myProfile) {
-    nav.innerHTML = `<button class="btn btn-ghost btn-sm" data-action="logout" data-i18n="logout">${t("logout")}</button>`;
+    nav.innerHTML = `<button class="btn btn-ghost btn-sm" data-action="logout">${t("logout")}</button>`;
   } else {
     nav.innerHTML = `
-      <button class="btn btn-ghost btn-sm" data-action="open-login" data-i18n="login">${t("login")}</button>
-      <button class="btn btn-primary btn-sm" data-action="open-register" data-i18n="signup">${t("signup")}</button>
-    `;
+      <button class="btn btn-ghost btn-sm" data-action="open-login">${t("login")}</button>
+      <button class="btn btn-primary btn-sm" data-action="open-register">${t("signup")}</button>`;
   }
 }
 
@@ -1391,16 +781,13 @@ async function initRealtime() {
   realtimeChannel = db.channel("messages-realtime")
     .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `receiver_id=eq.${currentUser.id}` }, payload => {
       const msg = payload.new;
-      if (activeConvUserId === msg.sender_id) {
-        appendMessage(msg, false);
-        db.from("messages").update({ is_read: true }).eq("id", msg.id).then(() => {});
-      }
+      if (activeConvUserId === msg.sender_id) { appendMessage(msg, false); db.from("messages").update({ is_read: true }).eq("id", msg.id).then(() => {}); }
       refreshUnreadCount(); refreshConversationList();
     })
     .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `sender_id=eq.${currentUser.id}` }, () => { refreshConversationList(); })
     .on("postgres_changes", { event: "DELETE", schema: "public", table: "messages" }, payload => {
-      const deletedId = payload.old.id;
-      if (deletedId) { const el = document.querySelector(`.msg[data-msg-id="${deletedId}"]`); if (el) el.remove(); }
+      const delId = payload.old.id;
+      if (delId) { const el = document.querySelector(`.msg[data-msg-id="${delId}"]`); if (el) el.remove(); }
       refreshConversationList();
     })
     .subscribe();
@@ -1430,4 +817,516 @@ async function loadProfiles(filters = {}) {
   }
   if (filters.city && filters.city !== "hepsi") q = q.ilike("city", filters.city.replace(/[%_]/g, ""));
   if (filters.marital && filters.marital !== "hepsi") q = q.eq("marital_status", filters.marital);
-  if (filters.education &&
+  if (filters.education && filters.education !== "hepsi") q = q.eq("education", filters.education);
+  if (filters.ageMin) q = q.gte("age", filters.ageMin);
+  if (filters.ageMax) q = q.lte("age", filters.ageMax);
+  if (filters.heightMin) q = q.gte("height", filters.heightMin);
+  if (filters.heightMax) q = q.lte("height", filters.heightMax);
+  if (filters.weightMin) q = q.gte("weight", filters.weightMin);
+  if (filters.weightMax) q = q.lte("weight", filters.weightMax);
+  const { data, error } = await q.limit(100);
+  if (error) { grid.innerHTML = `<div class="empty"><b>Hata</b>${esc(error.message)}</div>`; return; }
+  let list = data || [];
+  list = list.filter(p => p.id !== currentUser.id);
+  if (filters.search) { const s = filters.search.toLowerCase(); list = list.filter(p => (p.name || "").toLowerCase().includes(s) || (p.job || "").toLowerCase().includes(s) || (p.city || "").toLowerCase().includes(s)); }
+  allProfiles = list;
+  list.forEach(p => allUsers[p.id] = p);
+  if (!list.length) { grid.innerHTML = `<div class="empty"><b>${t("noMembers")}</b></div>`; $("#profileCount").textContent = `0 ${t("membersFound")}`; return; }
+  $("#profileCount").textContent = `${list.length} ${t("membersFound")}`;
+  grid.innerHTML = list.map(p => {
+    const liked = myLikes.has(p.id);
+    const infoPills = [];
+    if (p.marital_status) infoPills.push(`<span class="info-pill ${p.marital_status === "Boşanmış" ? "rose" : ""}">${esc(p.marital_status)}</span>`);
+    if (p.height) infoPills.push(`<span class="info-pill">${p.height} cm</span>`);
+    if (p.weight) infoPills.push(`<span class="info-pill">${p.weight} kg</span>`);
+    if (p.education) infoPills.push(`<span class="info-pill">${esc(p.education)}</span>`);
+    return `<article class="profile-card">
+      <div class="card-top">
+        ${avatarHtml(p)}
+        <div style="min-width:0;flex:1">
+          <h4>${esc(p.name)}, ${p.age}</h4>
+          <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}</div>
+        </div>
+      </div>
+      <div class="info-row">${infoPills.join("")}</div>
+      <p class="bio">${esc(p.bio || "—")}</p>
+      <div class="tags">${(p.interests || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
+      <div class="card-actions">
+        <button class="btn btn-ghost btn-sm" data-action="view-profile" data-id="${p.id}" style="flex:1">${t("profileBtn")}</button>
+        <button class="like-btn ${liked ? "liked" : ""}" data-action="toggle-like" data-id="${p.id}">${liked ? "♥" : "♡"}</button>
+        <button class="like-btn" data-action="start-chat" data-id="${p.id}">💬</button>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+async function handleRegister(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target); const data = Object.fromEntries(fd);
+  data.age = Number(data.age);
+  data.height = data.height ? Number(data.height) : null;
+  data.weight = data.weight ? Number(data.weight) : null;
+  data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
+  const password = data.password; delete data.password;
+  if (!data.name || !data.email || !data.age || !data.gender || !data.city || !data.country) { toast(t("fillRequired")); return; }
+  if (data.age < 18) { toast(t("only18")); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { toast(t("invalidEmail")); return; }
+  if (password.length < 6) { toast(t("passwordShort")); return; }
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "…";
+  const { data: authData, error: authErr } = await db.auth.signUp({ email: data.email, password, options: { emailRedirectTo: window.location.origin } });
+  if (authErr) { btn.disabled = false; btn.textContent = t("createMyAccount"); let msg = authErr.message; if (msg.includes("already registered")) msg = t("emailRegistered"); toast("Hata: " + msg); return; }
+  const userId = authData.user.id;
+  const profileData = { name: data.name, age: data.age, gender: data.gender, country: data.country || "Türkiye", city: data.city, job: data.job || "", bio: data.bio || "", marital_status: data.marital_status || "Bekar", height: data.height, weight: data.weight, education: data.education || "", interests: data.interests };
+  if (!authData.session) { savePendingProfile({ _userId: userId, ...profileData }); btn.disabled = false; btn.textContent = t("createMyAccount"); e.target.reset(); closeAllModals(); toast(t("registerSuccess"), 9000); return; }
+  const { error: profErr } = await db.from("profiles").insert({ id: userId, ...profileData });
+  if (profErr) { btn.disabled = false; btn.textContent = t("createMyAccount"); toast("Hata: " + profErr.message); return; }
+  currentUser = authData.user; myProfile = { ...profileData, id: userId }; myLikes = new Set();
+  closeAllModals(); updateNavbar(); updateProfileSection(); await initRealtime(); loadProfiles();
+  toast(`🎉 ${t("welcomeToast")} ${data.name.split(" ")[0]}!`);
+}
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const email = fd.get("email"), password = fd.get("password");
+  const btn = e.target.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "…";
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  btn.disabled = false; btn.textContent = t("login");
+  if (error) { let msg = error.message; if (msg.includes("Email not confirmed")) msg = t("emailNotConfirmed"); else if (msg.includes("Invalid login")) msg = t("invalidLogin"); toast("Hata: " + msg); return; }
+  currentUser = data.user;
+  await loadMyProfile(); await applyPendingProfile(); await loadMyLikes();
+  await initRealtime(); await refreshUnreadCount();
+  closeAllModals(); updateNavbar(); updateProfileSection(); loadProfiles();
+  toast(t("loginSuccess"));
+}
+
+async function handleLogout() {
+  if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
+  await db.auth.signOut();
+  currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
+  activeConvUserId = null; cancelPendingImage(); cancelPendingProfilePhoto();
+  closeMessages(); updateNavbar(); updateProfileSection();
+  toast(t("logoutDone"));
+}
+
+function openEditProfile() {
+  if (!currentUser || !myProfile) return;
+  pendingProfilePhoto = null;
+  $("#e-name").value = myProfile.name || "";
+  $("#e-age").value = myProfile.age || "";
+  $("#e-gender").value = myProfile.gender || "kadın";
+  $("#e-marital").value = myProfile.marital_status || "Bekar";
+  $("#e-education").value = myProfile.education || "";
+  $("#e-height").value = myProfile.height || "";
+  $("#e-weight").value = myProfile.weight || "";
+  $("#e-job").value = myProfile.job || "";
+  $("#e-bio").value = myProfile.bio || "";
+  $("#e-interests").value = (myProfile.interests || []).join(", ");
+  $("#e-country").value = normCountry(myProfile.country || "Türkiye");
+  updateCityDropdown("e-country", "e-city");
+  $("#e-city").value = myProfile.city || "";
+  const preview = $("#editPhotoPreview");
+  if (myProfile.avatar_url) { preview.style.background = `url('${myProfile.avatar_url}') center/cover`; preview.textContent = ""; $("#editPhotoRemoveBtn").style.display = "inline-flex"; }
+  else { preview.style.background = `linear-gradient(135deg,var(--rose),var(--plum))`; preview.textContent = initials(myProfile.name); $("#editPhotoRemoveBtn").style.display = "none"; }
+  openModal("editProfileModal");
+}
+
+function cancelPendingProfilePhoto() { if (pendingProfilePhoto) { URL.revokeObjectURL(pendingProfilePhoto.url); pendingProfilePhoto = null; } const fi = $("#editPhotoInput"); if (fi) fi.value = ""; }
+
+async function handleEditProfile(e) {
+  e.preventDefault();
+  if (!currentUser) return;
+  const fd = new FormData(e.target); const data = Object.fromEntries(fd);
+  data.age = Number(data.age);
+  data.height = data.height ? Number(data.height) : null;
+  data.weight = data.weight ? Number(data.weight) : null;
+  data.interests = (data.interests || "").split(",").map(s => s.trim()).filter(Boolean);
+  if (!data.name || !data.age || !data.gender || !data.city || !data.country) { toast(t("fillRequired")); return; }
+  if (data.age < 18) { toast(t("only18")); return; }
+  const btn = $("#editProfileSubmitBtn");
+  btn.disabled = true; btn.textContent = "…";
+  let avatar_url = myProfile.avatar_url || null;
+  if (pendingProfilePhoto) {
+    toast(t("uploading"), 2500);
+    const file = pendingProfilePhoto.file;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const fileName = `${currentUser.id}/avatar-${Date.now()}.${ext}`;
+    const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
+    if (upErr) { btn.disabled = false; btn.textContent = t("save"); toast("Hata: " + upErr.message); return; }
+    const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
+    avatar_url = urlData.publicUrl;
+  }
+  const updateData = { name: data.name, age: data.age, gender: data.gender, country: data.country, city: data.city, job: data.job || "", bio: data.bio || "", marital_status: data.marital_status || "Bekar", height: data.height, weight: data.weight, education: data.education || "", interests: data.interests, avatar_url };
+  const { error } = await db.from("profiles").update(updateData).eq("id", currentUser.id);
+  if (error) { btn.disabled = false; btn.textContent = t("save"); toast("Hata: " + error.message); return; }
+  myProfile = { ...myProfile, ...updateData };
+  cancelPendingProfilePhoto();
+  btn.disabled = false; btn.textContent = t("save");
+  closeModal("editProfileModal"); updateNavbar(); loadProfiles();
+  toast(t("profileUpdated"));
+}
+
+function handleEditPhotoPick(e) {
+  const file = e.target.files[0]; if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { toast(t("imageTooBig")); e.target.value = ""; return; }
+  if (!file.type.startsWith("image/")) { toast(t("pickImage")); e.target.value = ""; return; }
+  if (pendingProfilePhoto) URL.revokeObjectURL(pendingProfilePhoto.url);
+  const url = URL.createObjectURL(file);
+  pendingProfilePhoto = { file, url };
+  const preview = $("#editPhotoPreview");
+  preview.style.background = `url('${url}') center/cover`;
+  preview.textContent = "";
+  $("#editPhotoRemoveBtn").style.display = "inline-flex";
+  e.target.value = "";
+}
+
+async function toggleLike(id) {
+  if (!currentUser || !myProfile) { toast(t("lockedTitle")); openModal("registerModal"); return; }
+  if (currentUser.id === id) return;
+  if (myLikes.has(id)) { await db.from("likes").delete().eq("liker_id", currentUser.id).eq("liked_id", id); myLikes.delete(id); }
+  else { const { error } = await db.from("likes").insert({ liker_id: currentUser.id, liked_id: id }); if (error) { toast("Hata: " + error.message); return; } myLikes.add(id); }
+  loadProfiles(getCurrentFilters());
+}
+
+function getCurrentFilters() {
+  return { gender: $("#f-gender").value, country: $("#f-country").value, city: $("#f-city").value.trim(), marital: $("#f-marital").value, education: $("#f-education").value, ageMin: +$("#f-age-min").value || 18, ageMax: +$("#f-age-max").value || 99, heightMin: +$("#f-height-min").value || null, heightMax: +$("#f-height-max").value || null, weightMin: +$("#f-weight-min").value || null, weightMax: +$("#f-weight-max").value || null, search: $("#f-search").value.trim() };
+}
+
+function applyFilters() { loadProfiles(getCurrentFilters()); }
+function resetFilters() {
+  $("#f-gender").value = "hepsi"; $("#f-country").value = "hepsi";
+  $("#f-city").value = ""; $("#dl-f-city").innerHTML = "";
+  $("#f-marital").value = "hepsi"; $("#f-education").value = "hepsi";
+  $("#f-age-min").value = 18; $("#f-age-max").value = 99;
+  $("#f-height-min").value = ""; $("#f-height-max").value = "";
+  $("#f-weight-min").value = ""; $("#f-weight-max").value = "";
+  $("#f-search").value = "";
+  loadProfiles();
+}
+function quickSearch() {
+  if (!currentUser || !myProfile) { openModal("registerModal"); return; }
+  const gender = $("#q-gender").value, min = +$("#q-min").value || 18, max = +$("#q-max").value || 99;
+  $("#f-gender").value = gender; $("#f-age-min").value = min; $("#f-age-max").value = max;
+  loadProfiles({ gender, ageMin: min, ageMax: max });
+  document.getElementById("profiller").scrollIntoView({ behavior: "smooth" });
+}
+
+async function viewProfile(id) {
+  if (!currentUser || !myProfile) { openModal("registerModal"); return; }
+  const { data: p, error } = await db.from("profiles").select("*").eq("id", id).single();
+  if (error || !p) { toast("Bulunamadı"); return; }
+  const liked = myLikes.has(p.id);
+  const box = (label, val) => `<div style="background:#fbf7fa;border-radius:12px;padding:12px"><span style="display:block;font-size:.72rem;color:var(--muted);font-weight:600;text-transform:uppercase;margin-bottom:2px">${label}</span><b>${val}</b></div>`;
+  const details = [];
+  if (p.marital_status) details.push(box(t("maritalStatus"), esc(p.marital_status)));
+  if (p.height) details.push(box(t("height"), `${p.height} cm`));
+  if (p.weight) details.push(box(t("weight"), `${p.weight} kg`));
+  if (p.education) details.push(box(t("education"), esc(p.education)));
+  if (p.job) details.push(box(t("job"), esc(p.job)));
+  if (p.city) details.push(box(t("city"), `${esc(p.city)}${p.country && p.country !== "Türkiye" ? ", " + esc(p.country) : ""}`));
+  const avStyle = p.avatar_url ? `background:url('${esc(p.avatar_url)}') center/cover` : `background:${grad(p.id)}`;
+  const avContent = p.avatar_url ? "" : initials(p.name);
+  $("#detailBody").innerHTML = `
+    <button class="close-x" data-action="close-modal" data-modal="detailModal">✕</button>
+    <div class="card-top" style="margin-bottom:20px">
+      <div class="avatar" style="${avStyle};width:78px;height:78px;font-size:1.5rem;border-radius:22px">${avContent}</div>
+      <div style="min-width:0;flex:1">
+        <h3 style="font-size:1.3rem">${esc(p.name)}, ${p.age}</h3>
+        <div class="meta">${esc(p.job || "—")} · ${esc(p.city)}</div>
+      </div>
+    </div>
+    ${details.length ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">${details.join("")}</div>` : ""}
+    <h5 style="font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">${t("aboutSection")}</h5>
+    <p style="font-size:.92rem;background:#fbf7fa;padding:16px;border-radius:14px;margin-bottom:18px">${esc(p.bio || "—")}</p>
+    <h5 style="font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">${t("interestsSection")}</h5>
+    <div class="tags" style="margin-bottom:20px">
+      ${(p.interests || []).map(x => `<span class="tag">${esc(x)}</span>`).join("") || "<span style='color:var(--muted);font-size:.86rem'>—</span>"}
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn ${liked ? "btn-ghost" : "btn-primary"}" data-action="toggle-like-modal" data-id="${p.id}" style="flex:1;min-width:120px">
+        ${liked ? "♥" : "♡"} ${t("likeBtn")}
+      </button>
+      <button class="btn btn-primary" data-action="start-chat" data-id="${p.id}" style="flex:1;min-width:120px">${t("messageBtn")}</button>
+    </div>`;
+  openModal("detailModal");
+}
+
+function openMessages() {
+  if (!currentUser || !myProfile) { openModal("registerModal"); return; }
+  $("#msgOverlay").classList.add("open"); document.body.style.overflow = "hidden";
+  refreshConversationList();
+}
+function closeMessages() {
+  $("#msgOverlay").classList.remove("open");
+  $("#msgContainer").classList.remove("chat-open");
+  document.body.style.overflow = "";
+  activeConvUserId = null; cancelPendingImage();
+}
+
+async function refreshConversationList() {
+  if (!currentUser) return;
+  const { data, error } = await db.from("messages").select("*").or(`sender_id.eq.${currentUser.id},receiver_id.eq.${currentUser.id}`).order("created_at", { ascending: false }).limit(500);
+  if (error) return;
+  const convs = {};
+  (data || []).forEach(m => {
+    const otherId = m.sender_id === currentUser.id ? m.receiver_id : m.sender_id;
+    if (!convs[otherId]) convs[otherId] = { last: m, unread: 0 };
+    if (m.receiver_id === currentUser.id && !m.is_read) convs[otherId].unread++;
+  });
+  const list = Object.entries(convs).sort((a, b) => new Date(b[1].last.created_at) - new Date(a[1].last.created_at));
+  const el = $("#convList");
+  if (!list.length) { el.innerHTML = `<div class="empty" style="border:none;padding:30px 15px;font-size:.86rem">${t("noChats")}</div>`; return; }
+  const missingIds = list.map(([id]) => id).filter(id => !allUsers[id]);
+  if (missingIds.length) {
+    const { data: profs } = await db.from("profiles").select("*").in("id", missingIds);
+    (profs || []).forEach(p => allUsers[p.id] = p);
+  }
+  el.innerHTML = list.map(([id, conv]) => {
+    const u = allUsers[id] || { name: "?", city: "" };
+    const last = conv.last; const isActive = id === activeConvUserId;
+    const time = formatTime(last.created_at);
+    const preview = (last.sender_id === currentUser.id ? "Sen: " : "") + (last.content || (last.image_url ? "📷" : ""));
+    const avStyle = u.avatar_url ? `background:url('${esc(u.avatar_url)}') center/cover` : `background:${grad(id)}`;
+    const avContent = u.avatar_url ? "" : initials(u.name);
+    return `<div class="conv-item ${isActive ? "active" : ""}" data-action="open-conv" data-id="${id}">
+      <div class="avatar" style="${avStyle}">${avContent}</div>
+      <div class="conv-info"><b>${esc(u.name)}</b><span>${esc(preview.slice(0, 40))}</span></div>
+      <div class="conv-meta"><time>${time}</time>${conv.unread ? `<div class="unread">${conv.unread}</div>` : ""}</div>
+    </div>`;
+  }).join("");
+}
+
+function formatTime(iso) {
+  const d = new Date(iso), now = new Date(), diff = (now - d) / 1000;
+  if (diff < 60) return "şimdi";
+  if (diff < 3600) return Math.floor(diff / 60) + " dk";
+  if (diff < 86400) return d.getHours().toString().padStart(2, "0") + ":" + d.getMinutes().toString().padStart(2, "0");
+  return d.getDate() + "." + (d.getMonth() + 1);
+}
+
+async function openConversation(otherId) {
+  if (!otherId) return;
+  activeConvUserId = otherId;
+  if (!allUsers[otherId]) { const { data } = await db.from("profiles").select("*").eq("id", otherId).single(); if (data) allUsers[otherId] = data; }
+  const u = allUsers[otherId] || { name: "?" };
+  const avStyle = u.avatar_url ? `background:url('${esc(u.avatar_url)}') center/cover` : `background:${grad(otherId)}`;
+  const avContent = u.avatar_url ? "" : initials(u.name);
+  $("#msgMain").innerHTML = `
+    <div class="msg-head">
+      <button class="icon-btn" id="msgBack" data-action="msg-back" style="display:none">←</button>
+      <div class="avatar" style="${avStyle}">${avContent}</div>
+      <div class="msg-head-info"><b>${esc(u.name)}</b><span>${t("online")}</span></div>
+      <button class="icon-btn" data-action="close-messages">✕</button>
+    </div>
+    <div class="msg-body" id="msgBody"></div>
+    <div class="msg-img-preview" id="msgImgPreview">
+      <img id="msgImgPreviewImg" src="" alt="">
+      <div class="info"><b id="msgImgPreviewName"></b><span>${t("sendForBtn")}</span></div>
+      <button class="remove" data-action="cancel-image">✕</button>
+    </div>
+    <div class="msg-input-row">
+      <button class="msg-img-btn" data-action="pick-image">📷</button>
+      <input type="file" id="msgImageInput" accept="image/*" style="display:none">
+      <textarea id="msgInput" placeholder="${t("typeMessage")}" rows="1"></textarea>
+      <button class="msg-send" data-action="send-msg">➤</button>
+    </div>`;
+  $("#msgContainer").classList.add("chat-open");
+  if (window.innerWidth <= 980) $("#msgBack").style.display = "grid";
+  const { data: msgs } = await db.from("messages").select("*").or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`).order("created_at", { ascending: true });
+  (msgs || []).forEach(m => appendMessage(m, false));
+  await db.from("messages").update({ is_read: true }).eq("receiver_id", currentUser.id).eq("sender_id", otherId).eq("is_read", false);
+  refreshUnreadCount(); refreshConversationList(); scrollToBottom();
+  const input = $("#msgInput"); input.focus();
+  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+  input.addEventListener("input", () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 100) + "px"; });
+  $("#msgImageInput").addEventListener("change", handleImagePick);
+}
+
+function handleImagePick(e) {
+  const file = e.target.files[0];
+  if (!file || !activeConvUserId) return;
+  if (file.size > 5 * 1024 * 1024) { toast(t("imageTooBig")); e.target.value = ""; return; }
+  if (!file.type.startsWith("image/")) { toast(t("pickImage")); e.target.value = ""; return; }
+  if (pendingImage) URL.revokeObjectURL(pendingImage.url);
+  const localUrl = URL.createObjectURL(file);
+  pendingImage = { file, url: localUrl };
+  $("#msgImgPreviewImg").src = localUrl;
+  $("#msgImgPreviewName").textContent = file.name;
+  $("#msgImgPreview").classList.add("show");
+  $("#msgInput").focus();
+  e.target.value = "";
+}
+
+function cancelPendingImage() {
+  if (pendingImage) { URL.revokeObjectURL(pendingImage.url); pendingImage = null; }
+  const prev = $("#msgImgPreview"); if (prev) prev.classList.remove("show");
+  const fi = $("#msgImageInput"); if (fi) fi.value = "";
+}
+
+function appendMessage(m, scroll = true) {
+  const body = $("#msgBody"); if (!body) return;
+  const isMe = m.sender_id === currentUser.id;
+  const div = document.createElement("div");
+  div.className = "msg " + (isMe ? "me" : "them");
+  if (m.id && !String(m.id).startsWith("temp-")) div.dataset.msgId = m.id;
+  const time = new Date(m.created_at);
+  const timeStr = `${time.getHours().toString().padStart(2, "0")}:${time.getMinutes().toString().padStart(2, "0")}`;
+  let inner = "";
+  if (m.image_url) inner += `<img src="${esc(m.image_url)}" data-action="open-lightbox" data-url="${esc(m.image_url)}" loading="lazy">`;
+  if (m.content) inner += escapeText(m.content);
+  inner += `<time>${timeStr}</time>`;
+  if (isMe && m.id && !String(m.id).startsWith("temp-")) inner += `<button class="msg-del" data-action="delete-msg" data-id="${m.id}">✕</button>`;
+  div.innerHTML = inner;
+  body.appendChild(div);
+  if (scroll) scrollToBottom();
+}
+
+function escapeText(t) { return String(t).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])).replace(/\n/g, "<br>"); }
+function scrollToBottom() { const body = $("#msgBody"); if (body) body.scrollTop = body.scrollHeight; }
+
+async function sendMessage() {
+  const input = $("#msgInput");
+  if (!input || !activeConvUserId) return;
+  const content = input.value.trim();
+  if (!content && !pendingImage) return;
+  const sendBtn = $(".msg-send"); if (sendBtn) sendBtn.disabled = true;
+  let imageUrl = null;
+  if (pendingImage) {
+    toast(t("uploading"), 2000);
+    const file = pendingImage.file;
+    const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+    const fileName = `${currentUser.id}/${Date.now()}.${ext}`;
+    const { error: upErr } = await db.storage.from("chat-images").upload(fileName, file, { cacheControl: "3600", upsert: false });
+    if (upErr) { toast("Hata: " + upErr.message); if (sendBtn) sendBtn.disabled = false; return; }
+    const { data: urlData } = db.storage.from("chat-images").getPublicUrl(fileName);
+    imageUrl = urlData.publicUrl;
+  }
+  const { data: inserted, error } = await db.from("messages").insert({ sender_id: currentUser.id, receiver_id: activeConvUserId, content: content || "", image_url: imageUrl }).select().single();
+  if (error) { toast("Hata: " + error.message); if (sendBtn) sendBtn.disabled = false; return; }
+  appendMessage(inserted, true);
+  input.value = ""; input.style.height = "auto"; cancelPendingImage();
+  if (sendBtn) sendBtn.disabled = false;
+  refreshConversationList();
+}
+
+async function deleteMessage(id) {
+  if (!id) return;
+  if (!confirm(t("confirmDelete"))) return;
+  const { error } = await db.from("messages").delete().eq("id", id).eq("sender_id", currentUser.id);
+  if (error) { toast("Hata: " + error.message); return; }
+  const el = document.querySelector(`.msg[data-msg-id="${id}"]`); if (el) el.remove();
+  refreshConversationList();
+  toast(t("msgDeleted"));
+}
+
+async function startChatWith(userId) {
+  if (!currentUser) { openModal("loginModal"); return; }
+  if (currentUser.id === userId) return;
+  if (!myProfile) return;
+  closeModal("detailModal"); openMessages();
+  await openConversation(userId);
+}
+
+function openLightbox(url) { $("#lightboxImg").src = url; $("#lightbox").classList.add("open"); }
+function closeLightbox() { $("#lightbox").classList.remove("open"); $("#lightboxImg").src = ""; }
+
+document.addEventListener("click", async e => {
+  const el = e.target.closest("[data-action]");
+  if (!el) return;
+  const action = el.dataset.action, id = el.dataset.id, modal = el.dataset.modal;
+  if (el.tagName === "A") e.preventDefault();
+  switch (action) {
+    case "open-login": closeAllModals(); openModal("loginModal"); break;
+    case "open-register": closeAllModals(); openModal("registerModal"); break;
+    case "close-modal": closeModal(modal); break;
+    case "open-edit-profile": closeAllModals(); openEditProfile(); break;
+    case "pick-edit-photo": $("#editPhotoInput").click(); break;
+    case "remove-edit-photo": {
+      cancelPendingProfilePhoto();
+      const prev = $("#editPhotoPreview");
+      prev.style.backgroundImage = "";
+      prev.style.background = `linear-gradient(135deg,var(--rose),var(--plum))`;
+      prev.textContent = initials(myProfile.name);
+      $("#editPhotoRemoveBtn").style.display = "none";
+      myProfile.avatar_url = null;
+      break;
+    }
+    case "logout": await handleLogout(); break;
+    case "toggle-like": await toggleLike(id); break;
+    case "toggle-like-modal": await toggleLike(id); await viewProfile(id); break;
+    case "view-profile": await viewProfile(id); break;
+    case "quick-search": quickSearch(); break;
+    case "apply-filters": applyFilters(); break;
+    case "reset-filters": resetFilters(); break;
+    case "open-messages": openMessages(); break;
+    case "close-messages": closeMessages(); break;
+    case "open-conv": await openConversation(id); break;
+    case "send-msg": await sendMessage(); break;
+    case "start-chat": await startChatWith(id); break;
+    case "msg-back": $("#msgContainer").classList.remove("chat-open"); break;
+    case "pick-image": $("#msgImageInput").click(); break;
+    case "cancel-image": cancelPendingImage(); break;
+    case "open-lightbox": openLightbox(el.dataset.url); break;
+    case "close-lightbox": closeLightbox(); break;
+    case "delete-msg": e.stopPropagation(); await deleteMessage(id); break;
+  }
+});
+
+$$(".overlay").forEach(ov => { ov.addEventListener("click", e => { if (e.target === ov) closeModal(ov.id); }); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeAllModals(); closeLightbox(); if ($("#msgOverlay").classList.contains("open")) closeMessages(); } });
+
+$("#registerForm").addEventListener("submit", handleRegister);
+$("#loginForm").addEventListener("submit", handleLogin);
+$("#editProfileForm").addEventListener("submit", handleEditProfile);
+$("#editPhotoInput").addEventListener("change", handleEditPhotoPick);
+
+document.addEventListener("change", e => {
+  const map = { "r-country": "r-city", "e-country": "e-city", "f-country": "f-city" };
+  const cityId = map[e.target.id];
+  if (cityId) { $("#" + cityId).value = ""; updateCityDropdown(e.target.id, cityId); }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById("langBtn");
+  const menu = document.getElementById("langMenu");
+  if (btn && menu) {
+    btn.addEventListener("click", e => { e.stopPropagation(); menu.classList.toggle("open"); });
+    document.addEventListener("click", () => menu.classList.remove("open"));
+    menu.addEventListener("click", e => { const opt = e.target.closest("[data-lang]"); if (opt) { setLanguage(opt.dataset.lang); menu.classList.remove("open"); } });
+  }
+});
+
+(async function init() {
+  fillCountriesAndCities();
+  const l = LANGS.find(x => x.code === currentLang) || LANGS[0];
+  const flagEl = document.getElementById("langFlag");
+  const nameEl = document.getElementById("langName");
+  if (flagEl) flagEl.textContent = l.flag;
+  if (nameEl) nameEl.textContent = l.name;
+  document.documentElement.dir = (currentLang === "ar" || currentLang === "fa" || currentLang === "ku") ? "rtl" : "ltr";
+  document.documentElement.lang = currentLang;
+  buildLangMenu();
+  applyTranslations();
+
+  db.auth.onAuthStateChange(async (event) => {
+    if (event === "SIGNED_OUT") {
+      currentUser = null; myProfile = null; myLikes = new Set(); unreadCount = 0;
+      if (realtimeChannel) { db.removeChannel(realtimeChannel); realtimeChannel = null; }
+      updateNavbar(); updateProfileSection();
+    } else if (event === "SIGNED_IN") {
+      const { data } = await db.auth.getSession();
+      if (data.session) {
+        currentUser = data.session.user;
+        await loadMyProfile(); await applyPendingProfile();
+        updateNavbar(); updateProfileSection(); loadProfiles();
+      }
+    }
+  });
+  await checkSession();
+  await loadProfiles();
+})();
+</script>
+</body>
+</html>
