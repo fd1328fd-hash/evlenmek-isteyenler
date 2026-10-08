@@ -1,0 +1,34 @@
+{
+  "name": "Evlenmek İsteyenler",
+  "short_name": "Evlenmek",
+  "description": "Ciddi evlilik hedefleyen kişileri buluşturan, güvenli ve ücretsiz tanışma platformu.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff9fc",
+  "theme_color": "#e8437c",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["social", "lifestyle", "dating"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
