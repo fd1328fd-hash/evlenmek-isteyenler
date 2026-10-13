@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yazı — Evlenmek İsteyenler Blog</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  .post-header { padding: 50px 0 30px; }
+  .post-header h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.2; margin-bottom: 14px; }
+  .post-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); margin-bottom: 24px; }
+  .post-content { font-size: 1.02rem; line-height: 1.85; color: #2e2a3a; max-width: 760px; margin: 0 auto; padding-bottom: 60px; }
+  .post-content h2 { font-size: 1.4rem; font-weight: 800; margin: 32px 0 14px; color: var(--ink); }
+  .post-content h3 { font-size: 1.15rem; font-weight: 700; margin: 24px 0 10px; }
+  .post-content p { margin-bottom: 16px; }
+  .post-content ul, .post-content ol { margin: 16px 0 16px 24px; }
+  .post-content li { margin-bottom: 8px; }
+  .post-content blockquote { border-left: 4px solid var(--rose); background: var(--rose-soft); padding: 14px 20px; border-radius: 10px; margin: 20px 0; font-style: italic; }
+  .post-cover { width: 100%; max-height: 420px; object-fit: cover; border-radius: 20px; margin-bottom: 30px; }
+  .loading-screen { text-align: center; padding: 80px 20px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="index.html" class="logo">
+      <span class="logo-mark" style="display:flex; justify-content:center; align-items:center; gap:0px; font-size:1rem; padding: 0 4px; width: auto; min-width: 42px; background: #e8437c;">
+        <span style="display:inline-block; transform:scaleX(-1);">🦢</span>
+        <span>🦢</span>
+      </span>
+      <span class="logo-text">Evlenmek İsteyenler</span>
+    </a>
+    <div class="nav-actions">
+      <a href="blog.html" class="btn btn-ghost btn-sm">← Blog</a>
+    </div>
+  </div>
+</header>
+
+<article class="container" id="postContainer">
+  <div class="loading-screen">⏳ Yükleniyor...</div>
+</article>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom" style="border-top:none;padding-top:0;justify-content:center">
+      <span>© 2026 Evlenmek İsteyenler</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const SUPABASE_URL = "https://mrlyghqqyvrdcwwmhpwj.supabase.co";
+const SUPABASE_KEY = "sb_publishable_EW46ECy6Lv4Z1qJ_UPPx1A_JbU3G_rG";
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+// Basit Markdown benzeri render
+function renderContent(raw) {
+  let html = esc(raw);
+  html = html.replace(/^### (.+)$/gm, "<h3>$1</h3>");
+  html = html.replace(/^## (.+)$/gm, "<h2>$1</h2>");
+  html = html.replace(/^# (.+)$/gm, "<h2>$1</h2>");
+  html = html.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+  html = html.replace(/\*(.+?)\*/g, "<i>$1</i>");
+  html = html.replace(/^&gt; (.+)$/gm, "<blockquote>$1</blockquote>");
+  html = html.replace(/^- (.+)$/gm, "<li>$1</li>");
+  html = html.replace(/(<li>.*<\/li>)/gs, "<ul>$1</ul>");
+  html = html.split("\n\n").map(p => p.startsWith("<h") || p.startsWith("<ul") || p.startsWith("<blockquote") ? p : `<p>${p}</p>`).join("\n");
+  return html;
+}
+
+async function loadPost() {
+  const params = new URLSearchParams(location.search);
+  const slug = params.get("slug");
+  const el = document.getElementById("postContainer");
+  if (!slug) { el.innerHTML = `<div class="loading-screen">Yazı bulunamadı.</div>`; return; }
+
+  const { data, error } = await db.from("blog_posts").select("*").eq("slug", slug).eq("is_published", true).maybeSingle();
+  if (error || !data) { el.innerHTML = `<div class="loading-screen">Yazı bulunamadı veya yayından kaldırılmış.</div>`; return; }
+
+  document.title = data.title + " — Evlenmek İsteyenler";
+
+  const d = new Date(data.created_at);
+  const dateStr = `${d.getDate()} ${["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"][d.getMonth()]} ${d.getFullYear()}`;
+
+  // View sayacı (opsiyonel)
+  db.from("blog_posts").update({ views: (data.views || 0) + 1 }).eq("id", data.id).then(() => {});
+
+  el.innerHTML = `
+    <div class="post-header">
+      <a href="blog.html" class="blog-back" style="display:inline-flex;color:var(--rose);font-weight:600;font-size:.88rem;margin-bottom:16px;text-decoration:none">← Tüm Yazılar</a>
+      <h1>${esc(data.title)}</h1>
+      <div class="post-meta">
+        <span>📅 ${dateStr}</span>
+        <span>✍️ ${esc(data.author || "Evlenmek İsteyenler")}</span>
+        <span>👁️ ${(data.views || 0) + 1} okuma</span>
+      </div>
+      ${data.cover_image ? `<img src="${esc(data.cover_image)}" class="post-cover" alt="${esc(data.title)}">` : ""}
+    </div>
+    <div class="post-content">${renderContent(data.content)}</div>
+  `;
+}
+
+loadPost();
+</script>
+</body>
+</html>
